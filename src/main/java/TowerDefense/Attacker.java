@@ -134,8 +134,16 @@ public class Attacker {
 		hitPoints = Math.min(hitPoints + health, maxHealth);
 	}
 
+	//	public void dealDamage(int damage) {
+//		this.hitPoints = Math.max(0, hitPoints - damage);
+//		if (isDead())
+//			view.kill();
+//	}
 	public void dealDamage(int damage) {
 		this.hitPoints = Math.max(0, hitPoints - damage);
+		//...
+		this.view.dealDamage(hitPoints, maxHealth);
+		//...
 		if (isDead())
 			view.kill();
 	}

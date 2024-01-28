@@ -34,18 +34,19 @@ public class PlayerView {
 		int baseWidth = 713;
 		int baseHeight = 367;
 
-		Sprite frame = graphics.createSprite().setZIndex(-10000).setImage("Player_panel.png").setTint(0xebebeb).setX(0).setY(0).setBaseWidth(Constants.BOARD_DASH_WIDTH).setBaseHeight(Constants.BOARD_DASH_HEIGHT);
+		Sprite frame =
+				graphics.createSprite().setZIndex(-10000).setImage("Player_panel.png").setTint(0xebebeb).setX(0).setY(0).setBaseWidth((int) (Constants.BOARD_DASH_WIDTH * 0.8)).setBaseHeight(Constants.BOARD_DASH_HEIGHT);
 		avatar = graphics.createSprite().setAnchor(0.5).setBaseHeight(0).setBaseWidth(0).setImage(player.getAvatarToken()).setX(132).setY(239).setZIndex(20);
 
 		//background = entityModule.createSprite().setAnchor(0).setImage("HUD_" + color + ".png").setX(238 - 50 - PLAYER_AVATAR_RADIUS / 2).setY(baseY);
 
 		// pseudo -> The name of the player in the dashboard...
 //		int nameStartX = 361;
-		int nameStartX = 175;
+		int nameStartX = 140;
 		pseudo =
-				graphics.createText(player.getNicknameToken()).setAnchor(0.5).setFontSize(50).setStrokeColor(4).setStrokeColor(0x000000).setStrokeThickness(1.0).setY(57).setX(nameStartX).setFillColor(player.getColor()).setZIndex(-1);
+				graphics.createText(player.getNicknameToken()).setAnchor(0.5).setFontSize(45).setStrokeColor(4).setStrokeColor(0x000000).setStrokeThickness(1.0).setY(57).setX(nameStartX).setFillColor(player.getColor()).setZIndex(-1);
 //		int textPos = 490;
-		int textPos = (int) (Constants.BOARD_DASH_WIDTH * 0.68723);
+		int textPos = (int) (Constants.BOARD_DASH_WIDTH * 0.68723 * 0.8);
 		int textGap = 87;
 		gold = graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(50).setStrokeColor(0x000000).setStrokeThickness(1.0).setX(textPos).setY(154);
 
