@@ -35,12 +35,16 @@ public class Tile {
 		return canyon;
 	}
 
-	public boolean isDobstacle() { return Dobstacle;}
+	public boolean hasDestructibleObject() { return Dobstacle;}
 
-	public boolean isNDobstacle() { return NDobstacle;}
+	public boolean hasNonDestructibleObject() { return NDobstacle;}
+
+	public boolean hasAnyObject(){
+		return  Dobstacle || NDobstacle;
+	}
 
 	public boolean canBuild() {
-		return !canyon;
+		return !hasAnyObject();
 	}
 
 	public char getMapChar() {

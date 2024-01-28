@@ -93,7 +93,7 @@ public class Astar {
                     //System.out.println("The destination cell is found");
                     return;
                 }
-                else if (!closedList[st.getTile().getX()][st.getTile().getY()][st.getSubX()][st.getSubY()] && !st.getTile().isDobstacle() && !st.getTile().isNDobstacle()) {
+                else if (!closedList[st.getTile().getX()][st.getTile().getY()][st.getSubX()][st.getSubY()] && !st.getTile().hasAnyObject()) {
                     double gNew, hNew, costNew;
                     gNew = p.g + 1.0;
                     hNew = calculateHValue(st, dest);
@@ -149,7 +149,7 @@ public class Astar {
                     //System.out.println("The destination cell is found");
                     return;
                 }
-                else if (!closedList[st.getTile().getX()][st.getTile().getY()][st.getSubX()][st.getSubY()] && !st.getTile().isNDobstacle()) {
+                else if (!closedList[st.getTile().getX()][st.getTile().getY()][st.getSubX()][st.getSubY()] && !st.getTile().hasNonDestructibleObject()) {
                     double gNew, hNew, costNew;
                     gNew = p.g + 1.0;
                     hNew = calculateHValue(st, dest);

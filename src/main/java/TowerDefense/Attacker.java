@@ -1,7 +1,6 @@
 package TowerDefense;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.codingame.game.Player;
 
@@ -188,7 +187,7 @@ public class Attacker {
 		Astar astar = new Astar();
 		ArrayList<SubTile> path = astar.findpath(currentSubtile, dest);
 		for (int i=0;i<Math.min(Constants.SPEED, path.size());i++) {
-			//if(path.get(i).getTile().isNDobstacle() || path.get(i).getTile().isDobstacle()) break;
+			if(path.get(i).getTile().hasNonDestructibleObject() || path.get(i).getTile().hasDestructibleObject()) break;
 			view.move(path.get(i));
 		}
 		if (slowCountdown > 0)
