@@ -1,6 +1,7 @@
 package com.codingame.game;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -31,6 +32,7 @@ public class Referee extends AbstractReferee {
 	private Board board;
 	private ArrayList<Integer> playerOneXs;
 	private ArrayList<Integer> playerTwoXs;
+	private int prturn = 0;
 
 	@Override
 	public void init() {
@@ -55,7 +57,7 @@ public class Referee extends AbstractReferee {
 		for (Player player : gameManager.getActivePlayers()) {
 			for (String line : board.getPlayerInput(player, turn == 1)) {
 				player.sendInputLine(line);
-				System.out.println("mdmab: " + line);
+				System.out.println(turn + " - mdmab: " + line);
 			}
 
 			player.execute();
@@ -63,12 +65,15 @@ public class Referee extends AbstractReferee {
 
 		for (Player player : gameManager.getActivePlayers()) {
 			try {
-				String actions = player.getOutputs().get(0);
+//				String actions = player.getOutputs().get(0);
+				List<String> actions = player.getOutputs();
 				System.out.println("*************** No timeout ****************");
 
 				// For debugging purpose...
+				// During the 1st turn, the player have to output the y coordinates for their attackers...
 				if (turn == 1) {
-					String[] xOuts = actions.split(" ");
+					String coords = actions.get(0);
+					String[] xOuts = coords.split(" ");
 
 					if (player.getIndex() == 0) {
 						for (String x: xOuts) {
@@ -90,7 +95,16 @@ public class Referee extends AbstractReferee {
 					}
 				}
 				else {
-					System.out.println(actions);
+//					actions.forEach(actionList -> {
+//						for (String action: actionList.split(";")) {
+//							System.out.println(action);
+//						}
+//					});
+//					System.out.println("Size of list => " + actions.size());
+//					actions.forEach(System.out::println);
+
+					// Parse the output lines from the players and do actions...
+					actions.forEach(action -> parseCommand(action.split(" ")));
 				}
 				// ..............................
 
@@ -158,11 +172,9 @@ public class Referee extends AbstractReferee {
 			}
 		}
 
-
 		board.moveAttackers(turn);
 		board.fireTowers();
 		board.spawnAttackers(turn);
-
 
 
 		board.updateView();
@@ -178,6 +190,51 @@ public class Referee extends AbstractReferee {
 			gameManager.getActivePlayers().get(0).deactivate();
 			gameManager.getActivePlayers().get(0).deactivate();
 			gameManager.endGame();
+		}
+	}
+
+	public void parseCommand(String[] commandArgs) {
+		if (commandArgs.length == 0) {
+			// Gotta throw an exception for bad input....
+		}
+
+		switch (commandArgs[0]) {
+			case "go":
+				break;
+			case "build":
+				break;
+			case "attack":
+				break;
+			default:
+				break;
+		}
+	}
+
+	public void checkCommandGo(String[] commandArgs) {
+		int state = 1;
+
+		/*
+		* 1 -> go -> 2
+		* 1 -> _ -> 3
+		* 2 -> (int) -> 0
+		* 2 -> _ -> 3
+		* 0 -> * -> 3
+		* */
+		for (String arg: commandArgs) {
+			switch (state) {
+				case 1:
+					state = (arg.equals("go") ? 2: 3);
+					break;
+				case 2:
+					try {
+						Integer temp = Integer.parseInt(arg);
+						state = 0;
+					}
+					catch (NumberFormatException ex) {
+						state = 3;
+					}
+					break;
+			}
 		}
 	}
 

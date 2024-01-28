@@ -24,9 +24,11 @@ public class Board {
 	private int height;
 	private List<Player> players;
 	private BoardView view;
+	private int objCount = 0;
+	private ArrayList<String[]> objectStrMaps = new ArrayList<>();
 	private int waveIndex = 0;
 	private int earliestWaveStart = 1;
-//	private List<List<Attacker>> futureAttackers = new ArrayList<>();
+	//	private List<List<Attacker>> futureAttackers = new ArrayList<>();
 	private List<BuildAction> buildActions = new ArrayList<>();
 	private List<List<SubTile>> paths = new ArrayList<>();
 	private int waveNumber = 0;
@@ -302,20 +304,20 @@ public class Board {
 		if (x < 0 || x >= width || y < 0 || y >= height) throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
 		Tower tower = null;
 		switch (type.toUpperCase()) {
-		case "GUNTOWER":
-			tower = new GunTower(grid[x][y]);
-			break;
-		case "FIRETOWER":
-			tower = new FireTower(grid[x][y]);
-			break;
-		case "GLUETOWER":
-			tower = new GlueTower(grid[x][y]);
-			break;
-		case "HEALTOWER":
-			tower = new HealTower(grid[x][y]);
-			break;
-		default:
-			throw new InvalidActionException("tower type " + type + " unknown", true, player);
+			case "GUNTOWER":
+				tower = new GunTower(grid[x][y]);
+				break;
+			case "FIRETOWER":
+				tower = new FireTower(grid[x][y]);
+				break;
+			case "GLUETOWER":
+				tower = new GlueTower(grid[x][y]);
+				break;
+			case "HEALTOWER":
+				tower = new HealTower(grid[x][y]);
+				break;
+			default:
+				throw new InvalidActionException("tower type " + type + " unknown", true, player);
 		}
 		if (!tower.getTile().canBuild()) {
 			tower.undoBuild();
@@ -358,8 +360,12 @@ public class Board {
 	public List<String> getPlayerInput(Player player, boolean initialInput) {
 		List<String> input = new ArrayList<>();
 		if (initialInput) {
-			input.add(String.valueOf(player.getIndex()));
+//			input.add(String.valueOf(player.getIndex()));
+
+			// width, height...
 			input.add(width + " " + height);
+
+			// Grid...h lines of w characters...
 			for (int y = 0; y < height; y++) {
 				StringBuilder sb = new StringBuilder();
 				for (int x = 0; x < width; x++) {
@@ -370,22 +376,94 @@ public class Board {
 		}
 
 		// player + opponent
-		input.add(player.getPlayerInput());
-		if (players.get(0) == player)
-			input.add(players.get(1).getPlayerInput());
-		else
-			input.add(players.get(0).getPlayerInput());
+        Player opponent = players.get(0) == player ? players.get(1): player;
+
+		input.add(player.getPlayerMoneyInput() + " " + opponent.getPlayerMoneyInput());
+		input.add(player.getPlayerScoresInput() + " " + opponent.getPlayerScoresInput());
+
+		// Collecting the attackers of both of the players...
+		ArrayList<Attacker> playerAttacker = new ArrayList<>();
+		ArrayList<Attacker> opponentAttacker = new ArrayList<>();
+
+		System.err.println("" + playerAttacker.size());
+		System.err.println("" + opponentAttacker.size());
+
+		attackers.forEach(attacker -> {
+			if (attacker.getOwner() == player) {
+				playerAttacker.add(attacker);
+			}
+			else {
+				opponentAttacker.add(attacker);
+			}
+		});
+
+		veterans.forEach(attacker -> {
+			if (attacker.getOwner() == player) {
+				playerAttacker.add(attacker);
+			}
+			else {
+				opponentAttacker.add(attacker);
+			}
+		});
+
+		// Status of the characters of the player...
+		playerAttacker.forEach(attacker -> {
+			int id = attacker.getId();
+			int posX = attacker.getCurrentTile().getX();
+			int posY = attacker.getCurrentTile().getY();
+			int health = attacker.getHitPoints();
+			int speed = attacker.getSpeed();
+
+			input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
+		});
+
+		// Status of the characters of the opponent...
+		opponentAttacker.forEach(attacker -> {
+			int id = attacker.getId();
+			int posX = attacker.getCurrentTile().getX();
+			int posY = attacker.getCurrentTile().getY();
+			int health = attacker.getHitPoints();
+			int speed = attacker.getSpeed();
+
+			input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
+		});
+
+		// Object count...
+		input.add("" + this.objCount);
+
+		// Sending information of all the objects...
+		for (int i = 0; i < objCount; ++i) {
+			// ...
+			String type = objectStrMaps.get(i)[0];
+			String id = objectStrMaps.get(i)[1];
+			String owner = objectStrMaps.get(i)[2];
+			String posX = objectStrMaps.get(i)[3];
+			String posY = objectStrMaps.get(i)[4];
+			String health = objectStrMaps.get(i)[5];
+			String damage = objectStrMaps.get(i)[6];
+			String range = objectStrMaps.get(i)[7];
+			String cooldown = objectStrMaps.get(i)[8];
+			String bounty = objectStrMaps.get(i)[9];
+
+			input.add(type + " " + id + " " + owner + " " + posX + " " + posY + " " + health + " " + damage + " " + range + " " + cooldown + " " + bounty);
+		}
+
+//		input.add(player.getPlayerInput());
+//		if (players.get(0) == player)
+//			input.add(players.get(1).getPlayerInput());
+//		else
+//			input.add(players.get(0).getPlayerInput());
 
 		// towers, attackers
-		input.add(String.valueOf(towers.size()));
-		Comparator<Tower> compareById = (Tower t1, Tower t2) -> t1.getId() - t2.getId();
-		Collections.sort(towers, compareById);
-		for (Tower t : towers)
-			input.add(t.getPlayerInput());
-
-		input.add(String.valueOf(attackers.size()));
-		for (Attacker a : attackers)
-			input.add(a.getPlayerInput());
+//		input.add(String.valueOf(towers.size()));
+//		Comparator<Tower> compareById = (Tower t1, Tower t2) -> t1.getId() - t2.getId();
+//		Collections.sort(towers, compareById);
+//		for (Tower t : towers)
+//			input.add(t.getPlayerInput());
+//
+//		input.add(String.valueOf(attackers.size()));
+//		for (Attacker a : attackers)
+//			input.add(a.getPlayerInput());
 		return input;
 	}
 
@@ -397,6 +475,10 @@ public class Board {
 //				+ "\nspeed: " + ((double)Constants.WAVE_SPEED[index] / SubTile.SUBTILE_SIZE)
 //				+ "\nbounty: " + Constants.WAVE_BOUNTY[index];
 //	}
+
+	public void addObject() {
+		++this.objCount;
+	}
 
 	public void updateView() {
 		view.updateView();
