@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 import java.math.*;
@@ -12,12 +13,19 @@ class TestAgent {
         int playerId = in.nextInt();
         int width = in.nextInt();
         int height = in.nextInt();
+
+        System.err.printf("playerId: %d, width: %d, height: %d\n", playerId, width, height);
+
+
         if (in.hasNextLine()) {
             in.nextLine();
         }
+
         for (int i = 0; i < height; i++) {
             String line = in.nextLine();
+            System.err.printf("line: %s\n", line);
         }
+
 
         int cnt =0;
         // game loop
@@ -27,36 +35,46 @@ class TestAgent {
             int opponentMoney = in.nextInt();
             int opponentLives = in.nextInt();
             int towerCount = in.nextInt();
+
+            System.err.printf("Money: %d, Lives: %d, OpponentMoney: %d, OpponentLives: %d, towerCount: %d\n", myMoney, myLives, opponentMoney, opponentLives, towerCount);
+
+            if (in.hasNextLine())
+                in.nextLine();
+
             for (int i = 0; i < towerCount; i++) {
-                String towerType = in.next();
-                int towerId = in.nextInt();
-                int owner = in.nextInt();
-                int x = in.nextInt();
-                int y = in.nextInt();
-                int damage = in.nextInt();
-                float attackRange = in.nextFloat();
-                int reload = in.nextInt();
-                int coolDown = in.nextInt();
-            }
-            int attackerCount = in.nextInt();
-            for (int i = 0; i < attackerCount; i++) {
-                int attackerId = in.nextInt();
-                int owner = in.nextInt();
-                float x = in.nextFloat();
-                float y = in.nextFloat();
-                int hitPoints = in.nextInt();
-                int maxHitPoints = in.nextInt();
-                float currentSpeed = in.nextFloat();
-                float maxSpeed = in.nextFloat();
-                int slowTime = in.nextInt();
-                int bounty = in.nextInt();
+                String towerAll = in.nextLine();
+                System.err.println(towerAll);
             }
 
-            // Write an action using System.out.println()
+            int attackerCount = in.nextInt();
+            System.err.printf("attackerCount: %d\n", attackerCount);
+
+            if (in.hasNextLine())
+                in.nextLine();
+
+            for (int i = 0; i < attackerCount; i++) {
+                String attackerAll = in.nextLine();
+                System.err.println(attackerAll);
+            }
+
+//            if (in.hasNextLine()) {
+//                in.nextLine();
+//            }
+
+            if (cnt == 0) {
+                if (playerId == 0)
+                    System.out.println("0 2 4 7 10");
+                else
+                    System.out.println("1 3 5 8 9");
+            }
+            else {
+                System.out.println("BUILD 5 5 GUNTOWER");
+            }
+
+//             Write an action using System.out.println()
             System.err.println("Debug messages... here "+cnt);
             cnt++;
-
-            System.out.println("BUILD 5 5 GUNTOWER"); // BUILD x y TOWER | UPGRADE id PROPERTY
+            System.out.flush();
         }
     }
 }

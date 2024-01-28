@@ -195,13 +195,23 @@ public class Board {
 //	}
 
 	// creating attackers
+	int gg = 3;
 	public void createAttackerAtBase(Player owner,Player enemy) {
 
-		Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy);
+		Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy, gg++);
 		AttackerView a_view = view.addAttacker(a);
 		a.setView(a_view);
 
 		attackers.add(a);
+	}
+
+	public void test() {
+		for (int i = attackers.size() - 1; i >= 0; i--) {
+			Attacker a = attackers.get(i);
+			a.kill();
+			veterans.add(a);
+			attackers.remove(i);
+		}
 	}
 
 	public void spawnAttackers(int turn) {
@@ -212,6 +222,13 @@ public class Board {
 					createAttackerAtBase(players.get(i),players.get(i^1));
 				}
 			}
+		}
+
+		for( int i=veterans.size()-1; i>=0; i-- ) {
+			Attacker a = veterans.get(i);
+			veterans.remove(i);
+			a.respawn();
+			attackers.add(a);
 		}
 	}
 
@@ -238,6 +255,8 @@ public class Board {
 			for (int i = attackers.size() - 1; i >= 0; i--) {
 				Attacker a = attackers.get(i);
 				if (a.isDead()) {
+					attackers.get(i).kill();
+					veterans.add(attackers.get(i));
 					attackers.remove(i);
 					t.getOwner().kill(a);
 				}

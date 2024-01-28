@@ -5,10 +5,7 @@ import java.util.Random;
 
 import TowerDefense.Constants;
 import TowerDefense.Tile;
-import com.codingame.gameengine.module.entities.GraphicEntityModule;
-import com.codingame.gameengine.module.entities.Group;
-import com.codingame.gameengine.module.entities.Sprite;
-import com.codingame.gameengine.module.entities.SpriteAnimation;
+import com.codingame.gameengine.module.entities.*;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 
 import TowerDefense.Attacker;
@@ -24,6 +21,9 @@ public class AttackerView {
 	private Group group;
 	private Sprite glueSprite = null;
 	private SpriteAnimation attackerBody, attackerHelmet;
+	private Rectangle healthBarRed; // Health bar...
+	private Rectangle healthBarGreen; // Health bar...
+	public static final int HEALTH_BAR_LEN = 100;  // Length of the health bar...
 	private GraphicEntityModule graphics;
 	private TooltipModule tooltips;
 	private String[] attackerBodySprites;
@@ -62,6 +62,9 @@ public class AttackerView {
 			break;
 		}
 		if (group == null) {
+			healthBarRed = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-100).setY(-10).setFillColor(0xff0000);
+			healthBarGreen = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-100).setY(-10).setFillColor(0x00ff00);
+
 			attackerBody = graphics.createSpriteAnimation().
 					setImages(attackerBodySprites).
 					setDuration(WALK_DURATION).setLoop(true).setPlaying(true);
@@ -69,7 +72,7 @@ public class AttackerView {
 					setImages(attackerHelmetSprites).
 					setDuration(WALK_DURATION).setLoop(true).setPlaying(true).
 					setTint(attacker.getOwner().getColor());
-			group = graphics.createGroup(attackerBody, attackerHelmet)
+			group = graphics.createGroup(healthBarRed, healthBarGreen, attackerBody, attackerHelmet)
 					.setX((int) (BoardView.CELL_SIZE * attacker.getLocation().getX()))
 					.setY((int) (BoardView.CELL_SIZE * attacker.getLocation().getY()));
 			attackerBody.setX(-BoardView.CELL_SIZE);
@@ -144,6 +147,11 @@ public class AttackerView {
 		group.setY((int) (BoardView.CELL_SIZE * nextSubTile.getY()));
 		attacker.setCurrentSubtile(nextSubTile);
 		//tooltips.setTooltipText(sprite, getTooltipString());
+	}
+
+	public void dealDamage(int hp, int maxHp) {
+		System.err.println("Bar length: " + (int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
+		this.healthBarGreen.setWidth((int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
 	}
 
 	public String getTooltipString() {

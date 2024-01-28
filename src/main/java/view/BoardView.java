@@ -20,24 +20,31 @@ public class BoardView {
 	private Text wave;
 
 	public BoardView(Board board, GraphicEntityModule graphics, TooltipModule tooltips) {
-		graphics.createRectangle().setFillColor(0xebebeb).setHeight(1080).setWidth(1920);
+		int width = 1920;
+		int height = 1080;
+
+		graphics.createRectangle().setFillColor(0xebebeb).setHeight(height).setWidth(width);
 		this.board = board;
 		board.setView(this);
 		this.graphics = graphics;
 		this.tooltips = tooltips;
 
-		wave = graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(40).setStrokeColor(0x000000).setStrokeThickness(0.0).setX(855 / 2).setY(540);
+//		wave = graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(40).setStrokeColor(0x000000).setStrokeThickness(0.0).setX(855 / 2).setY(540);
+		wave =
+				graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(40).setStrokeColor(0x000000).setStrokeThickness(0.0).setX(Constants.BOARD_DASH_WIDTH / 2).setY(graphics.getWorld().getHeight() / 2);
 
-		String[] attackerBodySprites = graphics.createSpriteSheetSplitter().setSourceImage("att_body.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("b").split();
-		String[] attackerHelmetSprites = graphics.createSpriteSheetSplitter().setSourceImage("att_helmet.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("h").split();
-		graphics.createSpriteAnimation().setImages(attackerBodySprites).setLoop(true).setPlaying(true).setX(100).setY(440).setScale(2);
-		graphics.createSpriteAnimation().setImages(attackerHelmetSprites).setLoop(true).setPlaying(true).setX(100).setY(440).setScale(2);
+		// The animating body in the middle of the dashboard...useless..Y E E T....
+//		String[] attackerBodySprites = graphics.createSpriteSheetSplitter().setSourceImage("att_body.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("b").split();
+//		String[] attackerHelmetSprites = graphics.createSpriteSheetSplitter().setSourceImage("att_helmet.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("h").split();
+//		graphics.createSpriteAnimation().setImages(attackerBodySprites).setLoop(true).setPlaying(true).setX(100).setY(440).setScale(2);
+//		graphics.createSpriteAnimation().setImages(attackerHelmetSprites).setLoop(true).setPlaying(true).setX(100).setY(440).setScale(2);
 
 
 		boardGroup = graphics.createGroup();
 		// TODO: switch gridgroup back to BufferedGroup
 		boardGroup.setScale((double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE));
-		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
+//		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
+		boardGroup.setX(Constants.BOARD_DASH_WIDTH);
 		Group gridGroup = graphics.createGroup();
 		boardGroup.add(gridGroup);
 		Group innerGroup = graphics.createGroup();
@@ -91,6 +98,9 @@ public class BoardView {
 	public void updateView() {
 //		String text = board.getWaveInfo();
 		String text = "HELLOOO";
+		// Debug....
+//		String text = "" + graphics.getWorld().getWidth() + ", " + graphics.getWorld().getHeight();
+		// end Debug....
 		if (!text.equals(wave.getText()))
 			wave.setText(text);
 	}

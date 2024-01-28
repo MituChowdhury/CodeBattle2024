@@ -24,21 +24,37 @@ public class Attacker {
 	private static int idCounter;
 	private ArrayList<SubTile> steps;
 
+	Tile spawnTile;
+	SubTile spawnSubtile;
+
 	private boolean reachOpponentBase;
 
-	public Attacker(Tile[][] grid, int hp, int speed, int bounty, Player owner, Player enemy) {
+	public Attacker(Tile[][] grid, int hp, int speed, int bounty, Player owner, Player enemy, int spawn_position_y) {
 		id = idCounter++;
 		//this.remainingPath = path;
+
+		// Errorneous code...
+//		if(owner.getIndex() == 1) {
+//			this.currentTile = grid[0][Constants.MAP_WIDTH-1];
+//			this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
+//		}
+//		else {
+//			this.currentTile = grid[Constants.MAP_HEIGHT-1][0];
+//			this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE*(SubTile.SUBTILE_SIZE-1));
+//		}
+
 		if(owner.getIndex() == 1) {
-			this.currentTile = grid[Constants.MAP_WIDTH-1-(id%5)][0];
-			this.currentSubtile = currentTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+			this.spawnTile = grid[Constants.MAP_WIDTH-1][spawn_position_y];
+			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
 			//this.currentSubtile = currentTile.getSubTiles().get(((SubTile.SUBTILE_SIZE-1)*(SubTile.SUBTILE_SIZE-1))+(SubTile.SUBTILE_SIZE-1));
 		}
 		else {
-			this.currentTile = grid[0][Constants.MAP_HEIGHT-1-(id%5)];
-			this.currentSubtile = currentTile.getSubTile(0, SubTile.SUBTILE_SIZE-1);
+			this.spawnTile = grid[0][Constants.MAP_HEIGHT-1-spawn_position_y];
+			this.spawnSubtile = spawnTile.getSubTile(0, SubTile.SUBTILE_SIZE-1);
 			//this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
 		}
+
+		this.spawn();
 
 		this.grid = grid;
 		this.owner = owner;
@@ -48,6 +64,15 @@ public class Attacker {
 		this.bounty = bounty;
 		this.maxHealth = hitPoints;
 		this.reachOpponentBase = false;
+	}
+
+	public void spawn() {
+		this.currentTile = this.spawnTile;
+		this.currentSubtile = this.spawnSubtile;
+	}
+
+	public void respawn() {
+		this.spawn();
 	}
 
 	public int getId() {
@@ -96,8 +121,9 @@ public class Attacker {
 		dealDamage(hitPoints);
 	}
 
+	// TODO: change this to proper functionality
 	public boolean canRespawn() {
-		return reachOpponentBase;
+		return reachOpponentBase || true;
 	}
 
 	public boolean canHeal() {
@@ -108,8 +134,16 @@ public class Attacker {
 		hitPoints = Math.min(hitPoints + health, maxHealth);
 	}
 
+	//	public void dealDamage(int damage) {
+//		this.hitPoints = Math.max(0, hitPoints - damage);
+//		if (isDead())
+//			view.kill();
+//	}
 	public void dealDamage(int damage) {
 		this.hitPoints = Math.max(0, hitPoints - damage);
+		//...
+		this.view.dealDamage(hitPoints, maxHealth);
+		//...
 		if (isDead())
 			view.kill();
 	}

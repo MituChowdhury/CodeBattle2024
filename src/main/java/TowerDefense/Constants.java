@@ -1,8 +1,8 @@
 package TowerDefense;
 
 public class Constants {
-	public static final int MAP_WIDTH = 17; // keep the dimensions odd for best map generation results
-	public static final int MAP_HEIGHT = 17;
+	public static final int MAP_WIDTH = 21; // keep the dimensions odd for best map generation results
+	public static final int MAP_HEIGHT = 15;
 	public static final double ENFORCE_BRANCHING_PROBABILITY = 0.6;
 	public static final int TURN_COUNT = 50;
 	public static final int MIN_PATH_LENGTH = 30;
@@ -43,4 +43,8 @@ public class Constants {
 	public static final int BOUNTY = 25;
 	public static final int NUM_UPGRADE_SPRITES = 3;
     public static int CHARACTER_COUNT =5;
+
+	// Authored by: mdmab
+	public static int BOARD_DASH_WIDTH = 350;
+	public static int BOARD_DASH_HEIGHT = 367;
 }
