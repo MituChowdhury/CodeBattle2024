@@ -141,14 +141,21 @@ public class Attacker {
 	}
 
 	public void move() {
-		int speed = getSpeed();
+//		int speed = getSpeed();
 		steps = new ArrayList<>();
 //		while (steps.size() < speed && remainingPath.size() > 1) {
 //			steps.add(remainingPath.get(remainingPath.size() - 1));
 //			remainingPath.remove(remainingPath.size() - 1);
 //		}
-		for (int i=0;i<Constants.SPEED;i++) {
-			view.move();
+		SubTile src, dest;
+		if(owner.getIndex() == 0) dest = grid[Constants.MAP_WIDTH-1][0].getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+		else dest = grid[0][Constants.MAP_HEIGHT-1].getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+
+		Astar astar = new Astar();
+		ArrayList<SubTile> path = astar.findpath(currentSubtile, dest);
+		for (int i=0;i<Math.min(Constants.SPEED, path.size());i++) {
+			//if(path.get(i).getTile().isNDobstacle() || path.get(i).getTile().isDobstacle()) break;
+			view.move(path.get(i));
 		}
 		if (slowCountdown > 0)
 			slowCountdown--;

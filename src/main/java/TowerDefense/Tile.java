@@ -6,15 +6,17 @@ public class Tile {
 	private int x;
 	private int y;
 	private boolean canyon;
-	private boolean obstacle;
+	private boolean Dobstacle;
+	private boolean NDobstacle;
 	private ArrayList<SubTile> subTiles = new ArrayList<>();
 	private Tile[] neighbors = new Tile[4];
 
-	public Tile(int x, int y, boolean canyon, boolean obstacle) {
+	public Tile(int x, int y, boolean canyon, boolean Dobstacle, boolean NDobstacle) {
 		this.x = x;
 		this.y = y;
 		this.canyon = canyon;
-		this.obstacle = obstacle;
+		this.Dobstacle = Dobstacle;
+		this.NDobstacle = NDobstacle;
 	}
 
 	public int getX() {
@@ -33,7 +35,9 @@ public class Tile {
 		return canyon;
 	}
 
-	public boolean isObstacle() { return obstacle;}
+	public boolean isDobstacle() { return Dobstacle;}
+
+	public boolean isNDobstacle() { return NDobstacle;}
 
 	public boolean canBuild() {
 		return !canyon;
@@ -50,7 +54,7 @@ public class Tile {
 	}
 
 	public boolean isCanyon() {
-		return !obstacle;
+		return !Dobstacle;
 	}
 
 	public void setCanyon(boolean canyon) {

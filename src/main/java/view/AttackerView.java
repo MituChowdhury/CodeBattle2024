@@ -83,7 +83,7 @@ public class AttackerView {
 	}
 
 	private int finalY = -1;
-	public void move() {
+	public void move(SubTile nextSubTile) {
 //		if (attacker.isSlow()) {
 //			if (glueSprite == null) {
 //				glueSprite = graphics.createSprite().setImage("glue" + (1 + attacker.getId() % 3) + ".png").setScale(0.3).setY(50);
@@ -106,41 +106,40 @@ public class AttackerView {
 		graphics.commitEntityState(0, attackerBody);
 		graphics.commitEntityState(0, attackerHelmet);
 
-		ArrayList<SubTile> neighbours = attacker.getCurrentSubTile().getNeighbors();
+//		ArrayList<SubTile> neighbours = attacker.getCurrentSubTile().getNeighbors();
+//
+//		double destination_x = attacker.getEnemy().getIndex() == 0 ? 0 : ((Constants.MAP_WIDTH-1)+(((double)SubTile.SUBTILE_SIZE-1)/SubTile.SUBTILE_SIZE));
+//		double destination_y = attacker.getEnemy().getIndex() == 0 ? ((Constants.MAP_HEIGHT-1)+(((double)SubTile.SUBTILE_SIZE-1)/SubTile.SUBTILE_SIZE)) : 0;
+//		double minDist = Double.MAX_VALUE;
+//		SubTile nextSubTile = attacker.getCurrentSubTile();
+//
+//		for (SubTile st : neighbours) {
+//			if(st.getTile().isDobstacle()) continue;
+//			double dx = st.getX() - destination_x;
+//			double dy = st.getY() - destination_y;
+//			double dist = Math.sqrt(dx * dx + dy * dy);
+//			if(dist < minDist) {
+//				minDist = dist;
+//			}
+//		}
+//
+//		ArrayList<SubTile>all = new ArrayList<>();
+//
+//		for (SubTile st : neighbours) {
+//
+//			if(st.getTile().isDobstacle()) {
+//				continue;
+//			}
+//			double dx = st.getX() - destination_x;
+//			double dy = st.getY() - destination_y;
+//			double dist = Math.sqrt(dx * dx + dy * dy);
+//			if(dist == minDist) {
+//				all.add(st);
+//			}
+//		}
 
-		double destination_x = attacker.getEnemy().getIndex() == 0 ? 0 : ((Constants.MAP_WIDTH-1)+(((double)SubTile.SUBTILE_SIZE-1)/SubTile.SUBTILE_SIZE));
-		double destination_y = attacker.getEnemy().getIndex() == 0 ? ((Constants.MAP_HEIGHT-1)+(((double)SubTile.SUBTILE_SIZE-1)/SubTile.SUBTILE_SIZE)) : 0;
-		double minDist = Double.MAX_VALUE;
-		SubTile nextSubTile = attacker.getCurrentSubTile();
-
-		for (SubTile st : neighbours) {
-			if(st.getTile().isObstacle()) continue;
-			double dx = st.getX() - destination_x;
-			double dy = st.getY() - destination_y;
-			double dist = Math.sqrt(dx * dx + dy * dy);
-			if(dist < minDist) {
-				minDist = dist;
-			}
-		}
-
-		ArrayList<SubTile>all = new ArrayList<>();
-
-		for (SubTile st : neighbours) {
-
-			if(st.getTile().isObstacle()) {
-				continue;
-			}
-			double dx = st.getX() - destination_x;
-			double dy = st.getY() - destination_y;
-			double dist = Math.sqrt(dx * dx + dy * dy);
-			if(dist == minDist) {
-				all.add(st);
-			}
-		}
-
-		if(!all.isEmpty()) nextSubTile = all.get(random.nextInt(all.size()));
-//		Tile t = nextSubTile.getTile();
-//		boolean b = t.isObstacle();
+		//if(!all.isEmpty()) nextSubTile = all.get(random.nextInt(all.size()));
+//
 		group.setX((int) (BoardView.CELL_SIZE * nextSubTile.getX()));
 		group.setY((int) (BoardView.CELL_SIZE * nextSubTile.getY()));
 		attacker.setCurrentSubtile(nextSubTile);
