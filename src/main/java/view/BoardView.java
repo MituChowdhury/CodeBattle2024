@@ -73,10 +73,15 @@ public class BoardView {
 						innerGroup.add(headquarter);
 					}
 				}
-				if (board.getGrid()[x][y].isObstacle()) {  // if there is obstacle
-					Sprite obstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y);
-					tooltips.setTooltipText(obstacle, "x: " + x + "\ny: " + y);
-					innerGroup.add(obstacle);
+				if (board.getGrid()[x][y].hasNonDestructibleObject()) {  // if there is obstacle
+					Sprite NDobstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y); // for not destructable tiles
+					tooltips.setTooltipText(NDobstacle, "x: " + x + "\ny: " + y);
+					innerGroup.add(NDobstacle);
+				}
+				else if (board.getGrid()[x][y].hasDestructibleObject()) {  // if there is obstacle
+					Sprite Dobstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y).setAlpha(0.7);
+					tooltips.setTooltipText(Dobstacle, "x: " + x + "\ny: " + y);
+					innerGroup.add(Dobstacle);
 				}
 			}
 		}

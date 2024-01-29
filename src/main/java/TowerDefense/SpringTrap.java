@@ -1,54 +1,117 @@
 package TowerDefense;
 
+import com.codingame.game.Player;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.entities.Group;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 import view.GunTowerView;
 import view.TowerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpringTrap extends Tower {
 	Board board;
-	public SpringTrap(Tile tile, Board board) {
+	int dir;
+
+	ArrayList<Attacker> toRelocate = new ArrayList<Attacker>();
+
+	// dir -> UP-1 RIGHT-2 DOWN-3 LEFT-4
+	public SpringTrap(Tile tile, int dir, Board board) {
 		super("SPRINGTRAP", tile);
-		properties[TowerProperty.DAMAGE.ordinal()] = Constants.GUNTOWER_DAMAGE;
+		properties[TowerProperty.DAMAGE.ordinal()] = Constants.SPRINGTRAP_DAMAGE;
 		properties[TowerProperty.RANGE.ordinal()] = Constants.SPRINGTRAP_RANGE;
 		properties[TowerProperty.RELOAD.ordinal()] = Constants.SPRINGTRAP_RELOAD;
 		cost = Constants.GUNTOWER_COST;
+		this.dir = dir;
 		this.board = board;
+	}
+
+	public int getSpringDistance() {
+		int rangeIndex = TowerProperty.DAMAGE.ordinal();
+		double range = properties[rangeIndex][this.upgradeStates[rangeIndex]];
+		return (int) range;
+	}
+
+
+	private SubTile getRelocateSubTile( Attacker target ) {
+		int newSubX = target.getCurrentSubTile().subX;
+		int newSubY = target.getCurrentSubTile().subY;
+		int newTileX = target.getCurrentTile().getX();
+		int newTileY = target.getCurrentTile().getY();
+
+		int targetDir = target.getDirection();
+		Tile tttt = target.getCurrentTile();
+
+		int distance = this.getSpringDistance();
+
+		if( this.dir == 3 || this.dir == 1 ) {
+			newTileY += (dir == 1 ? -1 : 1) * distance;
+			newSubX += ( targetDir == 2 ? -1 : ( targetDir == 4 ? 1 : 0 )) * target.getSpeed()/2;
+		} else if( this.dir == 4 || this.dir == 2 ) {
+			newTileX += (dir == 4 ? -1 : 1) * distance;
+			newSubY += ( targetDir == 3 ? -1 : ( targetDir == 1 ? 1 : 0 )) * target.getSpeed()/2;
+		}
+
+
+		if( newSubX > Constants.SUBTILE_SIZE ) {
+			newTileX += newSubX / Constants.SUBTILE_SIZE;
+			newSubX = newSubX % Constants.SUBTILE_SIZE;
+		} else if( newSubX < 0 ) {
+			newTileX -= newSubX / Constants.SUBTILE_SIZE + 1;
+			newSubX = Constants.SUBTILE_SIZE - newSubX / Constants.SUBTILE_SIZE -1;
+		}
+
+		if( newSubY > Constants.SUBTILE_SIZE ) {
+			newTileY += newSubY / Constants.SUBTILE_SIZE;
+			newSubY = newSubY % Constants.SUBTILE_SIZE;
+		} else if( newSubY < 0 ) {
+			newTileY -= newSubY / Constants.SUBTILE_SIZE + 1;
+			newSubY = Constants.SUBTILE_SIZE - newSubY / Constants.SUBTILE_SIZE -1;
+		}
+
+
+		Tile t = board.getGrid()[newTileX][newTileY];
+
+		return t.getSubTile(newSubX, newSubY);
+	}
+
+	@Override
+	public boolean inRange(Attacker a) {
+
+		for( int i=0; i< toRelocate.size(); i++ ) {
+			if( toRelocate.get(i) == a ) {
+				toRelocate.remove(i);
+				return true;
+			};
+		}
+
+		if( a.getCurrentTile() == this.tile ) {
+
+			// This piece of code defies any logic but it works
+			if( a.getOwner().getIndex() == 0 ) return true;
+			else toRelocate.add(a);
+		}
+
+		return false;
 	}
 
 	@Override
 	boolean doAttack(List<Attacker> attackers) {
 		Attacker target = null;
 		for (Attacker a : attackers) {
+			Player p1 = getOwner();
+			Tile t = a.getCurrentTile();
+			Player p2 = a.getOwner();
 			if (getOwner() == a.getOwner() || !inRange(a))
 				continue;
 			if (target == null)  // lagte pare
 				target = a;
-			if( a == lastAttacked ) {
-				target = a;
-				break;
-			}
 		}
 		if (target == null)
 			return false;
 
-		this.lastAttacked = target;
-		System.out.println(board.getGrid()[this.tile.getX()][this.tile.getY()]);
-		double x = this.tile.getX();
-		double y = this.tile.getY();
-		target.disappear();
-		target.kill();
-
-		Tile t = board.getGrid()[target.getCurrentTile().getX()][target.getCurrentTile().getY()+2];
-		target.respawnAt(t);
-//		SubTile stt = t.getSubTile((int)target.getCurrentSubTile().subX, (int)target.getCurrentSubTile().subY);
-//		target.relocate( stt );
-		Tile tt = target.getCurrentTile();
-		SubTile st = target.getCurrentSubTile();
-//		getView().attack(target);
+		target.relocate( this.getRelocateSubTile(target) );
 		return true;
 	}
 

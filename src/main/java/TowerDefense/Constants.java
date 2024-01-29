@@ -1,6 +1,7 @@
 package TowerDefense;
 
 public class Constants {
+	public static final int SUBTILE_SIZE = 10;
 	public static final int MAP_WIDTH = 21; // keep the dimensions odd for best map generation results
 	public static final int MAP_HEIGHT = 15;
 	public static final double ENFORCE_BRANCHING_PROBABILITY = 0.6;
@@ -16,6 +17,7 @@ public class Constants {
 	public static final double[] GUNTOWER_RELOAD = { 0, 4, 3, 2 };
 
 
+	public static final double[] SPRINGTRAP_DAMAGE = { 2, 3, 4, 5 };
 	public static final double[] SPRINGTRAP_RANGE = { 1, 0, 0, 0 };
 	public static final double[] SPRINGTRAP_RELOAD = { 0, 4, 3, 2 };
 	public static final int FIRETOWER_COST = 100;
@@ -43,7 +45,7 @@ public class Constants {
 //	public static final int[] WAVE_BOUNTY = { 25, 30, 30, 20, 22, 25, 25, 30, 30 };
 
 	public static final int HP = 300;
-	public static final int SPEED = 5;
+	public static final int SPEED = 10;
 	public static final int BOUNTY = 25;
 	public static final int NUM_UPGRADE_SPRITES = 3;
     public static int CHARACTER_COUNT =1;

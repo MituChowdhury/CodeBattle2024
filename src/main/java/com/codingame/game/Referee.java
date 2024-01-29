@@ -17,7 +17,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import view.BoardView;
 
 public class Referee extends AbstractReferee {
-	public static final int FRAME_DURATION = 500;
+	public static final int FRAME_DURATION = 500; // THIS THING IS NEVER USED SO CHANGING IT HAS NO EFFECT
 	public static Random random;
 
 	@Inject
@@ -56,9 +56,10 @@ public class Referee extends AbstractReferee {
 
 		if( turn == 1 ) {
 			try {
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 15, 7, "SPRINGTRAP");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "SPRINGTRAP_U");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 14, 7, "SPRINGTRAP_D");
 			} catch ( InvalidActionException e ) {
-				System.out.println("#################################################################################################################################");
+				System.out.println("asdasd #################################################################################################################################");
 				System.out.println(e.getMessage());
 				throw new NullPointerException();
 			}
@@ -172,12 +173,13 @@ public class Referee extends AbstractReferee {
 
 
 		board.moveAttackers(turn);
+		board.updateView();
+
 		board.fireTowers();
 		board.spawnAttackers(turn);
 
 
 
-		board.updateView();
 		for (Player player : gameManager.getPlayers()) {
 			player.setScore(player.getScorePoints());
 			if (player.isDead() && player.isActive())

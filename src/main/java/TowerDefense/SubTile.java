@@ -3,7 +3,7 @@ package TowerDefense;
 import java.util.ArrayList;
 
 public class SubTile {
-	public final static int SUBTILE_SIZE = 10;
+	public final static int SUBTILE_SIZE = Constants.SUBTILE_SIZE;
 	private Tile tile;
 	//TODO: made them public for the sake of debugging
 	public int subX;
@@ -20,12 +20,20 @@ public class SubTile {
 		return tile;
 	}
 
+	public int getSubX() {
+		return subX;
+	}
+
+	public int getSubY() {
+		return subY;
+	}
+
 	public double getX() {
-		return tile.getX() -.5+ (double) subX / SUBTILE_SIZE;
+		return (tile.getX() + (double) subX / SUBTILE_SIZE);
 	}
 
 	public double getY() {
-		return tile.getY() -.8+ (double) subY / SUBTILE_SIZE;
+		return (tile.getY() + (double) subY / SUBTILE_SIZE);
 	}
 
 //	public SubTile mirror(Tile[][] grid, int width, int height) {

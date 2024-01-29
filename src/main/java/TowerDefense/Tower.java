@@ -14,7 +14,7 @@ public abstract class Tower {
 	private int id;
 	private String type;
 	protected Tile tile;
-	private int[] upgradeStates;
+	protected int[] upgradeStates;
 	protected double[][] properties;
 	protected int cooldown;
 	protected int cost;
@@ -97,6 +97,7 @@ public abstract class Tower {
 			cooldown = (int) getProperty(TowerProperty.RELOAD) - 1;
 		}
 	}
+
 
 	public boolean inRange(Attacker a) {
 //		for (SubTile sub : a.getSteps()) {

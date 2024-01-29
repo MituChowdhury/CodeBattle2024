@@ -5,10 +5,7 @@ import java.util.Random;
 
 import TowerDefense.Constants;
 import TowerDefense.Tile;
-import com.codingame.gameengine.module.entities.GraphicEntityModule;
-import com.codingame.gameengine.module.entities.Group;
-import com.codingame.gameengine.module.entities.Sprite;
-import com.codingame.gameengine.module.entities.SpriteAnimation;
+import com.codingame.gameengine.module.entities.*;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 
 import TowerDefense.Attacker;
@@ -24,6 +21,9 @@ public class AttackerView {
 	private Group group;
 	private Sprite glueSprite = null;
 	private SpriteAnimation attackerBody, attackerHelmet;
+	private Rectangle healthBarRed; // Health bar...
+	private Rectangle healthBarGreen; // Health bar...
+	public static final int HEALTH_BAR_LEN = 100;  // Length of the health bar...
 	private GraphicEntityModule graphics;
 	private TooltipModule tooltips;
 	private String[] attackerBodySprites;
@@ -62,6 +62,9 @@ public class AttackerView {
 			break;
 		}
 		if (group == null) {
+			healthBarRed = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-100).setY(-10).setFillColor(0xff0000);
+			healthBarGreen = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-100).setY(-10).setFillColor(0x00ff00);
+
 			attackerBody = graphics.createSpriteAnimation().
 					setImages(attackerBodySprites).
 					setDuration(WALK_DURATION).setLoop(true).setPlaying(true);
@@ -69,7 +72,7 @@ public class AttackerView {
 					setImages(attackerHelmetSprites).
 					setDuration(WALK_DURATION).setLoop(true).setPlaying(true).
 					setTint(attacker.getOwner().getColor());
-			group = graphics.createGroup(attackerBody, attackerHelmet)
+			group = graphics.createGroup(healthBarRed, healthBarGreen, attackerBody, attackerHelmet)
 					.setX((int) (BoardView.CELL_SIZE * attacker.getLocation().getX()))
 					.setY((int) (BoardView.CELL_SIZE * attacker.getLocation().getY()));
 			attackerBody.setX(-BoardView.CELL_SIZE);
@@ -83,7 +86,7 @@ public class AttackerView {
 	}
 
 	private int finalY = -1;
-	public void move() {
+	public void move(SubTile nextSubTile) {
 //		if (attacker.isSlow()) {
 //			if (glueSprite == null) {
 //				glueSprite = graphics.createSprite().setImage("glue" + (1 + attacker.getId() % 3) + ".png").setScale(0.3).setY(50);
@@ -106,51 +109,47 @@ public class AttackerView {
 		graphics.commitEntityState(0, attackerBody);
 		graphics.commitEntityState(0, attackerHelmet);
 
-		ArrayList<SubTile> neighbours = attacker.getCurrentSubTile().getNeighbors();
+//		ArrayList<SubTile> neighbours = attacker.getCurrentSubTile().getNeighbors();
+//
+//		double destination_x = attacker.getEnemy().getIndex() == 0 ? 0 : ((Constants.MAP_WIDTH-1)+(((double)SubTile.SUBTILE_SIZE-1)/SubTile.SUBTILE_SIZE));
+//		double destination_y = attacker.getEnemy().getIndex() == 0 ? ((Constants.MAP_HEIGHT-1)+(((double)SubTile.SUBTILE_SIZE-1)/SubTile.SUBTILE_SIZE)) : 0;
+//		double minDist = Double.MAX_VALUE;
+//		SubTile nextSubTile = attacker.getCurrentSubTile();
+//
+//		for (SubTile st : neighbours) {
+//			if(st.getTile().isDobstacle()) continue;
+//			double dx = st.getX() - destination_x;
+//			double dy = st.getY() - destination_y;
+//			double dist = Math.sqrt(dx * dx + dy * dy);
+//			if(dist < minDist) {
+//				minDist = dist;
+//			}
+//		}
+//
+//		ArrayList<SubTile>all = new ArrayList<>();
+//
+//		for (SubTile st : neighbours) {
+//
+//			if(st.getTile().isDobstacle()) {
+//				continue;
+//			}
+//			double dx = st.getX() - destination_x;
+//			double dy = st.getY() - destination_y;
+//			double dist = Math.sqrt(dx * dx + dy * dy);
+//			if(dist == minDist) {
+//				all.add(st);
+//			}
+//		}
 
-		double destination_x = attacker.getEnemy().getIndex() == 0 ? 0 : ((Constants.MAP_WIDTH-1)+(((double)SubTile.SUBTILE_SIZE-1)/SubTile.SUBTILE_SIZE));
-		double destination_y = attacker.getEnemy().getIndex() == 0 ? ((Constants.MAP_HEIGHT-1)+(((double)SubTile.SUBTILE_SIZE-1)/SubTile.SUBTILE_SIZE)) : 0;
-		double minDist = Double.MAX_VALUE;
-		SubTile nextSubTile = attacker.getCurrentSubTile();
-
-		for (SubTile st : neighbours) {
-			if(st.getTile().isObstacle()) continue;
-			double dx = st.getX() - destination_x;
-			double dy = st.getY() - destination_y;
-			double dist = Math.sqrt(dx * dx + dy * dy);
-			if(dist < minDist) {
-				minDist = dist;
-			}
-		}
-
-		ArrayList<SubTile>all = new ArrayList<>();
-
-		for (SubTile st : neighbours) {
-
-			if(st.getTile().isObstacle()) {
-				continue;
-			}
-			double dx = st.getX() - destination_x;
-			double dy = st.getY() - destination_y;
-			double dist = Math.sqrt(dx * dx + dy * dy);
-			if(dist == minDist) {
-				all.add(st);
-			}
-		}
-
-		if(!all.isEmpty()) nextSubTile = all.get(random.nextInt(all.size()));
-//		Tile t = nextSubTile.getTile();
-//		boolean b = t.isObstacle();
-		if(nextSubTile.getX() >= 13 && nextSubTile.getX() <= 16 && attacker.getOwner().getIndex() == 1) {
-			int a = 0;
-			Tile t = nextSubTile.getTile();
-			double x = nextSubTile.getX();
-			double y = nextSubTile.getY();
-		}
 		group.setX((int) (BoardView.CELL_SIZE * nextSubTile.getX()));
 		group.setY((int) (BoardView.CELL_SIZE * nextSubTile.getY()));
 		attacker.setCurrentSubtile(nextSubTile);
 		//tooltips.setTooltipText(sprite, getTooltipString());
+	}
+
+	public void dealDamage(int hp, int maxHp) {
+		System.err.println("Bar length: " + (int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
+		this.healthBarGreen.setWidth((int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
 	}
 
 	public String getTooltipString() {

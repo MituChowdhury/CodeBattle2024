@@ -1,7 +1,6 @@
 package TowerDefense;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.codingame.game.Player;
 
@@ -23,6 +22,7 @@ public class Attacker {
 	private AttackerView view;
 	private static int idCounter;
 	private ArrayList<SubTile> steps;
+	public Tile lastTile;
 
 	Tile spawnTile;
 	SubTile spawnSubtile;
@@ -50,7 +50,7 @@ public class Attacker {
 		}
 		else {
 			this.spawnTile = grid[0][Constants.MAP_HEIGHT-1-spawn_position_y];
-			this.spawnSubtile = spawnTile.getSubTile(0, SubTile.SUBTILE_SIZE-1);
+			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
 			//this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
 		}
 
@@ -66,17 +66,13 @@ public class Attacker {
 		this.reachOpponentBase = false;
 	}
 
-	public void disappear() {
-		view.disappear();
+	public void relocate(SubTile newSubTile) {
+		this.currentTile = newSubTile.getTile();
+		this.currentSubtile = newSubTile;
 	}
 	public void spawn() {
 		this.currentTile = this.spawnTile;
 		this.currentSubtile = this.spawnSubtile;
-	}
-
-	public void respawnAt(Tile newTile) {
-		this.currentTile = newTile;
-		this.currentSubtile = newTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
 	}
 
 	public void respawn() {
@@ -146,8 +142,16 @@ public class Attacker {
 		hitPoints = Math.min(hitPoints + health, maxHealth);
 	}
 
+	//	public void dealDamage(int damage) {
+//		this.hitPoints = Math.max(0, hitPoints - damage);
+//		if (isDead())
+//			view.kill();
+//	}
 	public void dealDamage(int damage) {
 		this.hitPoints = Math.max(0, hitPoints - damage);
+		//...
+		this.view.dealDamage(hitPoints, maxHealth);
+		//...
 		if (isDead())
 			view.kill();
 	}
@@ -177,15 +181,36 @@ public class Attacker {
 		this.currentTile = currentSubtile.getTile();
 	}
 
+	public int getDirection() {
+		int dir = 0;
+
+		if( steps.size() == 0 ) return getOwner().getIndex() == 0 ? 2 : 4;
+
+		if( steps.get(0).getSubX() == steps.get(1).getSubX() ) {
+			if( steps.get(0).getSubY() - steps.get(1).getSubY() > 0 ) dir = 3;
+			else dir = 1;
+		}else if( steps.get(0).getSubX() - steps.get(1).getSubX() > 0 ) dir = 2;
+		else dir = 4;
+
+		return dir;
+	}
+
 	public void move() {
-		int speed = getSpeed();
+//		int speed = getSpeed();
 		steps = new ArrayList<>();
 //		while (steps.size() < speed && remainingPath.size() > 1) {
 //			steps.add(remainingPath.get(remainingPath.size() - 1));
 //			remainingPath.remove(remainingPath.size() - 1);
 //		}
-		for (int i=0;i<Constants.SPEED;i++) {
-			view.move();
+		SubTile src, dest;
+		if(owner.getIndex() == 0) dest = grid[Constants.MAP_WIDTH-1][Constants.MAP_HEIGHT/2].getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+		else dest = grid[0][Constants.MAP_HEIGHT/2].getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+
+		Astar astar = new Astar();
+		ArrayList<SubTile> path = astar.findpath(currentSubtile, dest);
+		for (int i=0;i<Math.min(Constants.SPEED, path.size());i++) {
+			if(path.get(i).getTile().hasNonDestructibleObject() || path.get(i).getTile().hasDestructibleObject()) break;
+			view.move(path.get(i));
 		}
 		if (slowCountdown > 0)
 			slowCountdown--;
