@@ -40,6 +40,8 @@ public class BoardView {
 //		graphics.createSpriteAnimation().setImages(attackerHelmetSprites).setLoop(true).setPlaying(true).setX(100).setY(440).setScale(2);
 
 
+		double g = graphics.getWorld().getHeight();
+
 		boardGroup = graphics.createGroup();
 		// TODO: switch gridgroup back to BufferedGroup
 		boardGroup.setScale((double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE));

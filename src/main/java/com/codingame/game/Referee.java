@@ -53,16 +53,19 @@ public class Referee extends AbstractReferee {
 
 	@Override
 	public void gameTurn(int turn) {
-
-		if( turn == 1 ) {
-			try {
+		try {
+			if( turn == 1 ) {
 				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "SPRINGTRAP_U");
 				board.cacheBuild(gameManager.getActivePlayers().get(0), 14, 7, "SPRINGTRAP_D");
-			} catch ( InvalidActionException e ) {
-				System.out.println("asdasd #################################################################################################################################");
-				System.out.println(e.getMessage());
-				throw new NullPointerException();
 			}
+
+			if( turn == 20 ) {
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 8, "FIREBOMB");
+			}
+		} catch ( InvalidActionException e ) {
+			System.out.println("asdasd #################################################################################################################################");
+			System.out.println(e.getMessage());
+			throw new NullPointerException();
 		}
 
 		for (Player player : gameManager.getActivePlayers()) {
