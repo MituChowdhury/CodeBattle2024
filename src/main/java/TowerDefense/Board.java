@@ -144,8 +144,14 @@ public class Board {
 	}
 
 	public void moveAttackers(int turn) {
-		for (Attacker a : attackers)
-			a.move();
+
+		for (int i = 0; i <2 ; i++) {
+
+			PathFinder.init(i^1);
+			for (Attacker a : attackers)
+				if(a.getOwner().getIndex()==i)
+					a.move();
+		}
 	}
 
 //	private boolean canCreateAttackers(int turn) {

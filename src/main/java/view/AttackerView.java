@@ -55,8 +55,16 @@ public class AttackerView {
 		attacker.setView(this);
 		for (Group g : spriteCache.get(attacker.getOwner().getIndex())) {
 			group = g;
-			Tile t = attacker.getLocation();
-			group.setAlpha(1).setX((int) (BoardView.CELL_SIZE * t.getX())).setY((int) (BoardView.CELL_SIZE * t.getY()));
+			SubTile t = attacker.getCurrentSubTile();
+			if(attacker.getOwner().getIndex()==0)
+				group.setAlpha(1)
+						.setX((int) (BoardView.CELL_SIZE * (t.getX()+Constants.PLAYER0_X_OFFSET)))
+						.setY((int) (BoardView.CELL_SIZE * (t.getY()+Constants.PLAYER0_Y_OFFSET)));
+			else
+				group.setAlpha(1)
+						.setX((int) (BoardView.CELL_SIZE * (t.getX()+Constants.PLAYER1_X_OFFSET)))
+						.setY((int) (BoardView.CELL_SIZE * (t.getY()+Constants.PLAYER1_Y_OFFSET)));
+
 			graphics.commitEntityState(0, group);
 			spriteCache.get(attacker.getOwner().getIndex()).remove(g);
 			break;
@@ -73,8 +81,8 @@ public class AttackerView {
 					setDuration(WALK_DURATION).setLoop(true).setPlaying(true).
 					setTint(attacker.getOwner().getColor());
 			group = graphics.createGroup(healthBarRed, healthBarGreen, attackerBody, attackerHelmet)
-					.setX((int) (BoardView.CELL_SIZE * attacker.getLocation().getX()))
-					.setY((int) (BoardView.CELL_SIZE * attacker.getLocation().getY()));
+					.setX((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getX()))
+					.setY((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getY()));
 			attackerBody.setX(-BoardView.CELL_SIZE);
 			attackerHelmet.setX(-BoardView.CELL_SIZE);
 			if (attacker.getOwner().getIndex() == 1) {
@@ -143,8 +151,15 @@ public class AttackerView {
 
 		//if(!all.isEmpty()) nextSubTile = all.get(random.nextInt(all.size()));
 //
-		group.setX((int) (BoardView.CELL_SIZE * nextSubTile.getX()));
-		group.setY((int) (BoardView.CELL_SIZE * nextSubTile.getY()));
+		if(attacker.getOwner().getIndex()==0) {
+			group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER0_X_OFFSET)));
+			group.setY((int) (BoardView.CELL_SIZE * (nextSubTile.getY() +Constants.PLAYER0_Y_OFFSET)));
+		}
+		else{
+
+			group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER1_X_OFFSET)));
+			group.setY((int) (BoardView.CELL_SIZE * (nextSubTile.getY() +Constants.PLAYER1_Y_OFFSET)));
+		}
 		attacker.setCurrentSubtile(nextSubTile);
 		//tooltips.setTooltipText(sprite, getTooltipString());
 	}

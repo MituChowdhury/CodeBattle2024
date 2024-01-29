@@ -6,8 +6,11 @@ import com.codingame.game.Player;
 
 import view.AttackerView;
 
+
+
 public class Attacker {
 	//private List<SubTile> remainingPath;
+
 	private Tile[][] grid;
 	private Tile currentTile;
 	private SubTile currentSubtile;
@@ -44,12 +47,12 @@ public class Attacker {
 
 		if(owner.getIndex() == 1) {
 			this.spawnTile = grid[Constants.MAP_WIDTH-1][spawn_position_y];
-			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+			this.spawnSubtile = spawnTile.getSubTile(0,SubTile.SUBTILE_SIZE-1);
 			//this.currentSubtile = currentTile.getSubTiles().get(((SubTile.SUBTILE_SIZE-1)*(SubTile.SUBTILE_SIZE-1))+(SubTile.SUBTILE_SIZE-1));
 		}
 		else {
 			this.spawnTile = grid[0][Constants.MAP_HEIGHT-1-spawn_position_y];
-			this.spawnSubtile = spawnTile.getSubTile(0, SubTile.SUBTILE_SIZE-1);
+			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
 			//this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
 		}
 
@@ -174,22 +177,16 @@ public class Attacker {
 	}
 
 	public void move() {
-//		int speed = getSpeed();
-		steps = new ArrayList<>();
-//		while (steps.size() < speed && remainingPath.size() > 1) {
-//			steps.add(remainingPath.get(remainingPath.size() - 1));
-//			remainingPath.remove(remainingPath.size() - 1);
-//		}
-		SubTile src, dest;
-		if(owner.getIndex() == 0) dest = grid[Constants.MAP_WIDTH-1][0].getSubTile(SubTile.SUBTILE_SIZE-1, 0);
-		else dest = grid[0][Constants.MAP_HEIGHT-1].getSubTile(SubTile.SUBTILE_SIZE-1, 0);
 
-		Astar astar = new Astar();
-		ArrayList<SubTile> path = astar.findpath(currentSubtile, dest);
-		for (int i=0;i<Math.min(Constants.SPEED, path.size());i++) {
-			if(path.get(i).getTile().hasNonDestructibleObject() || path.get(i).getTile().hasDestructibleObject()) break;
+
+		boolean[][] optimalTiles = PathFinder.getOptimalPathTiles(currentTile,grid);
+		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);
+
+		int ln = Math.min(path.size(),getSpeed());
+		for (int i = 0; i < ln; i++) {
 			view.move(path.get(i));
 		}
+
 		if (slowCountdown > 0)
 			slowCountdown--;
 	}
