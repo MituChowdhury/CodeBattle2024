@@ -54,13 +54,13 @@ public class Referee extends AbstractReferee {
 	@Override
 	public void gameTurn(int turn) {
 		try {
-			if( turn == 1 ) {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "SPRINGTRAP_U");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 14, 7, "SPRINGTRAP_D");
+			if( turn == 4 ) {
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "GUNTOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 14, 7, "GUNTOWER");
 			}
 
-			if( turn == 20 ) {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 8, "FIREBOMB");
+			if( turn == 12 ) {
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 8, "FIREBOMB");
 			}
 		} catch ( InvalidActionException e ) {
 			System.out.println("asdasd #################################################################################################################################");
@@ -188,9 +188,9 @@ public class Referee extends AbstractReferee {
 			if (player.isDead() && player.isActive())
 				player.deactivate(player.getNicknameToken() + ": no lives left");
 		}
-		if( turn == 20 ) {
-			board.test();
-		}
+//		if( turn == 20 ) {
+//			board.test();
+//		}
 		if (turn == Constants.TURN_COUNT) {
 			gameManager.getActivePlayers().get(0).deactivate();
 			gameManager.getActivePlayers().get(0).deactivate();

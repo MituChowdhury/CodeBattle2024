@@ -32,8 +32,9 @@ public class FireBomb extends Tower {
 		for (Attacker a : attackers) {
 			if (getOwner() == a.getOwner() || !inRange(a) || a.isSlow())
 				continue;
+			int d = (int) getProperty(TowerProperty.DAMAGE);
 			a.dealDamage((int) getProperty(TowerProperty.DAMAGE));
-			getView().attack(a);
+//			getView().attack(a);
 			attacked = true;
 		}
 		return attacked;

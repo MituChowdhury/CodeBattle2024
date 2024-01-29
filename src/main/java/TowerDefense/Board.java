@@ -276,10 +276,10 @@ public class Board {
 			}
 		}
 
-		Collections.sort(to_del);
-		for( int i=0; i<to_del.size(); i++ ) {
-			towers.remove(to_del.get(i)-i);
-		}
+//		Collections.sort(to_del);
+//		for( int i=0; i<to_del.size(); i++ ) {
+//			towers.remove(to_del.get(i)-i);
+//		}
 
 
 		for (int i = attackers.size() - 1; i >= 0; i--) {
