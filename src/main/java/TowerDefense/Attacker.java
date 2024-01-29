@@ -25,6 +25,7 @@ public class Attacker {
 	private AttackerView view;
 	private static int idCounter;
 	private ArrayList<SubTile> steps;
+	public Tile lastTile;
 
 	Tile spawnTile;
 	SubTile spawnSubtile;
@@ -68,6 +69,10 @@ public class Attacker {
 		this.reachOpponentBase = false;
 	}
 
+	public void relocate(SubTile newSubTile) {
+		this.currentTile = newSubTile.getTile();
+		this.currentSubtile = newSubTile;
+	}
 	public void spawn() {
 		this.currentTile = this.spawnTile;
 		this.currentSubtile = this.spawnSubtile;
@@ -109,6 +114,10 @@ public class Attacker {
 
 	public Tile getLocation() {
 		return currentTile;
+	}
+
+	public SubTile getLocationSubTile() {
+		return currentSubtile;
 	}
 
 	public Tile getCurrentTile() {
@@ -173,7 +182,20 @@ public class Attacker {
 	public void setCurrentSubtile(SubTile t){
 		this.currentSubtile = t;
 		this.currentTile = currentSubtile.getTile();
+	}
 
+	public int getDirection() {
+		int dir = 0;
+
+		if( steps.size() == 0 ) return getOwner().getIndex() == 0 ? 2 : 4;
+
+		if( steps.get(0).getSubX() == steps.get(1).getSubX() ) {
+			if( steps.get(0).getSubY() - steps.get(1).getSubY() > 0 ) dir = 3;
+			else dir = 1;
+		}else if( steps.get(0).getSubX() - steps.get(1).getSubX() > 0 ) dir = 2;
+		else dir = 4;
+
+		return dir;
 	}
 
 	public void move() {

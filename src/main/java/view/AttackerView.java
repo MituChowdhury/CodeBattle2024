@@ -193,6 +193,10 @@ public class AttackerView {
 		}
 	}
 
+	public void disappear() {
+		group.setVisible(false);
+	}
+
 	private void changeAnimation(String[] body, String[] helmet) {
 		attackerBody.setImages(body);
 		attackerBody.setDuration(DEATH_DURATION);
