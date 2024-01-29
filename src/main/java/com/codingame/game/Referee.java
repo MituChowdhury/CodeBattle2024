@@ -14,6 +14,10 @@ import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 import com.google.inject.Inject;
 
+import command.AttackCommand;
+import command.BuildCommand;
+import command.GoCommand;
+import exception.BadCommandException;
 import view.BoardView;
 
 public class Referee extends AbstractReferee {
@@ -32,7 +36,8 @@ public class Referee extends AbstractReferee {
 	private Board board;
 	private ArrayList<Integer> playerOneXs;
 	private ArrayList<Integer> playerTwoXs;
-	private int prturn = 0;
+	public static final ArrayList<String> VALID_OBJECT_NAMES = new ArrayList<>();
+	public static final ArrayList<String> VALID_DIRECTIONS = new ArrayList<>();
 
 	@Override
 	public void init() {
@@ -50,6 +55,21 @@ public class Referee extends AbstractReferee {
 
 		playerOneXs = new ArrayList<>();
 		playerTwoXs = new ArrayList<>();
+
+		VALID_OBJECT_NAMES.add("GUN_TOWER");
+		VALID_OBJECT_NAMES.add("HEAL_TOWER");
+		VALID_OBJECT_NAMES.add("STUN_TOWER");
+		VALID_OBJECT_NAMES.add("SPRING_NORTH");
+		VALID_OBJECT_NAMES.add("SPRING_SOUTH");
+		VALID_OBJECT_NAMES.add("SPRING_EAST");
+		VALID_OBJECT_NAMES.add("SPRING_WEST");
+		VALID_OBJECT_NAMES.add("BOMB");
+		VALID_OBJECT_NAMES.add("WALL");
+
+		VALID_DIRECTIONS.add("NORTH");
+		VALID_DIRECTIONS.add("SOUTH");
+		VALID_DIRECTIONS.add("EAST");
+		VALID_DIRECTIONS.add("WEST");
 	}
 
 	@Override
@@ -104,11 +124,118 @@ public class Referee extends AbstractReferee {
 //					actions.forEach(System.out::println);
 
 					// Parse the output lines from the players and do actions...
-					actions.forEach(action -> parseCommand(action.split(" ")));
+					actions.forEach(action -> {
+						try {
+							parseCommand(player, action.split(" "));
+						}
+						catch (BadCommandException ex) {
+							System.err.println("\t[Exception] " + ex.getMessage());
+						}
+					});
 				}
 				// ..............................
 
 				System.out.println("*************** No timeout ****************");
+
+			} catch (TimeoutException e) {
+				e.printStackTrace();
+				player.kill();
+				player.deactivate(String.format("$%d timeout!", player.getIndex()));
+				System.out.println("****** On timeout *******");
+				System.out.println(String.format("$%d timeout!", player.getIndex()));
+				System.out.println("" + player.getIndex() + " killed.");
+				System.out.println("****** On timeout *******");
+			}
+		}
+
+		while (true) {
+			try {
+				if (!board.executeBuilds())
+					break;
+			} catch (InvalidActionException ex) {
+				if (ex.isGameBreaking()) {
+					ex.getPlayer().kill();
+					ex.getPlayer().deactivate(ex.getPlayer().getNicknameToken() + ": " + ex.getMessage());
+				} else {
+					gameManager.addToGameSummary(ex.getPlayer().getNicknameToken() + ": " + ex.getMessage());
+				}
+			}
+		}
+
+		board.moveAttackers(turn);
+		board.fireTowers();
+		board.spawnAttackers(turn);
+
+
+		board.updateView();
+		for (Player player : gameManager.getPlayers()) {
+			player.setScore(player.getScorePoints());
+			if (player.isDead() && player.isActive())
+				player.deactivate(player.getNicknameToken() + ": no lives left");
+		}
+//		if( turn == 20 ) {
+//			board.test();
+//		}
+		if (turn == Constants.TURN_COUNT) {
+			gameManager.getActivePlayers().get(0).deactivate();
+			gameManager.getActivePlayers().get(0).deactivate();
+			gameManager.endGame();
+		}
+	}
+
+	public void parseCommand(Player commander, String[] commandArgs) throws BadCommandException {
+		if (commandArgs.length == 1 && commandArgs[0].equals("")) {
+			// Gotta throw an exception for bad input....
+			System.err.println("[X] Wrong: (Empty)");
+			throw new BadCommandException("No command has been sent by the player");
+		}
+
+		System.err.println("[-] " + String.join(" ", commandArgs));
+
+		if (commandArgs[0].equals("go")) {
+			// Implementation for "go" command...
+			GoCommand cmd = Util.getGoCommand(commander, this.board, commandArgs);
+			Attacker attacker = cmd.getAttacker();
+			System.out.println(cmd.toString());
+		}
+		else if (commandArgs[0].equals("build")) {
+			// Implementation for "build" command...
+			BuildCommand cmd = Util.getBuildCommand(commander, this.board, commandArgs);
+			Attacker attacker = cmd.getAttacker();
+			System.out.println(cmd.toString());
+		}
+		else if (commandArgs[0].equals("attack") && Util.checkAttackStructure(commandArgs)) {
+			// Implementation for "attack" command...
+			AttackCommand cmd = Util.getAttackCommand(commander, this.board, commandArgs);
+			Attacker attacker = cmd.getAttacker();
+			System.out.println(cmd.toString());
+		}
+		else {
+			// Exceptions for invalid commands...
+			throw new BadCommandException("Invalid command sent by the player.");
+		}
+	}
+
+	public void eliminatePlayer(Player player) {
+		player.kill();
+	}
+
+	@Override
+	public void onEnd() {
+		int[] scores = gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray();
+		String[] texts = new String[2];
+		for (int i = 0; i < scores.length; i++) {
+			texts[i] = gameManager.getPlayers().get(i).getLives() + " lives, " + gameManager.getPlayers().get(i).getMoney() + " gold";
+		}
+		endScreenModule.setScores(scores, texts);
+		//String endSprite = "tie";
+		//if (scores[0] > scores[1]) endSprite = "win0";
+		//if (scores[0] < scores[1]) endSprite = "win1";
+		//endScreenModule.setTitleRankingsSprite(endSprite + ".png");
+	}
+}
+
+// ----------------------------------------------------------------------------- //
 
 //
 //				for (String action : actions.split(";")) {
@@ -147,108 +274,3 @@ public class Referee extends AbstractReferee {
 //						player.deactivate(player.getNicknameToken() + " provided a malformed output");
 //					}
 //				}
-			} catch (TimeoutException e) {
-				e.printStackTrace();
-				player.kill();
-				player.deactivate(String.format("$%d timeout!", player.getIndex()));
-				System.out.println("****** On timeout *******");
-				System.out.println(String.format("$%d timeout!", player.getIndex()));
-				System.out.println("" + player.getIndex() + " killed.");
-				System.out.println("****** On timeout *******");
-			}
-		}
-
-		while (true) {
-			try {
-				if (!board.executeBuilds())
-					break;
-			} catch (InvalidActionException ex) {
-				if (ex.isGameBreaking()) {
-					ex.getPlayer().kill();
-					ex.getPlayer().deactivate(ex.getPlayer().getNicknameToken() + ": " + ex.getMessage());
-				} else {
-					gameManager.addToGameSummary(ex.getPlayer().getNicknameToken() + ": " + ex.getMessage());
-				}
-			}
-		}
-
-		board.moveAttackers(turn);
-		board.fireTowers();
-		board.spawnAttackers(turn);
-
-
-		board.updateView();
-		for (Player player : gameManager.getPlayers()) {
-			player.setScore(player.getScorePoints());
-			if (player.isDead() && player.isActive())
-				player.deactivate(player.getNicknameToken() + ": no lives left");
-		}
-		if( turn == 20 ) {
-			board.test();
-		}
-		if (turn == Constants.TURN_COUNT) {
-			gameManager.getActivePlayers().get(0).deactivate();
-			gameManager.getActivePlayers().get(0).deactivate();
-			gameManager.endGame();
-		}
-	}
-
-	public void parseCommand(String[] commandArgs) {
-		if (commandArgs.length == 0) {
-			// Gotta throw an exception for bad input....
-		}
-
-		switch (commandArgs[0]) {
-			case "go":
-				break;
-			case "build":
-				break;
-			case "attack":
-				break;
-			default:
-				break;
-		}
-	}
-
-	public void checkCommandGo(String[] commandArgs) {
-		int state = 1;
-
-		/*
-		* 1 -> go -> 2
-		* 1 -> _ -> 3
-		* 2 -> (int) -> 0
-		* 2 -> _ -> 3
-		* 0 -> * -> 3
-		* */
-		for (String arg: commandArgs) {
-			switch (state) {
-				case 1:
-					state = (arg.equals("go") ? 2: 3);
-					break;
-				case 2:
-					try {
-						Integer temp = Integer.parseInt(arg);
-						state = 0;
-					}
-					catch (NumberFormatException ex) {
-						state = 3;
-					}
-					break;
-			}
-		}
-	}
-
-	@Override
-	public void onEnd() {
-		int[] scores = gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray();
-		String[] texts = new String[2];
-		for (int i = 0; i < scores.length; i++) {
-			texts[i] = gameManager.getPlayers().get(i).getLives() + " lives, " + gameManager.getPlayers().get(i).getMoney() + " gold";
-		}
-		endScreenModule.setScores(scores, texts);
-		//String endSprite = "tie";
-		//if (scores[0] > scores[1]) endSprite = "win0";
-		//if (scores[0] < scores[1]) endSprite = "win1";
-		//endScreenModule.setTitleRankingsSprite(endSprite + ".png");
-	}
-}

@@ -280,6 +280,42 @@ public class Board {
 		return attackers;
 	}
 
+	public List<Attacker> getVeterans() {
+		return veterans;
+	}
+
+	public List<Attacker> getAllAttackers() {
+		List<Attacker> all = new ArrayList<>();
+
+		for (Attacker attacker: attackers) {
+			all.add(attacker);
+		}
+
+		for (Attacker veteran: veterans) {
+			all.add(veteran);
+		}
+
+		return all;
+	}
+
+	public List<Attacker> getAllAttackersOf(Player player) {
+		List<Attacker> all = new ArrayList<>();
+
+		for (Attacker attacker: attackers) {
+			if (attacker.getOwner() == player) {
+				all.add(attacker);
+			}
+		}
+
+		for (Attacker veteran: veterans) {
+			if (veteran.getOwner() == player) {
+				all.add(veteran);
+			}
+		}
+
+		return all;
+	}
+
 	public void cacheBuild(Player player, int x, int y, String type) throws InvalidActionException {
 		buildActions.add(new BuildAction(player, x, y, type));
 	}
@@ -376,7 +412,7 @@ public class Board {
 		}
 
 		// player + opponent
-        Player opponent = players.get(0) == player ? players.get(1): player;
+		Player opponent = players.get(0) == player ? players.get(1): player;
 
 		input.add(player.getPlayerMoneyInput() + " " + opponent.getPlayerMoneyInput());
 		input.add(player.getPlayerScoresInput() + " " + opponent.getPlayerScoresInput());

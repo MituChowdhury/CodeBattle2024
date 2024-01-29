@@ -20,7 +20,9 @@ public class Attacker {
 	private Player owner;
 	private Player enemy;
 	private AttackerView view;
-	private static int idCounter;
+//	private static int idCounter;
+	private static int playerOneAttackerIdCounter = 0;
+	private static int playerTwoAttackerIdCounter = 0;
 	private ArrayList<SubTile> steps;
 
 	Tile spawnTile;
@@ -29,7 +31,8 @@ public class Attacker {
 	private boolean reachOpponentBase;
 
 	public Attacker(Tile[][] grid, int hp, int speed, int bounty, Player owner, Player enemy, int spawn_position_y) {
-		id = idCounter++;
+//		id = idCounter++;
+		id = (owner.getIndex() == 0 ? playerOneAttackerIdCounter++: playerTwoAttackerIdCounter++);
 		//this.remainingPath = path;
 
 		// Errorneous code...

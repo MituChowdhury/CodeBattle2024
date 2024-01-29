@@ -27,7 +27,13 @@ class TestAgent {
             System.err.printf("line: %s\n", line);
         }
 
-        System.out.println("0 2 4 7 9");
+        String yCoords = "0 2 4 8 9";
+
+        System.out.println(yCoords);
+        System.out.println("PASS");
+        System.out.println("PASS");
+        System.out.println("PASS");
+        System.out.println("PASS");
 
         int cnt =0;
         // game loop
@@ -66,7 +72,7 @@ class TestAgent {
 
                 // Status of the opponent's characters....
                 System.err.println();
-                System.err.println("Player characters: ");
+                System.err.println("Opponent characters: ");
 
                 for (int i = 0; i < 5; ++i) {
                     int opponentCharId = in.nextInt();
@@ -138,11 +144,12 @@ class TestAgent {
 //            else
             {
 //                System.out.println("BUILD 5 5 GUNTOWER");
-                System.out.println("BUILD 2 9 FIRETOWER");
-                System.out.println("BUILD 3 9 FIRETOWER");
-                System.out.println("BUILD 4 9 FIRETOWER");
-                System.out.println("BUILD 5 9 FIRETOWER");
-                System.out.println("BUILD 9 9 FIRETOWER");
+                System.out.println("go 1");
+                System.out.println("build 2 GUN_TOWER 20 14");
+                System.out.println("attack 3 NORTH");
+//                System.out.println("forte");
+                System.out.println("");
+                System.out.println("wtf");
             }
 
 //             Write an action using System.out.println()

@@ -1,5 +1,9 @@
 package TowerDefense;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
 	public static final int MAP_WIDTH = 21; // keep the dimensions odd for best map generation results
 	public static final int MAP_HEIGHT = 15;
@@ -44,9 +48,18 @@ public class Constants {
 	public static final int SPEED = 12;
 	public static final int BOUNTY = 25;
 	public static final int NUM_UPGRADE_SPRITES = 3;
-    public static int CHARACTER_COUNT =5;
+	public static int CHARACTER_COUNT =5;
 
 	// Authored by: mdmab
 	public static int BOARD_DASH_WIDTH = 350;
 	public static int BOARD_DASH_HEIGHT = 367;
+//	public static List<String> VALID_OBJECT_NAMES = Arrays.asList(new String[]{
+//			"GUN_TOWER", "HEAL_TOWER", "STUN_TOWER",
+//			"SPRING_NORTH", "SPRING_SOUTH", "SPRING_EAST", "SPRING_WEST",
+//			"BOMB", "WALL"
+//	});
+
+//	public static List<String> VALID_DIRECTIONS = Arrays.asList(new String[]{
+//			"NORTH", "SOUTH", "EAST", "WEST"
+//	});
 }
