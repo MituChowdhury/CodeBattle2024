@@ -24,11 +24,11 @@ public class GunTowerView extends TowerView {
 	@Override
 	public void attack(Attacker a) {
 		attackSprite.setAlpha(1);
-		attackSprite.setX((int) (BoardView.CELL_SIZE * a.getLocation().getX()));
-		attackSprite.setY((int) (BoardView.CELL_SIZE * a.getLocation().getY()));
+		attackSprite.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX() + .8)));
+		attackSprite.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY() + .5)));
 		attackLine.setAlpha(1);
-		attackLine.setX2((int) (BoardView.CELL_SIZE * (a.getLocation().getX() + 0.5)));
-		attackLine.setY2((int) (BoardView.CELL_SIZE * (a.getLocation().getY() + 0.5)));
+		attackLine.setX2((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX() + .8 + 0.5)));
+		attackLine.setY2((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY() + 0.5 + 0.5)));
 
 		graphics.commitEntityState(0, attackSprite, attackLine);
 		attackSprite.setAlpha(0);

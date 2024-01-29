@@ -22,6 +22,7 @@ public class Attacker {
 	private AttackerView view;
 	private static int idCounter;
 	private ArrayList<SubTile> steps;
+	public Tile lastTile;
 
 	Tile spawnTile;
 	SubTile spawnSubtile;
@@ -49,7 +50,7 @@ public class Attacker {
 		}
 		else {
 			this.spawnTile = grid[0][Constants.MAP_HEIGHT-1-spawn_position_y];
-			this.spawnSubtile = spawnTile.getSubTile(0, SubTile.SUBTILE_SIZE-1);
+			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
 			//this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
 		}
 
@@ -65,6 +66,10 @@ public class Attacker {
 		this.reachOpponentBase = false;
 	}
 
+	public void relocate(SubTile newSubTile) {
+		this.currentTile = newSubTile.getTile();
+		this.currentSubtile = newSubTile;
+	}
 	public void spawn() {
 		this.currentTile = this.spawnTile;
 		this.currentSubtile = this.spawnSubtile;
@@ -106,6 +111,10 @@ public class Attacker {
 
 	public Tile getLocation() {
 		return currentTile;
+	}
+
+	public SubTile getLocationSubTile() {
+		return currentSubtile;
 	}
 
 	public Tile getCurrentTile() {
@@ -170,7 +179,20 @@ public class Attacker {
 	public void setCurrentSubtile(SubTile t){
 		this.currentSubtile = t;
 		this.currentTile = currentSubtile.getTile();
+	}
 
+	public int getDirection() {
+		int dir = 0;
+
+		if( steps.size() == 0 ) return getOwner().getIndex() == 0 ? 2 : 4;
+
+		if( steps.get(0).getSubX() == steps.get(1).getSubX() ) {
+			if( steps.get(0).getSubY() - steps.get(1).getSubY() > 0 ) dir = 3;
+			else dir = 1;
+		}else if( steps.get(0).getSubX() - steps.get(1).getSubX() > 0 ) dir = 2;
+		else dir = 4;
+
+		return dir;
 	}
 
 	public void move() {
@@ -181,8 +203,8 @@ public class Attacker {
 //			remainingPath.remove(remainingPath.size() - 1);
 //		}
 		SubTile src, dest;
-		if(owner.getIndex() == 0) dest = grid[Constants.MAP_WIDTH-1][0].getSubTile(SubTile.SUBTILE_SIZE-1, 0);
-		else dest = grid[0][Constants.MAP_HEIGHT-1].getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+		if(owner.getIndex() == 0) dest = grid[Constants.MAP_WIDTH-1][Constants.MAP_HEIGHT/2].getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+		else dest = grid[0][Constants.MAP_HEIGHT/2].getSubTile(SubTile.SUBTILE_SIZE-1, 0);
 
 		Astar astar = new Astar();
 		ArrayList<SubTile> path = astar.findpath(currentSubtile, dest);

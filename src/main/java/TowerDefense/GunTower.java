@@ -24,12 +24,17 @@ public class GunTower extends Tower {
 		for (Attacker a : attackers) {
 			if (getOwner() == a.getOwner() || !inRange(a))
 				continue;
-//			if (target == null || a.getPathLength() < target.getPathLength())  // lagte pare
-//				target = a;
+			if (target == null)  // lagte pare
+				target = a;
+			if( a == lastAttacked ) {
+				target = a;
+				break;
+			}
 		}
 		if (target == null)
 			return false;
 
+		this.lastAttacked = target;
 		target.dealDamage((int) getProperty(TowerProperty.DAMAGE));
 		getView().attack(target);
 		return true;

@@ -195,10 +195,10 @@ public class Board {
 //	}
 
 	// creating attackers
-	int gg = 3;
+	int gg = 7;
 	public void createAttackerAtBase(Player owner,Player enemy) {
 
-		Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy, gg++);
+		Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy, 7);
 		AttackerView a_view = view.addAttacker(a);
 		a.setView(a_view);
 
@@ -215,6 +215,10 @@ public class Board {
 	}
 
 	public void spawnAttackers(int turn) {
+
+		System.out.println("$$$ " + turn + " ###########################################################################################################");
+		System.out.println(towers);
+		System.out.println("###########################################################################################################");
 
 		if(turn==1){
 			for (int i = 0; i <2 ; i++) {
@@ -313,6 +317,18 @@ public class Board {
 			break;
 		case "HEALTOWER":
 			tower = new HealTower(grid[x][y]);
+			break;
+		case "SPRINGTRAP_U":
+			tower = new SpringTrap(grid[x][y], 1,this);
+			break;
+		case "SPRINGTRAP_R":
+			tower = new SpringTrap(grid[x][y], 2,this);
+			break;
+		case "SPRINGTRAP_D":
+			tower = new SpringTrap(grid[x][y], 3,this);
+			break;
+		case "SPRINGTRAP_L":
+			tower = new SpringTrap(grid[x][y], 4,this);
 			break;
 		default:
 			throw new InvalidActionException("tower type " + type + " unknown", true, player);

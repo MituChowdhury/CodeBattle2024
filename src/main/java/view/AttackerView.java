@@ -141,8 +141,6 @@ public class AttackerView {
 //			}
 //		}
 
-		//if(!all.isEmpty()) nextSubTile = all.get(random.nextInt(all.size()));
-//
 		group.setX((int) (BoardView.CELL_SIZE * nextSubTile.getX()));
 		group.setY((int) (BoardView.CELL_SIZE * nextSubTile.getY()));
 		attacker.setCurrentSubtile(nextSubTile);
@@ -176,6 +174,10 @@ public class AttackerView {
 			group.setVisible(false);
 			//spriteCache.get(attacker.getOwner().getIndex()).add(group);
 		}
+	}
+
+	public void disappear() {
+		group.setVisible(false);
 	}
 
 	private void changeAnimation(String[] body, String[] helmet) {

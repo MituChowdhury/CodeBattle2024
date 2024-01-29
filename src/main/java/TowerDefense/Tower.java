@@ -13,8 +13,8 @@ import view.TowerView;
 public abstract class Tower {
 	private int id;
 	private String type;
-	private Tile tile;
-	private int[] upgradeStates;
+	protected Tile tile;
+	protected int[] upgradeStates;
 	protected double[][] properties;
 	protected int cooldown;
 	protected int cost;
@@ -23,6 +23,8 @@ public abstract class Tower {
 	public static final String[] TowerOrder = { "HEALTOWER", "FIRETOWER", "GUNTOWER", "GLUETOWER" };
 
 	static int idCounter = 0;
+
+	protected Attacker lastAttacked = null;
 
 	public Tower(String type, Tile tile) {
 		this.id = idCounter++;
@@ -96,15 +98,17 @@ public abstract class Tower {
 		}
 	}
 
+
 	public boolean inRange(Attacker a) {
-		for (SubTile sub : a.getSteps()) {
+//		for (SubTile sub : a.getSteps()) {
+		SubTile sub = a.getCurrentSubTile();
 			double dx = sub.getX() - tile.getX();
 			double dy = sub.getY() - tile.getY();
 			int rangeIndex = TowerProperty.RANGE.ordinal();
 			double range = properties[rangeIndex][upgradeStates[rangeIndex]];
 			double dist = Math.sqrt(dx * dx + dy * dy);
 			if (range >= dist) return true;
-		}
+//		}
 		return false;
 	}
 
