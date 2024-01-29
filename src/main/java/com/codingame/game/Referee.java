@@ -9,15 +9,18 @@ import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
 import com.codingame.gameengine.core.AbstractReferee;
 import com.codingame.gameengine.core.MultiplayerGameManager;
 import com.codingame.gameengine.module.endscreen.EndScreenModule;
+import com.codingame.gameengine.module.entities.Circle;
+import com.codingame.gameengine.module.entities.Curve;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 import com.google.inject.Inject;
 
-import org.apache.commons.lang3.ObjectUtils;
 import view.BoardView;
 
+import static view.BoardView.CELL_SIZE;
+
 public class Referee extends AbstractReferee {
-	public static final int FRAME_DURATION = 500; // THIS THING IS NEVER USED SO CHANGING IT HAS NO EFFECT
+	public static final int FRAME_DURATION = 500;
 	public static Random random;
 
 	@Inject
@@ -53,18 +56,6 @@ public class Referee extends AbstractReferee {
 
 	@Override
 	public void gameTurn(int turn) {
-
-		if( turn == 1 ) {
-			try {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "SPRINGTRAP_U");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 14, 7, "SPRINGTRAP_D");
-			} catch ( InvalidActionException e ) {
-				System.out.println("asdasd #################################################################################################################################");
-				System.out.println(e.getMessage());
-				throw new NullPointerException();
-			}
-		}
-
 		for (Player player : gameManager.getActivePlayers()) {
 			for (String line : board.getPlayerInput(player, turn == 1)) {
 				player.sendInputLine(line);
@@ -173,13 +164,12 @@ public class Referee extends AbstractReferee {
 
 
 		board.moveAttackers(turn);
-		board.updateView();
-
 		board.fireTowers();
 		board.spawnAttackers(turn);
 
 
 
+		board.updateView();
 		for (Player player : gameManager.getPlayers()) {
 			player.setScore(player.getScorePoints());
 			if (player.isDead() && player.isActive())
@@ -193,6 +183,41 @@ public class Referee extends AbstractReferee {
 			gameManager.getActivePlayers().get(0).deactivate();
 			gameManager.endGame();
 		}
+
+		for(Attacker attacker: board.getAttackers()){
+
+//			double calculationX = (double) (CELL_SIZE * attacker.getLocation().getX())
+//					* (double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE)
+
+
+			Circle shockWaveEffect = graphicEntityModule.createCircle()
+				.setX((int) (CELL_SIZE * attacker.getLocation().getX()))
+				.setY((int) (CELL_SIZE * attacker.getLocation().getY()))
+				.setRadius(20,Curve.EASE_IN)
+				.setLineWidth(3, Curve.EASE_IN)
+				.setLineAlpha(1,Curve.EASE_IN)
+				.setLineColor(0xffffff,Curve.EASE_IN)
+				.setFillAlpha(0);
+
+		graphicEntityModule.commitEntityState(0, shockWaveEffect);
+//
+////		shockWaveEffect.setRadius(50,Curve.EASE_IN)
+////				.setLineAlpha(.5,Curve.EASE_IN);
+////		graphics.commitEntityState(.4, shockWaveEffect);
+////
+////		shockWaveEffect.setRadius(70,Curve.EASE_IN)
+////				.setLineAlpha(.2,Curve.EASE_IN);
+////		graphics.commitEntityState(.8, shockWaveEffect);
+//
+		shockWaveEffect
+				.setRadius(100,Curve.EASE_OUT)
+				.setLineAlpha(0,Curve.EASE_OUT)
+				.setLineWidth(0,Curve.EASE_OUT);
+
+		graphicEntityModule.commitEntityState(1, shockWaveEffect);
+		}
+
+
 	}
 
 	@Override

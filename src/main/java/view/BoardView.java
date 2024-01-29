@@ -14,7 +14,7 @@ import TowerDefense.Tower;
 public class BoardView {
 	public static final int CELL_SIZE = 100;
 	private Board board;
-	private GraphicEntityModule graphics;
+	public GraphicEntityModule graphics;
 	private Group boardGroup;
 	private TooltipModule tooltips;
 	private Text wave;

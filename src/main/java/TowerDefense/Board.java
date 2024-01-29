@@ -23,7 +23,7 @@ public class Board {
 	private int width;
 	private int height;
 	private List<Player> players;
-	private BoardView view;
+	public BoardView view;
 	private int waveIndex = 0;
 	private int earliestWaveStart = 1;
 //	private List<List<Attacker>> futureAttackers = new ArrayList<>();

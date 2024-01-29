@@ -37,9 +37,12 @@ public class AttackerView {
 		spriteCache.add(new ArrayList<Group>());
 		spriteCache.add(new ArrayList<Group>());
 	}
+
+	Circle shockWaveEffect;
 	final Random random = new Random();
 
 	public AttackerView(Attacker attacker, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
+
 
 		if (attackerBodySprites == null) {
 			attackerBodySprites = graphics.createSpriteSheetSplitter().setSourceImage("att_body.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("ab").split();
@@ -83,9 +86,19 @@ public class AttackerView {
 			boardGroup.add(group);
 		}
 		//tooltips.setTooltipText(sprite, getTooltipString());
-	}
+
+
+        shockWaveEffect = graphics.createCircle();
+    }
+
+
+
+
+
 
 	private int finalY = -1;
+
+
 	public void move(SubTile nextSubTile) {
 //		if (attacker.isSlow()) {
 //			if (glueSprite == null) {
@@ -104,6 +117,7 @@ public class AttackerView {
 //			glueSprite.setAlpha(0);
 //			graphics.commitEntityState(0, glueSprite);
 //		}
+
 
 
 		graphics.commitEntityState(0, attackerBody);
@@ -144,6 +158,34 @@ public class AttackerView {
 		group.setX((int) (BoardView.CELL_SIZE * nextSubTile.getX()));
 		group.setY((int) (BoardView.CELL_SIZE * nextSubTile.getY()));
 		attacker.setCurrentSubtile(nextSubTile);
+
+
+//		shockWaveEffect
+//				.setX((int) (BoardView.CELL_SIZE * nextSubTile.getX()))
+//				.setY((int) (BoardView.CELL_SIZE * nextSubTile.getY()))
+//				.setRadius(20,Curve.EASE_IN)
+//				.setLineWidth(3, Curve.EASE_IN)
+//				.setLineAlpha(1,Curve.EASE_IN)
+//				.setLineColor(0xffffff,Curve.EASE_IN)
+//				.setFillAlpha(0);
+//
+//		graphics.commitEntityState(0, shockWaveEffect);
+//
+////		shockWaveEffect.setRadius(50,Curve.EASE_IN)
+////				.setLineAlpha(.5,Curve.EASE_IN);
+////		graphics.commitEntityState(.4, shockWaveEffect);
+////
+////		shockWaveEffect.setRadius(70,Curve.EASE_IN)
+////				.setLineAlpha(.2,Curve.EASE_IN);
+////		graphics.commitEntityState(.8, shockWaveEffect);
+//
+//		shockWaveEffect
+//				.setRadius(100,Curve.EASE_OUT)
+//				.setLineAlpha(0,Curve.EASE_OUT)
+//				.setLineWidth(0,Curve.EASE_OUT);
+//
+//		graphics.commitEntityState(1, shockWaveEffect);
+
 		//tooltips.setTooltipText(sprite, getTooltipString());
 	}
 
