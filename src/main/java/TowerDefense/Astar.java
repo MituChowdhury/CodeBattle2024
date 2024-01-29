@@ -16,8 +16,8 @@ public class Astar {
             this.h = h;
         }
     }
-    private SubTile[][][][] parent = new SubTile[Constants.MAP_WIDTH][Constants.MAP_HEIGHT][SubTile.SUBTILE_SIZE][SubTile.SUBTILE_SIZE];
-    private ArrayList<SubTile> path = new ArrayList<>();
+    private final SubTile[][][][] parent = new SubTile[Constants.MAP_WIDTH][Constants.MAP_HEIGHT][SubTile.SUBTILE_SIZE][SubTile.SUBTILE_SIZE];
+    private final ArrayList<SubTile> path = new ArrayList<>();
     boolean isDestination(SubTile pos, SubTile dest) {
         return pos == dest || pos.equals(dest);
     }

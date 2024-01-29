@@ -23,7 +23,7 @@ public class BoardView {
 		int width = 1920;
 		int height = 1080;
 
-		graphics.createRectangle().setFillColor(0xebebeb).setHeight(height).setWidth(width);
+		graphics.createRectangle().setFillColor(0xebebfb).setHeight(height).setWidth(width);
 		this.board = board;
 		board.setView(this);
 		this.graphics = graphics;
@@ -43,7 +43,7 @@ public class BoardView {
 		boardGroup = graphics.createGroup();
 		// TODO: switch gridgroup back to BufferedGroup
 		boardGroup.setScale((double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE));
-//		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
+		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
 		boardGroup.setX(Constants.BOARD_DASH_WIDTH);
 		Group gridGroup = graphics.createGroup();
 		boardGroup.add(gridGroup);
@@ -54,11 +54,7 @@ public class BoardView {
 			innerGroup.add(Utils.createBoardSprite(graphics, "canyon.png", -1, y).setAlpha(0.7));
 			innerGroup.add(Utils.createBoardSprite(graphics, "canyon.png", board.getWidth(), y).setAlpha(0.7));
 			for (int x = 0; x < board.getWidth(); x++) {
-				if (board.getGrid()[x][y].canBuild()) {
-					Sprite plateau = Utils.createBoardSprite(graphics, "plateau.png", x, y);
-					tooltips.setTooltipText(plateau, "x: " + x + "\ny: " + y);
-					innerGroup.add(plateau);
-				} else if (board.getGrid()[x][y].canEnter()) {
+				 if (board.getGrid()[x][y].canEnter()) {
 					Sprite canyon = Utils.createBoardSprite(graphics, "canyon.png", x, y).setZIndex(-1);
 					tooltips.setTooltipText(canyon, "x: " + x + "\ny: " + y);
 					boardGroup.add(canyon);
@@ -79,7 +75,7 @@ public class BoardView {
 					innerGroup.add(NDobstacle);
 				}
 				else if (board.getGrid()[x][y].hasDestructibleObject()) {  // if there is obstacle
-					Sprite Dobstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y).setAlpha(0.7);
+					Sprite Dobstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y).setAlpha(0.4);
 					tooltips.setTooltipText(Dobstacle, "x: " + x + "\ny: " + y);
 					innerGroup.add(Dobstacle);
 				}

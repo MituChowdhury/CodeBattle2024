@@ -175,7 +175,7 @@ public class Referee extends AbstractReferee {
 			if (player.isDead() && player.isActive())
 				player.deactivate(player.getNicknameToken() + ": no lives left");
 		}
-		if( turn == 20 ) {
+		if( turn == 100 ) {
 			board.test();
 		}
 		if (turn == Constants.TURN_COUNT) {

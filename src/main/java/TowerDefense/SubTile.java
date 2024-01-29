@@ -29,11 +29,13 @@ public class SubTile {
 	}
 
 	public double getX() {
-		return (tile.getX() + (double) subX / SUBTILE_SIZE);
+		double val =  (tile.getX()  + (double) subX / SUBTILE_SIZE);
+		return  val<0 ? 0:val;
 	}
 
 	public double getY() {
-		return (tile.getY() + (double) subY / SUBTILE_SIZE);
+		double val =  (tile.getY() + (double) subY / SUBTILE_SIZE);
+		return  val<0 ? 0: val;
 	}
 
 //	public SubTile mirror(Tile[][] grid, int width, int height) {
