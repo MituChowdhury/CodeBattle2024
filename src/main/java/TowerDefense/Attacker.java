@@ -25,7 +25,7 @@ public class Attacker {
 	private Player owner;
 	private Player enemy;
 	private AttackerView view;
-//	private static int idCounter;
+	//	private static int idCounter;
 //	private static int playerOneAttackerIdCounter = 0;
 //	private static int playerTwoAttackerIdCounter = 0;
 	private static TreeMap<Integer, Integer> playerAttackerCounter = new TreeMap<>();
@@ -50,14 +50,13 @@ public class Attacker {
 
 
 		if(owner.getIndex() == 1) {
-			this.spawnTile = grid[Constants.MAP_WIDTH-1][spawn_position_y+(id%Constants.CHARACTER_COUNT)];
-			this.spawnSubtile = spawnTile.getSubTile(0,SubTile.SUBTILE_SIZE-1);
-			//this.currentSubtile = currentTile.getSubTiles().get(((SubTile.SUBTILE_SIZE-1)*(SubTile.SUBTILE_SIZE-1))+(SubTile.SUBTILE_SIZE-1));
+			this.spawnTile = grid[Constants.MAP_WIDTH-1][spawn_position_y];
+			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+
 		}
 		else {
-			this.spawnTile = grid[0][spawn_position_y-(id%Constants.CHARACTER_COUNT)];
-			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
-			//this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
+			this.spawnTile = grid[0][spawn_position_y];
+			this.spawnSubtile = spawnTile.getSubTile(0,SubTile.SUBTILE_SIZE-1);
 		}
 
 		this.spawn();
