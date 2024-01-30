@@ -147,7 +147,7 @@ class TestAgent {
                 System.out.println("go 1");
 
                 if( cnt == 3 ) {
-                    System.out.println("build 1 GUN_TOWER 11 6");
+                    System.out.println("build 1 GUN_TOWER 13 6");
                 } else {
                     System.out.println("");
                 }

@@ -10,10 +10,14 @@ import com.codingame.gameengine.module.tooltip.TooltipModule;
 public class BoardView {
 	public static final int CELL_SIZE = 100;
 	private Board board;
-	private GraphicEntityModule graphics;
+	public GraphicEntityModule graphics;
 	private Group boardGroup;
 	private TooltipModule tooltips;
 	private Text wave;
+
+	public double gg() {
+		return (double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE);
+	}
 
 	public BoardView(Board board, GraphicEntityModule graphics, TooltipModule tooltips) {
 		int width = 1920;
@@ -37,6 +41,8 @@ public class BoardView {
 		boardGroup.setScale((double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE));
 		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
 		boardGroup.setX(Constants.BOARD_DASH_WIDTH);
+
+		//rabbani: should be uncomment
 		Group gridGroup = graphics.createGroup();
 		boardGroup.add(gridGroup);
 		Group innerGroup = graphics.createGroup();

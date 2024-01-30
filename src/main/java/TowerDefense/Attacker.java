@@ -25,6 +25,7 @@ public class Attacker {
 	private Player owner;
 	private Player enemy;
 	private AttackerView view;
+
 //	private static int idCounter;
 //	private static int playerOneAttackerIdCounter = 0;
 //	private static int playerTwoAttackerIdCounter = 0;
@@ -132,6 +133,7 @@ public class Attacker {
 		return currentSubtile;
 	}
 
+
 	public void kill() {
 		dealDamage(hitPoints);
 	}
@@ -191,7 +193,9 @@ public class Attacker {
 	}
 
 
+
 	public void setCurrentSubtile(SubTile t){
+
 		this.currentSubtile = t;
 		this.currentTile = currentSubtile.getTile();
 	}

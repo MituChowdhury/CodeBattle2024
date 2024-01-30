@@ -24,6 +24,7 @@ public class Board {
 	private int width;
 	private int height;
 	private List<Player> players;
+
 	private BoardView view;
 	private int objCount = 0;
 	private ArrayList<String[]> objectStrMaps = new ArrayList<>();

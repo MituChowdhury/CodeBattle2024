@@ -10,6 +10,8 @@ import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
 import com.codingame.gameengine.core.AbstractReferee;
 import com.codingame.gameengine.core.MultiplayerGameManager;
 import com.codingame.gameengine.module.endscreen.EndScreenModule;
+import com.codingame.gameengine.module.entities.Circle;
+import com.codingame.gameengine.module.entities.Curve;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 import com.google.inject.Inject;
@@ -25,8 +27,11 @@ import exception.BadCommandException;
 
 import view.BoardView;
 
+import static TowerDefense.Constants.BOARD_DASH_WIDTH;
+import static view.BoardView.CELL_SIZE;
+
 public class Referee extends AbstractReferee {
-	public static final int FRAME_DURATION = 500; // THIS THING IS NEVER USED SO CHANGING IT HAS NO EFFECT
+	public static final int FRAME_DURATION = 500;
 	public static Random random;
 
 	@Inject
