@@ -71,4 +71,6 @@ public class Constants {
 	// Authored by: mdmab
 	public static int BOARD_DASH_WIDTH = 350;
 	public static int BOARD_DASH_HEIGHT = 367;
+
+	public static int CELL_SIZE = 100;
 }

@@ -11,6 +11,8 @@ import TowerDefense.Tower;
 
 public class GunTowerView extends TowerView {
 
+
+
 	public GunTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
 		super(tower, boardGroup, graphics, tooltips, "gunTower");
 		attackSprite = graphics.createSprite().setImage("gunTowerAttack.png").setAlpha(0);
@@ -23,7 +25,7 @@ public class GunTowerView extends TowerView {
 		canonBall = graphics.createCircle();
 		canonBall
 				.setRadius(10)
-				.setX(Constants.BOARD_DASH_WIDTH + (int) (BoardView.CELL_SIZE * (tower.getTile().getX())))
+				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5)))
 				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY())))
 				.setAlpha(1)
 				.setLineWidth(0)
@@ -60,7 +62,7 @@ public class GunTowerView extends TowerView {
 //		graphics.commitEntityState(0, attackLine);
 		graphics.commitEntityState(0, attackSprite, attackLine);
 //		graphics.commitEntityState(1,attackSprite);
-//		attackSprite.setAlpha(0);
+		attackSprite.setAlpha(0);
 		attackLine.setAlpha(0);
 //		canonBall
 //				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX()+ 0.5)), Curve.IMMEDIATE)
