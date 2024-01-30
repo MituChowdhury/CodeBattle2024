@@ -116,15 +116,11 @@ public class MapGenerator {
 			grid = new Tile[width][height];
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
-<<<<<<< HEAD
-//					grid[x][y] = new Tile(x, y, true, (Math.random()>0.75) && !(x==0) && !(x==Constants.MAP_WIDTH-1),
-//							(Math.random()>0.90) && !(x==0) && !(x==Constants.MAP_WIDTH-1));
-=======
+
 //					grid[x][y] = new Tile(x, y, true, false,
 //							false);
 					grid[x][y] = new Tile(x, y, true, (random.nextDouble()>0.75) && !(x==0) && !(x==Constants.MAP_WIDTH-1),
 							(random.nextDouble()>0.90) && !(x==0) && !(x==Constants.MAP_WIDTH-1));
->>>>>>> bc3af09b7cda1a10b8da82daf4d6451eb0570f4e
 					//grid[x][y] = new Tile(x,y, true,  x%2!=y%2, !(x==0||x==16||y==0||y==16));
 					grid[x][y] = new Tile(x,y, true, false,false);
 				}

@@ -16,8 +16,7 @@ import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 import com.google.inject.Inject;
 
-<<<<<<< HEAD
-=======
+
 
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -26,7 +25,6 @@ import command.BuildCommand;
 import command.GoCommand;
 import exception.BadCommandException;
 
->>>>>>> bc3af09b7cda1a10b8da82daf4d6451eb0570f4e
 import view.BoardView;
 
 import static TowerDefense.Constants.BOARD_DASH_WIDTH;
@@ -89,7 +87,7 @@ public class Referee extends AbstractReferee {
 		try {
 			if (turn == 4) {
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "GUNTOWER");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 9, 7, "GLUETOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 9, 7, "GUNTOWER");
 			}
 
 			if (turn == 12) {

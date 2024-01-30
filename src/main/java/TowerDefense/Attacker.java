@@ -25,17 +25,13 @@ public class Attacker {
 	private Player owner;
 	private Player enemy;
 	private AttackerView view;
-<<<<<<< HEAD
-	private static int idCounter;
-private ArrayList<SubTile> steps;
-=======
+
 //	private static int idCounter;
 //	private static int playerOneAttackerIdCounter = 0;
 //	private static int playerTwoAttackerIdCounter = 0;
 	private static TreeMap<Integer, Integer> playerAttackerCounter = new TreeMap<>();
 	private ArrayList<SubTile> steps;
 	public Tile lastTile;
->>>>>>> bc3af09b7cda1a10b8da82daf4d6451eb0570f4e
 
 	Tile spawnTile;
 	SubTile spawnSubtile;

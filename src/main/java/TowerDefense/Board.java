@@ -24,13 +24,10 @@ public class Board {
 	private int width;
 	private int height;
 	private List<Player> players;
-<<<<<<< HEAD
-	public BoardView view;
-=======
+
 	private BoardView view;
 	private int objCount = 0;
 	private ArrayList<String[]> objectStrMaps = new ArrayList<>();
->>>>>>> bc3af09b7cda1a10b8da82daf4d6451eb0570f4e
 	private int waveIndex = 0;
 	private int earliestWaveStart = 1;
 	//	private List<List<Attacker>> futureAttackers = new ArrayList<>();
