@@ -384,6 +384,11 @@ public class Board {
 
 	private void build(Player player, int x, int y, String type) throws InvalidActionException {
 		if (x < 0 || x >= width || y < 0 || y >= height) throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
+
+		if (!grid[x][y].canBuild()) {
+			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
+		}
+
 		Tower tower = null;
 		switch (type.toUpperCase()) {
 
@@ -414,13 +419,16 @@ public class Board {
 		case "FIREBOMB":
 			tower = new FireBomb(grid[x][y]);
 			break;
+		case "WALL":
+			tower = new Wall(grid[x][y]);
+			break;
 		default:
 			throw new InvalidActionException("tower type " + type + " unknown", true, player);
 		}
-		if (!tower.getTile().canBuild()) {
-			tower.undoBuild();
-			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
-		}
+//		if (!tower.getTile().canBuild()) {
+//			tower.undoBuild();
+//			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
+//		}
 		for (Tower t : towers) {
 			if (t.getTile() == tower.getTile()) {
 				tower.undoBuild();

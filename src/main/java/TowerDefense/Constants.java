@@ -34,11 +34,21 @@ public class Constants {
 	public static final double[] FIREBOMB_FUSETIME = { 2, 1, 0, 0 };
 
 
-
-
 	public static final double[] SPRINGTRAP_DAMAGE = { 2, 3, 4, 5 };
 	public static final double[] SPRINGTRAP_RANGE = { 1, 0, 0, 0 };
 	public static final double[] SPRINGTRAP_RELOAD = { 0, 4, 3, 2 };
+	public static final double[] SPRINGTRAP_HITPOINT = { 5, 10, 15, 20 };
+	public static final double[] SPRINGTRAP_FUSETIME = { 0, 0, 0, 0 };
+	public static final int SPRINGTRAP_COST = 10;
+
+
+	public static final double[] WALL_DAMAGE = { 0, 0, 0, 0 };
+	public static final double[] WALL_RANGE = { 0, 0, 0, 0 };
+	public static final double[] WALL_RELOAD = { 0, 0, 0, 0 };
+	public static final double[] WALL_HITPOINT = { 5, 10, 15, 20 };
+	public static final double[] WALL_FUSETIME = { 0, 0, 0, 0 };
+	public static final int WALL_COST = 10;
+
 	public static final int FIRETOWER_COST = 100;
 	public static final double[] FIRETOWER_DAMAGE = { 2, 3, 5, 7 };
 	public static final double[] FIRETOWER_RANGE = { 1.5, 2, 2.3, 2.5 };
