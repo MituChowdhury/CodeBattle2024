@@ -11,8 +11,23 @@ public class AttackCommand extends Command {
         this.direction = direction;
     }
 
-    public String getDirection() {
-        return this.direction;
+    public int getDirection() {
+        int dir = 0;
+        switch (this.direction) {
+            case "NORTH":
+                dir = 1;
+                break;
+            case "EAST":
+                dir = 2;
+                break;
+            case "SOUTH":
+                dir = 3;
+                break;
+            case "WEST":
+                dir = 4;
+                break;
+        }
+        return dir;
     }
 
     @Override

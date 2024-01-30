@@ -27,7 +27,7 @@ public class FireBomb extends Tower {
 	}
 
 	@Override
-	boolean doAttack(List<Attacker> attackers) {
+	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
 		this.incrementLifeTime();
 		if( this.getLifetime() < this.getProperty(TowerProperty.FUSETIME)  ) {
 			return false;
@@ -39,6 +39,14 @@ public class FireBomb extends Tower {
 			int d = (int) getProperty(TowerProperty.DAMAGE);
 			a.dealDamage((int) getProperty(TowerProperty.DAMAGE));
 			getView().attack(a);
+			attacked = true;
+		}
+		for (Tower a : towers) {
+			if (getOwner() == a.getOwner() || !inRange(a))
+				continue;
+			int d = (int) getProperty(TowerProperty.DAMAGE);
+			a.dealDamage((int) getProperty(TowerProperty.DAMAGE));
+//			getView().attack(a);
 			attacked = true;
 		}
 		return attacked;

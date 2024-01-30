@@ -2,10 +2,7 @@ package view;
 
 import java.text.DecimalFormat;
 
-import com.codingame.gameengine.module.entities.GraphicEntityModule;
-import com.codingame.gameengine.module.entities.Group;
-import com.codingame.gameengine.module.entities.Line;
-import com.codingame.gameengine.module.entities.Sprite;
+import com.codingame.gameengine.module.entities.*;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 
 import TowerDefense.Attacker;
@@ -18,6 +15,7 @@ public abstract class TowerView {
 	protected Sprite towerSprite, towerFixedSprite;
 	protected Sprite attackSprite;
 	protected Line attackLine;
+	protected Circle canonBall;
 	protected GraphicEntityModule graphics;
 	protected TooltipModule tooltipModule;
 	protected Group boardGroup;

@@ -9,7 +9,7 @@ import com.codingame.gameengine.module.tooltip.TooltipModule;
 public class FireBombView extends TowerView {
 
 	public FireBombView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
-		super(tower, boardGroup, graphics, tooltips, "gunTower");
+		super(tower, boardGroup, graphics, tooltips, "healTower");
 		attackLine = graphics.createLine();
 		attackLine.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5)));
 		attackLine.setY(BoardView.CELL_SIZE * tower.getTile().getY());

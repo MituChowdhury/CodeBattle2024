@@ -23,23 +23,23 @@ public class FireTower extends Tower {
 	}
 
 	@Override
-	public void attack(List<Attacker> attackers) {
+	public void attack(List<Attacker> attackers, List<Tower> towers) {
 		if (cooldown > 0) {
 			cooldown--;
 		}
 		if (fireEffect > 0) {
 			fireEffect--;
-			doAttack(attackers);
+			doAttack(attackers, towers);
 		}
 		if (cooldown > 0) return;
-		if (doAttack(attackers)) {
+		if (doAttack(attackers, towers)) {
 			cooldown = (int) getProperty(TowerProperty.RELOAD) - 1;
 			fireEffect = Constants.FIRE_EFFECT_DURATION - 1;
 		}
 	}
 
 	@Override
-	boolean doAttack(List<Attacker> attackers) {
+	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
 		if (cooldown == 0) alreadyAttacked.clear();
 		boolean firing = false;
 		for (Attacker a : attackers) {

@@ -22,7 +22,7 @@ public class Wall extends Tower {
 	}
 
 	@Override
-	boolean doAttack(List<Attacker> attackers) {
+	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
 		Attacker target = null;
 		for (Attacker a : attackers) {
 			if (getOwner() == a.getOwner() || !inRange(a))

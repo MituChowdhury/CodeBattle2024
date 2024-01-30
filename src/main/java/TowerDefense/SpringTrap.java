@@ -28,6 +28,7 @@ public class SpringTrap extends Tower {
 		this.dir = dir;
 		this.board = board;
 		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
+		this.tile.unsetDestructibleObject();
 	}
 
 	public int getSpringDistance() {
@@ -89,6 +90,8 @@ public class SpringTrap extends Tower {
 			};
 		}
 
+		Tile tt = a.getCurrentTile();
+
 		if( a.getCurrentTile() == this.tile ) {
 
 			// This piece of code defies any logic but it works
@@ -100,7 +103,7 @@ public class SpringTrap extends Tower {
 	}
 
 	@Override
-	boolean doAttack(List<Attacker> attackers) {
+	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
 		Attacker target = null;
 		for (Attacker a : attackers) {
 			Player p1 = getOwner();

@@ -7,6 +7,7 @@ public class Tile {
 	private int y;
 	private boolean canyon;
 	private boolean Dobstacle;
+	Tower obstacleTower = null;
 	private boolean NDobstacle;
 	private ArrayList<SubTile> subTiles = new ArrayList<>();
 	private Tile[] neighbors = new Tile[4];
@@ -39,13 +40,15 @@ public class Tile {
 
 	public boolean hasNonDestructibleObject() { return NDobstacle;}
 
-	public void setDestructibleObject(){
+	public void setDestructibleObject(Tower t){
 		this.Dobstacle = true;
+		this.obstacleTower = t;
 	}
 
 
 	public void unsetDestructibleObject(){
 		this.Dobstacle = false;
+		this.obstacleTower = null;
 	}
 	public boolean hasAnyObject(){
 		return  Dobstacle || NDobstacle;

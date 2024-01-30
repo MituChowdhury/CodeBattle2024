@@ -142,15 +142,30 @@ class TestAgent {
 //                    System.out.println("1 3 5 8 9");
 //            }
 //            else
-            {
+//            if( cnt == 4 ){
 //                System.out.println("BUILD 5 5 GUNTOWER");
                 System.out.println("go 1");
-                System.out.println("build 2 GUN_TOWER 20 14");
-                System.out.println("attack 2 NORTH");
+
+                if( cnt == 3 ) {
+                    System.out.println("build 1 GUN_TOWER 13 6");
+                } else {
+                    System.out.println("");
+                }
+
+                if(cnt == 4) {
+                    System.out.println("build 1 BOMB 9 6");
+                } else System.out.println("");
+
+                if( cnt >= 8 && cnt <= 12 ) {
+                    System.out.println("attack 2 NORTH");
+                } else {
+                    System.out.println("");
+                };
+
 //                System.out.println("forte");
                 System.out.println("");
                 System.out.println("wtf");
-            }
+//            }
 
 //             Write an action using System.out.println()
             System.err.println("Debug messages... here "+cnt);

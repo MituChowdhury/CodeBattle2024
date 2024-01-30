@@ -7,11 +7,14 @@ import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
 import com.codingame.gameengine.core.AbstractReferee;
 import com.codingame.gameengine.core.MultiplayerGameManager;
 import com.codingame.gameengine.module.endscreen.EndScreenModule;
+import com.codingame.gameengine.module.entities.Circle;
+import com.codingame.gameengine.module.entities.Curve;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 import com.google.inject.Inject;
 
 
+import command.Command;
 import org.apache.commons.lang3.ObjectUtils;
 
 import command.AttackCommand;
@@ -21,8 +24,11 @@ import exception.BadCommandException;
 
 import view.BoardView;
 
+import static TowerDefense.Constants.BOARD_DASH_WIDTH;
+import static view.BoardView.CELL_SIZE;
+
 public class Referee extends AbstractReferee {
-	public static final int FRAME_DURATION = 500; // THIS THING IS NEVER USED SO CHANGING IT HAS NO EFFECT
+	public static final int FRAME_DURATION = 500;
 	public static Random random;
 
 	@Inject
@@ -75,19 +81,27 @@ public class Referee extends AbstractReferee {
 
 	@Override
 	public void gameTurn(int turn) {
-		try {
-			if (turn == 4) {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 13, 7, "GUNTOWER");
-//				board.cacheBuild(gameManager.getActivePlayers().get(0), 9, 7, "GLUETOWER");
-			}
+//		try {
+//			if (turn == 4) {
+////				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "GUNTOWER");
+////				board.cacheBuild(gameManager.getActivePlayers().get(1), 9, 7, "SPRINGTRAP_U");
+//			}
+//
+//			if (turn == 12) {
+////				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 8, "SPRINGTRAP_U");
+//			}
+//		} catch (InvalidActionException e) {
+//			System.out.println("asdasd #################################################################################################################################");
+//			System.out.println(e.getMessage());
+//			throw new NullPointerException();
+//		}
 
-			if (turn == 12) {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 8, "FIREBOMB");
+		for( Attacker a:board.getAttackers() ) {
+			int x = a.getCurrentTile().getX();
+			int y = a.getCurrentTile().getY();
+			if( x == 8 && y == 7 && board.getGrid()[x+1][y].hasDestructibleObject() ) {
+				a.attack(board.getGrid()[x+1][y]);
 			}
-		} catch (InvalidActionException e) {
-			System.out.println("asdasd #################################################################################################################################");
-			System.out.println(e.getMessage());
-			throw new NullPointerException();
 		}
 
 		for (Player player : gameManager.getActivePlayers()) {
@@ -98,6 +112,13 @@ public class Referee extends AbstractReferee {
 
 			player.execute();
 		}
+
+		playerOneXs.add(Constants.MAP_HEIGHT/2);
+//		if( turn == 1 ) {
+//			board.createAttackerAtPositions( board.getPlayer(0), board.getPlayer(1), playerOneXs );
+//		}
+
+
 
 		for (Player player : gameManager.getActivePlayers()) {
 			try {
@@ -150,7 +171,7 @@ public class Referee extends AbstractReferee {
 
 					actions.forEach(action -> {
 						try {
-							parseCommand(player, usedAttackers, action.split(" "));
+							executeCommand(parseCommand(player, usedAttackers, action.split(" ")));
 						} catch (BadCommandException ex) {
 							System.err.println("\t[Exception] " + ex.getMessage());
 						}
@@ -186,6 +207,7 @@ public class Referee extends AbstractReferee {
 		}
 
 		board.moveAttackers(turn);
+		board.updateTowers();
 		board.fireTowers();
 //		board.spawnAttackers(turn);
 
@@ -206,7 +228,46 @@ public class Referee extends AbstractReferee {
 		}
 	}
 
-	public void parseCommand(Player commander, TreeSet<Integer> usedAttackers, String[] commandArgs) throws BadCommandException {
+	private void executeCommand( Command cmd ) throws BadCommandException {
+		try {
+			if( cmd.getClass() == BuildCommand.class ) {
+				BuildCommand c = (BuildCommand) cmd;
+				board.cacheBuild(c.getPlayer(), c.getPosX(), c.getPosY(), c.getObjectName());
+			} else if( cmd.getClass() == GoCommand.class ) {
+
+			} else if( cmd.getClass() == AttackCommand.class ) {
+				AttackCommand c = (AttackCommand) cmd;
+				Attacker a = c.getAttacker();
+				int dir = c.getDirection();
+				int newX = c.getAttacker().getCurrentTile().getX();
+				int newY = c.getAttacker().getCurrentTile().getY();
+				switch( dir ) {
+					case 1:
+						newY -= 1;
+						break;
+					case 2:
+						newX += 1;
+						break;
+					case 3:
+						newY += 1;
+						break;
+					case 4:
+						newX -= 1;
+						break;
+				}
+				if( newX >= board.getWidth() || newX < 0 || newY >= board.getHeight() || newY < 0 ) {
+					throw new BadCommandException("Attack tile is out of map");
+				}
+				Tile attackTile = board.getGrid()[newX][newY];
+				a.attack(attackTile);
+			}
+		} catch (InvalidActionException e) {
+			System.out.println("ERROR: #################################################################################################################################");
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public Command parseCommand(Player commander, TreeSet<Integer> usedAttackers, String[] commandArgs) throws BadCommandException {
 		if (commandArgs.length == 1 && commandArgs[0].equals("")) {
 			// Gotta throw an exception for bad input....
 			System.err.println("[X] Wrong: (Empty)");
@@ -215,9 +276,11 @@ public class Referee extends AbstractReferee {
 
 		System.err.println("[-] " + String.join(" ", commandArgs));
 
+		Command cmd;
+
 		if (commandArgs[0].equals("go")) {
 			// Implementation for "go" command...
-			GoCommand cmd = Util.getGoCommand(commander, this.board, commandArgs);
+			cmd = Util.getGoCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
 
 			throwIfAttackerUsed(usedAttackers, attacker.getId());
@@ -226,7 +289,7 @@ public class Referee extends AbstractReferee {
 			System.out.println(cmd.toString());
 		} else if (commandArgs[0].equals("build")) {
 			// Implementation for "build" command...
-			BuildCommand cmd = Util.getBuildCommand(commander, this.board, commandArgs);
+			cmd = Util.getBuildCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
 
 			throwIfAttackerUsed(usedAttackers, attacker.getId());
@@ -235,7 +298,7 @@ public class Referee extends AbstractReferee {
 			System.out.println(cmd.toString());
 		} else if (commandArgs[0].equals("attack") && Util.checkAttackStructure(commandArgs)) {
 			// Implementation for "attack" command...
-			AttackCommand cmd = Util.getAttackCommand(commander, this.board, commandArgs);
+			cmd = Util.getAttackCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
 
 			throwIfAttackerUsed(usedAttackers, attacker.getId());
@@ -246,6 +309,8 @@ public class Referee extends AbstractReferee {
 			// Exceptions for invalid commands...
 			throw new BadCommandException("Invalid command sent by the player.");
 		}
+
+		return cmd;
 	}
 
 	public void throwIfAttackerUsed(TreeSet<Integer> usedAttackers, int id) throws BadCommandException {

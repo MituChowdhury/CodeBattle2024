@@ -17,6 +17,8 @@ public class Constants {
 	public static final int PLAYER_SCORE = 0;
 	public static final int PLAYER_DEATH_COUNT = 0;
 
+	public static final int ATTACKER_DAMAGE = 5;
+
 	public static final int GUNTOWER_COST = 100;
 	public static final int FIREBOMB_COST = 100;
 
@@ -27,7 +29,7 @@ public class Constants {
 	public static final double[] GUNTOWER_FUSETIME = { 2, 1, 0, 0 };
 
 
-	public static final double[] FIREBOMB_DAMAGE = { 5, 8, 15, 30 };
+	public static final double[] FIREBOMB_DAMAGE = { 1, 8, 15, 30 };
 	public static final double[] FIREBOMB_RANGE = { 10, 4, 5, 6 };
 	public static final double[] FIREBOMB_RELOAD = { 0, 0, 0, 0 };
 	public static final double[] FIREBOMB_HITPOINTS = { 5, 10, 15, 20 };
@@ -91,6 +93,7 @@ public class Constants {
 	// Authored by: mdmab
 	public static int BOARD_DASH_WIDTH = 350;
 	public static int BOARD_DASH_HEIGHT = 367;
+
 //	public static List<String> VALID_OBJECT_NAMES = Arrays.asList(new String[]{
 //			"GUN_TOWER", "HEAL_TOWER", "STUN_TOWER",
 //			"SPRING_NORTH", "SPRING_SOUTH", "SPRING_EAST", "SPRING_WEST",
@@ -100,4 +103,5 @@ public class Constants {
 //	public static List<String> VALID_DIRECTIONS = Arrays.asList(new String[]{
 //			"NORTH", "SOUTH", "EAST", "WEST"
 //	});
+
 }

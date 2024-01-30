@@ -12,6 +12,9 @@ import com.codingame.gameengine.module.tooltip.TooltipModule;
 import TowerDefense.Attacker;
 import TowerDefense.SubTile;
 
+import static TowerDefense.Constants.BOARD_DASH_WIDTH;
+import static view.BoardView.CELL_SIZE;
+
 public class AttackerView {
 	private static final int WALK_DURATION = 200;
 	private static final int DEATH_DURATION = 1000;
@@ -41,6 +44,8 @@ public class AttackerView {
 		spriteCache.add(new ArrayList<Group>());
 		spriteCache.add(new ArrayList<Group>());
 	}
+
+	Circle shockWaveEffect;
 	final Random random = new Random();
 
 	private String getResourcePath(String type){
