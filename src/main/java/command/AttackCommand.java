@@ -15,6 +15,7 @@ public class AttackCommand extends Command {
         return this.direction;
     }
 
+    @Override
     public String toString() {
         return "Player: " + player.getIndex() + ", " +
                 "Attacker: " + attacker.getId() + ", " +

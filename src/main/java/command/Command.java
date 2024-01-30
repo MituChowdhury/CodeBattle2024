@@ -19,4 +19,6 @@ public abstract class Command {
     public Attacker getAttacker() {
         return attacker;
     }
+
+    public abstract String toString();
 }

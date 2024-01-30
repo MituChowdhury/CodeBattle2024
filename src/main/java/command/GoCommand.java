@@ -11,6 +11,7 @@ public class GoCommand extends Command {
     }
 
 
+    @Override
     public String toString() {
         return "Player: " + player.getIndex() + ", " +
                 "Attacker: " + attacker.getId();

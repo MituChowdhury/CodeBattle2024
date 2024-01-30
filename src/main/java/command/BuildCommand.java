@@ -28,6 +28,7 @@ public class BuildCommand extends Command {
         return posY;
     }
 
+    @Override
     public String toString() {
         return "Player: " + player.getIndex() + ", " +
                 "Attacker: " + attacker.getId() + ", " +
