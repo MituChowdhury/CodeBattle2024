@@ -39,6 +39,14 @@ public class Tile {
 
 	public boolean hasNonDestructibleObject() { return NDobstacle;}
 
+	public void setDestructibleObject(){
+		this.Dobstacle = true;
+	}
+
+
+	public void unsetDestructibleObject(){
+		this.Dobstacle = false;
+	}
 	public boolean hasAnyObject(){
 		return  Dobstacle || NDobstacle;
 	}

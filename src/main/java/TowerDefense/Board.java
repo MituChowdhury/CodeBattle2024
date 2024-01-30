@@ -384,9 +384,46 @@ public class Board {
 
 	private void build(Player player, int x, int y, String type) throws InvalidActionException {
 		if (x < 0 || x >= width || y < 0 || y >= height) throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
+
+		if (!grid[x][y].canBuild()) {
+			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
+		}
+
 		Tower tower = null;
 		switch (type.toUpperCase()) {
 
+		case "GUNTOWER":
+			tower = new GunTower(grid[x][y]);
+			break;
+		case "FIRETOWER":
+			tower = new FireTower(grid[x][y]);
+			break;
+		case "GLUETOWER":
+			tower = new GlueTower(grid[x][y]);
+			break;
+		case "HEALTOWER":
+			tower = new HealTower(grid[x][y]);
+			break;
+		case "SPRINGTRAP_U":
+			tower = new SpringTrap(grid[x][y], 1,this);
+			break;
+		case "SPRINGTRAP_R":
+			tower = new SpringTrap(grid[x][y], 2,this);
+			break;
+		case "SPRINGTRAP_D":
+			tower = new SpringTrap(grid[x][y], 3,this);
+			break;
+		case "SPRINGTRAP_L":
+			tower = new SpringTrap(grid[x][y], 4,this);
+			break;
+		case "FIREBOMB":
+			tower = new FireBomb(grid[x][y]);
+			break;
+		case "WALL":
+			tower = new Wall(grid[x][y]);
+			break;
+		default:
+			throw new InvalidActionException("tower type " + type + " unknown", true, player);
 			case "GUNTOWER":
 				tower = new GunTower(grid[x][y]);
 				break;
@@ -417,10 +454,10 @@ public class Board {
 			default:
 				throw new InvalidActionException("tower type " + type + " unknown", true, player);
 		}
-		if (!tower.getTile().canBuild()) {
-			tower.undoBuild();
-			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
-		}
+//		if (!tower.getTile().canBuild()) {
+//			tower.undoBuild();
+//			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
+//		}
 		for (Tower t : towers) {
 			if (t.getTile() == tower.getTile()) {
 				tower.undoBuild();

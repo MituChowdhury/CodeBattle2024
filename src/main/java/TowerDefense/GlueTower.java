@@ -15,7 +15,10 @@ public class GlueTower extends Tower {
 		properties[TowerProperty.DAMAGE.ordinal()] = Constants.GLUETOWER_DAMAGE;
 		properties[TowerProperty.RANGE.ordinal()] = Constants.GLUETOWER_RANGE;
 		properties[TowerProperty.RELOAD.ordinal()] = Constants.GLUETOWER_RELOAD;
+		properties[TowerProperty.HITPOINT.ordinal()] = Constants.GLUETOWER_HITPOINT;
+		properties[TowerProperty.FUSETIME.ordinal()] = Constants.GLUETOWER_FUSETIME;
 		cost = Constants.GLUETOWER_COST;
+		hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
 	}
 
 	@Override

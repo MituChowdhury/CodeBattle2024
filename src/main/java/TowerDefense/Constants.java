@@ -34,11 +34,21 @@ public class Constants {
 	public static final double[] FIREBOMB_FUSETIME = { 2, 1, 0, 0 };
 
 
-
-
 	public static final double[] SPRINGTRAP_DAMAGE = { 2, 3, 4, 5 };
 	public static final double[] SPRINGTRAP_RANGE = { 1, 0, 0, 0 };
 	public static final double[] SPRINGTRAP_RELOAD = { 0, 4, 3, 2 };
+	public static final double[] SPRINGTRAP_HITPOINT = { 5, 10, 15, 20 };
+	public static final double[] SPRINGTRAP_FUSETIME = { 0, 0, 0, 0 };
+	public static final int SPRINGTRAP_COST = 10;
+
+
+	public static final double[] WALL_DAMAGE = { 0, 0, 0, 0 };
+	public static final double[] WALL_RANGE = { 0, 0, 0, 0 };
+	public static final double[] WALL_RELOAD = { 0, 0, 0, 0 };
+	public static final double[] WALL_HITPOINT = { 5, 10, 15, 20 };
+	public static final double[] WALL_FUSETIME = { 0, 0, 0, 0 };
+	public static final int WALL_COST = 10;
+
 	public static final int FIRETOWER_COST = 100;
 	public static final double[] FIRETOWER_DAMAGE = { 2, 3, 5, 7 };
 	public static final double[] FIRETOWER_RANGE = { 1.5, 2, 2.3, 2.5 };
@@ -48,6 +58,8 @@ public class Constants {
 	public static final double[] GLUETOWER_DAMAGE = { 8, 15, 25, 40 }; // duration of slowdown effect
 	public static final double[] GLUETOWER_RANGE = { 3, 4, 5, 6 };
 	public static final double[] GLUETOWER_RELOAD = { 4, 3, 2, 1 };
+	public static final double[] GLUETOWER_HITPOINT = { 5, 10, 15, 20 };
+	public static final double[] GLUETOWER_FUSETIME = { 0, 0, 0, 0 };
 	public static final int GLUE_SLOWDOWN = 4;
 	public static final int HEALTOWER_COST = 100;
 	public static final double[] HEALTOWER_DAMAGE = { 5, 8, 15, 30 };
