@@ -70,4 +70,9 @@ public abstract class TowerView {
 		if (towerFixedSprite != null)
 			this.towerFixedSprite.setImage(spriteFileBaseName + "Fixed" + upgradeLevel + ".png");
 	}
+
+	// TODO: Add animation here
+	public void destroy() {
+		towerSprite.setVisible(false);
+	}
 }

@@ -1,5 +1,6 @@
 package TowerDefense;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -260,7 +261,10 @@ public class Board {
 			}
 		});
 
-		for (Tower t : towers) {
+		ArrayList<Integer> to_del = new ArrayList<Integer>();
+
+		for (int t_i=0; t_i<towers.size(); t_i++) {
+			Tower t = towers.get(t_i);
 			t.attack(attackers);
 			for (int i = attackers.size() - 1; i >= 0; i--) {
 				Attacker a = attackers.get(i);
@@ -271,7 +275,19 @@ public class Board {
 					t.getOwner().kill(a);
 				}
 			}
+
+//			if( t.getClass() == FireBomb.class && t.getLifetime()  ) {
+//				to_del.add(t_i);
+//			}
 		}
+
+		Collections.sort(to_del);
+		for( int i=0; i<to_del.size(); i++ ) {
+			Tower t = towers.get(to_del.get(i));
+			t.dealDamage((int) t.getProperty(TowerProperty.HITPOINT));
+			towers.remove(to_del.get(i)-i);
+		}
+
 
 		for (int i = attackers.size() - 1; i >= 0; i--) {
 			Attacker a = attackers.get(i);
@@ -335,6 +351,9 @@ public class Board {
 			break;
 		case "SPRINGTRAP_L":
 			tower = new SpringTrap(grid[x][y], 4,this);
+			break;
+		case "FIREBOMB":
+			tower = new FireBomb(grid[x][y]);
 			break;
 		default:
 			throw new InvalidActionException("tower type " + type + " unknown", true, player);

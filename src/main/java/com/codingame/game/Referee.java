@@ -57,6 +57,21 @@ public class Referee extends AbstractReferee {
 
 	@Override
 	public void gameTurn(int turn) {
+		try {
+			if( turn == 4 ) {
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "GUNTOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 14, 7, "GUNTOWER");
+			}
+
+			if( turn == 12 ) {
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 8, "FIREBOMB");
+			}
+		} catch ( InvalidActionException e ) {
+			System.out.println("asdasd #################################################################################################################################");
+			System.out.println(e.getMessage());
+			throw new NullPointerException();
+		}
+
 		for (Player player : gameManager.getActivePlayers()) {
 			for (String line : board.getPlayerInput(player, turn == 1)) {
 				player.sendInputLine(line);
@@ -176,9 +191,9 @@ public class Referee extends AbstractReferee {
 			if (player.isDead() && player.isActive())
 				player.deactivate(player.getNicknameToken() + ": no lives left");
 		}
-		if( turn == 100 ) {
-			board.test();
-		}
+//		if( turn == 20 ) {
+//			board.test();
+//		}
 		if (turn == Constants.TURN_COUNT) {
 			gameManager.getActivePlayers().get(0).deactivate();
 			gameManager.getActivePlayers().get(0).deactivate();
@@ -198,7 +213,7 @@ public class Referee extends AbstractReferee {
 			Circle shockWaveEffect = graphicEntityModule.createCircle()
 				.setX((int) calculationX + BOARD_DASH_WIDTH )
 				.setY((int) calculationY )
-				.setRadius(20,Curve.EASE_IN)
+				.setRadius(0,Curve.EASE_IN)
 				.setLineWidth(3, Curve.EASE_IN)
 				.setLineAlpha(1,Curve.EASE_IN)
 				.setLineColor(0xffffff,Curve.EASE_IN)
