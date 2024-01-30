@@ -17,11 +17,16 @@ public class Constants {
 	public static final double[] GUNTOWER_DAMAGE = { 5, 8, 15, 30 };
 	public static final double[] GUNTOWER_RANGE = { 3, 4, 5, 6 };
 	public static final double[] GUNTOWER_RELOAD = { 0, 4, 3, 2 };
+	public static final double[] GUNTOWER_HITPOINT = { 5, 10, 15, 20 };
 
 
 	public static final double[] FIREBOMB_DAMAGE = { 5, 8, 15, 30 };
 	public static final double[] FIREBOMB_RANGE = { 3, 4, 5, 6 };
 	public static final double[] FIREBOMB_RELOAD = { 0, 0, 0, 0 };
+	public static final double[] FIREBOMB_HITPOINTS = { 5, 10, 15, 20 };
+	public static final double[] FIREBOMB_FUSETIME = { 2, 1, 0, 0 };
+
+
 
 
 	public static final double[] SPRINGTRAP_DAMAGE = { 2, 3, 4, 5 };

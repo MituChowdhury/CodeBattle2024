@@ -270,16 +270,17 @@ public class Board {
 				}
 			}
 
-			if( t.getClass() == FireBomb.class && ((FireBomb) t).isUsed() ) {
-				((FireBomb) t).disappear();
-				to_del.add(t_i);
-			}
+//			if( t.getClass() == FireBomb.class && t.getLifetime()  ) {
+//				to_del.add(t_i);
+//			}
 		}
 
-//		Collections.sort(to_del);
-//		for( int i=0; i<to_del.size(); i++ ) {
-//			towers.remove(to_del.get(i)-i);
-//		}
+		Collections.sort(to_del);
+		for( int i=0; i<to_del.size(); i++ ) {
+			Tower t = towers.get(to_del.get(i));
+			t.dealDamage((int) t.getProperty(TowerProperty.HITPOINT));
+			towers.remove(to_del.get(i)-i);
+		}
 
 
 		for (int i = attackers.size() - 1; i >= 0; i--) {

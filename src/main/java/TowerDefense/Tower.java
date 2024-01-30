@@ -14,6 +14,7 @@ public abstract class Tower {
 	private int id;
 	private String type;
 	protected Tile tile;
+	protected int hitPoints;
 	protected int[] upgradeStates;
 	protected double[][] properties;
 	protected int cooldown;
@@ -21,6 +22,7 @@ public abstract class Tower {
 	private TowerView view;
 	private Player owner;
 	public static final String[] TowerOrder = { "HEALTOWER", "FIRETOWER", "GUNTOWER", "GLUETOWER" };
+	private int lifetime = 0;
 
 	static int idCounter = 0;
 
@@ -34,6 +36,26 @@ public abstract class Tower {
 		this.properties = new double[TowerProperty.values().length][];
 	}
 
+	public int getLifetime() {
+		return lifetime;
+	}
+
+	public void dealDamage(int damage) {
+		this.hitPoints = Math.max(0, hitPoints - damage);
+		//...
+//		this.view.dealDamage(hitPoints, maxHealth);
+		//...
+		if (isDestroyed())
+			view.destroy();
+	}
+
+	public void incrementLifeTime() {
+		this.lifetime++;
+	}
+
+	public boolean isDestroyed() {
+		return this.hitPoints == 0;
+	}
 	public boolean canUpgrade(TowerProperty property) {
 		int upgradeState = upgradeStates[property.ordinal()];
 		double[] values = properties[property.ordinal()];

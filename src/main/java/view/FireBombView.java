@@ -29,7 +29,4 @@ public class FireBombView extends TowerView {
 		attackLine.setAlpha(0);
 	}
 
-	public void disappear() {
-		boardGroup.setVisible(false);
-	}
 }

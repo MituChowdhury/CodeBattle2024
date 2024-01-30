@@ -1,5 +1,5 @@
 package TowerDefense;
 
 public enum TowerProperty {
-	DAMAGE, RANGE, RELOAD
+	DAMAGE, RANGE, RELOAD, HITPOINT, FUSETIME
 }
