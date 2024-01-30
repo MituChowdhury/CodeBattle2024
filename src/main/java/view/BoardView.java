@@ -1,15 +1,11 @@
 package view;
 
-import TowerDefense.Constants;
+import TowerDefense.*;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.entities.Group;
 import com.codingame.gameengine.module.entities.Sprite;
 import com.codingame.gameengine.module.entities.Text;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
-
-import TowerDefense.Attacker;
-import TowerDefense.Board;
-import TowerDefense.Tower;
 
 public class BoardView {
 	public static final int CELL_SIZE = 100;
@@ -52,18 +48,22 @@ public class BoardView {
 			for (int x = 0; x < board.getWidth(); x++) {
 				 if (board.getGrid()[x][y].canEnter()) {
 					Sprite canyon = Utils.createBoardSprite(graphics, "canyon.png", x, y).setZIndex(-1);
-					tooltips.setTooltipText(canyon, "x: " + x + "\ny: " + y);
-					boardGroup.add(canyon);
+
 					if (x == 0 && y == board.getHeight()/2) {
-						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png", x, y);
+
+						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png",x,y-.5);
 						headquarter.setTint(board.getPlayer(0).getColor());
+						canyon.setTint(board.getPlayer(0).getColor()).setAlpha(.3);
 						innerGroup.add(headquarter);
 					}
 					if (x == board.getWidth() - 1 && y == board.getHeight()/2) {
-						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png", x, y);
+						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png", x,y-.5);
 						headquarter.setTint(board.getPlayer(1).getColor());
+						canyon.setTint(board.getPlayer(1).getColor()).setAlpha(.3);
 						innerGroup.add(headquarter);
 					}
+					 tooltips.setTooltipText(canyon, "x: " + x + "\ny: " + y);
+					 boardGroup.add(canyon);
 				}
 				if (board.getGrid()[x][y].hasNonDestructibleObject()) {  // if there is obstacle
 					Sprite NDobstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y); // for not destructable tiles
