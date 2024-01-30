@@ -23,21 +23,15 @@ public class BoardView {
 		int width = 1920;
 		int height = 1080;
 
-		graphics.createRectangle().setFillColor(0xebebeb).setHeight(height).setWidth(width);
+		graphics.createRectangle().setFillColor(0xebebfb).setHeight(height).setWidth(width);
 		this.board = board;
 		board.setView(this);
 		this.graphics = graphics;
 		this.tooltips = tooltips;
 
-//		wave = graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(40).setStrokeColor(0x000000).setStrokeThickness(0.0).setX(855 / 2).setY(540);
 		wave =
 				graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(40).setStrokeColor(0x000000).setStrokeThickness(0.0).setX(Constants.BOARD_DASH_WIDTH / 2).setY(graphics.getWorld().getHeight() / 2);
 
-		// The animating body in the middle of the dashboard...useless..Y E E T....
-//		String[] attackerBodySprites = graphics.createSpriteSheetSplitter().setSourceImage("att_body.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("b").split();
-//		String[] attackerHelmetSprites = graphics.createSpriteSheetSplitter().setSourceImage("att_helmet.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("h").split();
-//		graphics.createSpriteAnimation().setImages(attackerBodySprites).setLoop(true).setPlaying(true).setX(100).setY(440).setScale(2);
-//		graphics.createSpriteAnimation().setImages(attackerHelmetSprites).setLoop(true).setPlaying(true).setX(100).setY(440).setScale(2);
 
 
 		double g = graphics.getWorld().getHeight();
@@ -45,7 +39,7 @@ public class BoardView {
 		boardGroup = graphics.createGroup();
 		// TODO: switch gridgroup back to BufferedGroup
 		boardGroup.setScale((double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE));
-//		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
+		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
 		boardGroup.setX(Constants.BOARD_DASH_WIDTH);
 		Group gridGroup = graphics.createGroup();
 		boardGroup.add(gridGroup);
@@ -56,20 +50,16 @@ public class BoardView {
 			innerGroup.add(Utils.createBoardSprite(graphics, "canyon.png", -1, y).setAlpha(0.7));
 			innerGroup.add(Utils.createBoardSprite(graphics, "canyon.png", board.getWidth(), y).setAlpha(0.7));
 			for (int x = 0; x < board.getWidth(); x++) {
-				if (board.getGrid()[x][y].canBuild()) {
-					Sprite plateau = Utils.createBoardSprite(graphics, "plateau.png", x, y);
-					tooltips.setTooltipText(plateau, "x: " + x + "\ny: " + y);
-					innerGroup.add(plateau);
-				} else if (board.getGrid()[x][y].canEnter()) {
+				 if (board.getGrid()[x][y].canEnter()) {
 					Sprite canyon = Utils.createBoardSprite(graphics, "canyon.png", x, y).setZIndex(-1);
 					tooltips.setTooltipText(canyon, "x: " + x + "\ny: " + y);
 					boardGroup.add(canyon);
-					if (x == 0 && y == board.getHeight()-1) {
+					if (x == 0 && y == board.getHeight()/2) {
 						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png", x, y);
 						headquarter.setTint(board.getPlayer(0).getColor());
 						innerGroup.add(headquarter);
 					}
-					if (x == board.getWidth() - 1 && y == 0) {
+					if (x == board.getWidth() - 1 && y == board.getHeight()/2) {
 						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png", x, y);
 						headquarter.setTint(board.getPlayer(1).getColor());
 						innerGroup.add(headquarter);
@@ -81,7 +71,7 @@ public class BoardView {
 					innerGroup.add(NDobstacle);
 				}
 				else if (board.getGrid()[x][y].hasDestructibleObject()) {  // if there is obstacle
-					Sprite Dobstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y).setAlpha(0.7);
+					Sprite Dobstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y).setAlpha(0.4);
 					tooltips.setTooltipText(Dobstacle, "x: " + x + "\ny: " + y);
 					innerGroup.add(Dobstacle);
 				}
