@@ -204,29 +204,13 @@ public class Board {
 //	}
 
 	// creating attackers
-	int gg = 7;
-	public void createAttackerAtBase(Player owner,Player enemy) {
 
-		Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy, 7);
-		AttackerView a_view = view.addAttacker(a);
-		a.setView(a_view);
 
-		attackers.add(a);
-	}
 
-	public void createAttackerAtPositions(Player owner, Player enemy, int[] positionY) {
-		for (int i = 0; i < Constants.CHARACTER_COUNT; ++i) {
-			Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy, positionY[i]);
-			AttackerView a_view = view.addAttacker(a);
-			a.setView(a_view);
-
-			attackers.add(a);
-		}
-	}
 
 	public void createAttackerAtPositions(Player owner, Player enemy, ArrayList<Integer> positionY) {
 		for (int i = 0; i < Constants.CHARACTER_COUNT; ++i) {
-			Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy, positionY.get(i));
+			Attacker a =new Attacker(grid, owner, enemy, positionY.get(i));
 			AttackerView a_view = view.addAttacker(a);
 			a.setView(a_view);
 
@@ -234,33 +218,21 @@ public class Board {
 		}
 	}
 
-	public void test() {
-		for (int i = attackers.size() - 1; i >= 0; i--) {
-			Attacker a = attackers.get(i);
-			a.kill();
-			veterans.add(a);
-			attackers.remove(i);
-		}
-	}
+//	public void test() {
+//		for (int i = attackers.size() - 1; i >= 0; i--) {
+//			Attacker a = attackers.get(i);
+//			a.kill();
+//			veterans.add(a);
+//			attackers.remove(i);
+//		}
+//	}
 
 	public void spawnAttackers(int turn) {
-
-		System.out.println("$$$ " + turn + " ###########################################################################################################");
-		System.out.println(towers);
-		System.out.println("###########################################################################################################");
-
-		if(turn==1){
-			for (int i = 0; i <2 ; i++) {
-				for (int j = 0; j <Constants.CHARACTER_COUNT ; j++) {
-					createAttackerAtBase(players.get(i),players.get(i^1));
-				}
-			}
-		}
 
 		for( int i=veterans.size()-1; i>=0; i-- ) {
 			Attacker a = veterans.get(i);
 			veterans.remove(i);
-			a.respawn();
+			a.spawn();
 			attackers.add(a);
 		}
 	}
@@ -591,5 +563,19 @@ public class Board {
 		for (Player player : players) {
 			player.updateView();
 		}
+	}
+
+	public void checkDeadAttacker() {
+
+		for(Attacker a:attackers){
+			if(a.hasReachedTarget() || a.isDead()){
+				a.kill();
+				veterans.add(a);
+
+			}
+		}
+
+		for(Attacker d:veterans)
+			attackers.remove(d);
 	}
 }

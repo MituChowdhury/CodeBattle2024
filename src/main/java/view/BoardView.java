@@ -33,7 +33,7 @@ public class BoardView {
 		double g = graphics.getWorld().getHeight();
 
 		boardGroup = graphics.createGroup();
-		// TODO: switch gridgroup back to BufferedGroup
+
 		boardGroup.setScale((double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE));
 		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
 		boardGroup.setX(Constants.BOARD_DASH_WIDTH);

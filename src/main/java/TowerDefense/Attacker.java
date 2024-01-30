@@ -37,7 +37,7 @@ public class Attacker {
 
 	private boolean reachOpponentBase;
 
-	public Attacker(Tile[][] grid, int hp, int speed, int bounty, Player owner, Player enemy, int spawn_position_y) {
+	public Attacker(Tile[][] grid, Player owner, Player enemy, int spawn_position_y) {
 //		id = idCounter++;
 		if (!playerAttackerCounter.containsKey(owner.getIndex())) {
 			playerAttackerCounter.put(owner.getIndex(), 0);
@@ -59,16 +59,17 @@ public class Attacker {
 			this.spawnSubtile = spawnTile.getSubTile(0,SubTile.SUBTILE_SIZE-1);
 		}
 
-		this.spawn();
-
 		this.grid = grid;
 		this.owner = owner;
 		this.enemy = enemy;
-		this.maxSpeed = speed;
-		this.hitPoints = hp;
-		this.bounty = bounty;
+		this.maxSpeed = Constants.SPEED;
+		this.hitPoints = Constants.HP;
+		this.bounty = Constants.BOUNTY;
 		this.maxHealth = hitPoints;
 		this.reachOpponentBase = false;
+
+		this.currentTile = this.spawnTile;
+		this.currentSubtile = this.spawnSubtile;
 	}
 
 	public void relocate(SubTile newSubTile) {
@@ -76,13 +77,17 @@ public class Attacker {
 		this.currentSubtile = newSubTile;
 	}
 	public void spawn() {
+		this.maxSpeed = Constants.SPEED;
+		this.hitPoints = Constants.HP;
+		this.bounty = Constants.BOUNTY;
+		this.maxHealth = hitPoints;
+
 		this.currentTile = this.spawnTile;
 		this.currentSubtile = this.spawnSubtile;
+		view.spawnAnimation();
+
 	}
 
-	public void respawn() {
-		this.spawn();
-	}
 
 	public int getId() {
 		return id;
@@ -135,9 +140,7 @@ public class Attacker {
 	}
 
 	// TODO: change this to proper functionality
-	public boolean canRespawn() {
-		return reachOpponentBase || true;
-	}
+
 
 	public boolean canHeal() {
 		return hitPoints < maxHealth;
@@ -169,9 +172,7 @@ public class Attacker {
 		return hitPoints <= 0;
 	}
 
-//	public boolean hasSucceeded() {
-//		return remainingPath.size() == 1;
-//	}
+
 
 	public void setView(AttackerView view) {
 		this.view = view;
@@ -208,9 +209,12 @@ public class Attacker {
 		steps = path;
 
 		int ln = Math.min(path.size(),getSpeed());
+
+		view.animateAttackerWalk();
 		for (int i = 0; i < ln; i++) {
 			view.move(path.get(i));
 		}
+
 
 		if (slowCountdown > 0)
 			slowCountdown--;
@@ -237,5 +241,13 @@ public class Attacker {
 		sb.append(bounty);
 
 		return sb.toString();
+	}
+
+	public boolean hasReachedTarget() {
+		if(owner.getIndex()==0){
+			return currentTile == grid[Constants.MAP_WIDTH-1][Constants.MAP_HEIGHT/2];
+		}
+
+		return  currentTile ==grid[0][Constants.MAP_HEIGHT/2];
 	}
 }

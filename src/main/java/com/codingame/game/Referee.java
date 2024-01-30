@@ -185,8 +185,14 @@ public class Referee extends AbstractReferee {
 			}
 		}
 
-		board.moveAttackers(turn);
+
+		if(turn!=1)
+			board.moveAttackers(turn);
+
 		board.fireTowers();
+		board.spawnAttackers(turn); //spawn those that were killed in previous turn
+		board.checkDeadAttacker(); //add those that are killed in this turn
+
 //		board.spawnAttackers(turn);
 
 
