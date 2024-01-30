@@ -85,7 +85,7 @@ public class AttackerView {
 			String[] attackerBodySprites = graphics.createSpriteSheetSplitter()
 					.setSourceImage(getResourcePath("walk"))
 					.setHeight(64).setWidth(64).setImageCount(3)
-					.setImagesPerRow(3).setOrigRow(0).setOrigCol(0).setName("ah"+attacker.getOwner().getIndex())
+					.setImagesPerRow(3).setOrigRow(0).setOrigCol(0).setName("ah"+attacker.getOwner().getIndex()+attacker.getId())
 					.split();
 
 			for (int i = 0; i <attackerBodySprites.length; i++) {
@@ -118,12 +118,14 @@ public class AttackerView {
 				.setSourceImage(getResourcePath("hurt"))
 				.setHeight(64).setWidth(64).setImageCount(4)
 				.setImagesPerRow(4).setOrigRow(0).setOrigCol(0).
-				setName("hurt"+attacker.getOwner().getIndex()).split();
+				setName("hurt"+attacker.getOwner().getIndex()+attacker.getId()).split();
 
 		attackerHurt = graphics.createSpriteAnimation().
 				setImages(attackerHurtSprites).
 				setScale(3).
 				setDuration(HURT_DURATION).setLoop(true).setPlaying(true).setAlpha(0);
+
+		group.add(attackerHurt);
 	}
 
 	public void animateAttackerHurt() {
@@ -132,22 +134,42 @@ public class AttackerView {
 
 		prevSprite = currentSprite;
 		currentSprite = attackerHurt;
-//		graphics.commitEntityState(0, attackerHurt);
+
+		group.remove(attackerBody);
+		group.add(attackerHurt);
+
+		attackerBody.setAlpha(0).setX(-BoardView.CELL_SIZE).setY(-BoardView.CELL_SIZE);
+		attackerHurt.setAlpha(1).setX(-BoardView.CELL_SIZE).setY(-BoardView.CELL_SIZE);
+
+		graphics.commitEntityState(0, attackerBody);
+		graphics.commitEntityState(0, attackerHurt);
+
+		attackerHurt.setAlpha(0).setX(-BoardView.CELL_SIZE).setY(-BoardView.CELL_SIZE);
+		attackerBody.setAlpha(1).setX(-BoardView.CELL_SIZE).setY(-BoardView.CELL_SIZE);
+
+		graphics.commitEntityState(0.5, attackerHurt);
+		graphics.commitEntityState(0.5, attackerBody);
+
+		group.remove(attackerHurt);
+		group.add(attackerBody);
 	}
 
 
 	public void move(SubTile nextSubTile) {
 
-		if (prevSprite != null) {
-			group.remove(prevSprite);
-			group.add(currentSprite);
+//		if (prevSprite != null) {
+//			group.remove(prevSprite);
+//			group.add(currentSprite);
+//
+//			prevSprite.setAlpha(0);
+//			currentSprite.setAlpha(1);
+//		}
 
-			prevSprite.setAlpha(0);
-			currentSprite.setAlpha(1);
-		}
+		attackerHurt.setAlpha(0);
+		attackerBody.setAlpha(1);
 
-//		graphics.commitEntityState(0, attackerBody);
-		graphics.commitEntityState(0, attackerHurt);
+		graphics.commitEntityState(0, attackerBody);
+//		graphics.commitEntityState(0, attackerHurt);
 
 		if(attacker.getOwner().getIndex()==0) {
 			group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER0_X_OFFSET)));

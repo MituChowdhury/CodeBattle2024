@@ -146,7 +146,7 @@ class TestAgent {
 //                System.out.println("BUILD 5 5 GUNTOWER");
                 System.out.println("go 1");
                 System.out.println("build 2 GUN_TOWER 20 14");
-                System.out.println("attack 3 NORTH");
+                System.out.println("attack 2 NORTH");
 //                System.out.println("forte");
                 System.out.println("");
                 System.out.println("wtf");
