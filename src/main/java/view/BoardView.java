@@ -19,6 +19,10 @@ public class BoardView {
 	private TooltipModule tooltips;
 	private Text wave;
 
+	public double gg() {
+		return (double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE);
+	}
+
 	public BoardView(Board board, GraphicEntityModule graphics, TooltipModule tooltips) {
 		int width = 1920;
 		int height = 1080;
@@ -38,9 +42,9 @@ public class BoardView {
 
 		boardGroup = graphics.createGroup();
 		// TODO: switch gridgroup back to BufferedGroup
-//		boardGroup.setScale((double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE));
-//		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
-//		boardGroup.setX(Constants.BOARD_DASH_WIDTH);
+		boardGroup.setScale((double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE));
+		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
+		boardGroup.setX(Constants.BOARD_DASH_WIDTH);
 
 		//rabbani: should be uncomment
 		Group gridGroup = graphics.createGroup();

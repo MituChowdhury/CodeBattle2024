@@ -20,11 +20,13 @@ public class GunTowerView extends TowerView {
 		attackLine.setLineColor(0xff0000).setAlpha(0);
 		attackLine.setLineWidth(5);
 
+		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
+
 		canonBall = graphics.createCircle();
 		canonBall
 				.setRadius(10)
-				.setX(Constants.BOARD_DASH_WIDTH + (int) (BoardView.CELL_SIZE * (tower.getTile().getX())))
-				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY())))
+				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH)
+				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY()) * gg))
 				.setAlpha(1)
 				.setLineWidth(0)
 				.setFillColor(0x3D3B40);
@@ -42,6 +44,8 @@ public class GunTowerView extends TowerView {
 
 	@Override
 	public void attack(Attacker a) {
+		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
+
 		attackSprite.setAlpha(1);
 		attackSprite.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX() + .8)));
 		attackSprite.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY() + .5)));
@@ -52,8 +56,8 @@ public class GunTowerView extends TowerView {
 
 		canonBall
 				.setAlpha(.8, Curve.EASE_OUT)
-				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX())))
-				.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY())));
+				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH)
+				.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY()) * gg));
 
 
 		graphics.commitEntityState(1, canonBall);
