@@ -78,16 +78,19 @@ public class Referee extends AbstractReferee {
 
 	@Override
 	public void gameTurn(int turn) {
-
-		if( turn == 1 ) {
-			try {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "SPRINGTRAP_U");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 14, 7, "SPRINGTRAP_D");
-			} catch ( InvalidActionException e ) {
-				System.out.println("asdasd #################################################################################################################################");
-				System.out.println(e.getMessage());
-				throw new NullPointerException();
+		try {
+			if (turn == 4) {
+//				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "GUNTOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 10, 7, "GUNTOWER");
 			}
+
+			if (turn == 12) {
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 8, "FIREBOMB");
+			}
+		} catch (InvalidActionException e) {
+			System.out.println("asdasd #################################################################################################################################");
+			System.out.println(e.getMessage());
+			throw new NullPointerException();
 		}
 
 		for (Player player : gameManager.getActivePlayers()) {
@@ -112,7 +115,7 @@ public class Referee extends AbstractReferee {
 					String[] xOuts = coords.split(" ");
 
 					if (player.getIndex() == 0) {
-						for (String x: xOuts) {
+						for (String x : xOuts) {
 							playerOneXs.add(Integer.parseInt(x));
 							System.err.println("Pos: " + x);
 						}
@@ -120,9 +123,8 @@ public class Referee extends AbstractReferee {
 						for (int i = 0; i < playerOneXs.size(); ++i) {
 							System.out.printf("(%d, 0)\n", playerOneXs.get(i));
 						}
-					}
-					else {
-						for (String x: xOuts) {
+					} else {
+						for (String x : xOuts) {
 							playerTwoXs.add(Integer.parseInt(x));
 							System.err.println("Pos: " + x);
 						}
@@ -135,10 +137,9 @@ public class Referee extends AbstractReferee {
 //					for (int pos: playerOneXs) {
 					Player owner = board.getPlayer(player.getIndex());
 					Player opponent = board.getPlayer(player.getIndex() ^ 1);
-					board.createAttackerAtPositions(owner, opponent, player.getIndex() == 0 ? playerOneXs: playerTwoXs);
+					board.createAttackerAtPositions(owner, opponent, player.getIndex() == 0 ? playerOneXs : playerTwoXs);
 //					}
-				}
-				else {
+				} else {
 //					actions.forEach(actionList -> {
 //						for (String action: actionList.split(";")) {
 //							System.out.println(action);
@@ -151,8 +152,7 @@ public class Referee extends AbstractReferee {
 					actions.forEach(action -> {
 						try {
 							parseCommand(player, action.split(" "));
-						}
-						catch (BadCommandException ex) {
+						} catch (BadCommandException ex) {
 							System.err.println("\t[Exception] " + ex.getMessage());
 						}
 					});
@@ -221,20 +221,17 @@ public class Referee extends AbstractReferee {
 			GoCommand cmd = Util.getGoCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
 			System.out.println(cmd.toString());
-		}
-		else if (commandArgs[0].equals("build")) {
+		} else if (commandArgs[0].equals("build")) {
 			// Implementation for "build" command...
 			BuildCommand cmd = Util.getBuildCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
 			System.out.println(cmd.toString());
-		}
-		else if (commandArgs[0].equals("attack") && Util.checkAttackStructure(commandArgs)) {
+		} else if (commandArgs[0].equals("attack") && Util.checkAttackStructure(commandArgs)) {
 			// Implementation for "attack" command...
 			AttackCommand cmd = Util.getAttackCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
 			System.out.println(cmd.toString());
-		}
-		else {
+		} else {
 			// Exceptions for invalid commands...
 			throw new BadCommandException("Invalid command sent by the player.");
 		}
@@ -257,6 +254,7 @@ public class Referee extends AbstractReferee {
 		//if (scores[0] < scores[1]) endSprite = "win1";
 		//endScreenModule.setTitleRankingsSprite(endSprite + ".png");
 	}
+}
 //}
 
 // ----------------------------------------------------------------------------- //
@@ -347,7 +345,6 @@ public class Referee extends AbstractReferee {
 //			gameManager.endGame();
 //		}
 //	}
-
 //	@Override
 //	public void onEnd() {
 //		int[] scores = gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray();
@@ -361,7 +358,4 @@ public class Referee extends AbstractReferee {
 //		//if (scores[0] < scores[1]) endSprite = "win1";
 //		//endScreenModule.setTitleRankingsSprite(endSprite + ".png");
 //	}
-}
-//=======
 //				}
-//>>>>>>> origin/mdmab
