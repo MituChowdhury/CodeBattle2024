@@ -201,7 +201,7 @@ public class Referee extends AbstractReferee {
 		}
 
 
-
+		// shockwave Animation
 		for(Attacker attacker: board.getAttackers()){
 
 			double calculationX = (double) ((CELL_SIZE-1) * attacker.getCurrentSubTile().getX())

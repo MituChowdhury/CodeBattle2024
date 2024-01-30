@@ -1,5 +1,7 @@
 package view;
 
+import TowerDefense.Constants;
+import com.codingame.gameengine.module.entities.Curve;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.entities.Group;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
@@ -17,8 +19,25 @@ public class GunTowerView extends TowerView {
 		attackLine.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5)));
 		attackLine.setLineColor(0xff0000).setAlpha(0);
 		attackLine.setLineWidth(5);
+
+		canonBall = graphics.createCircle();
+		canonBall
+				.setRadius(10)
+				.setX(Constants.BOARD_DASH_WIDTH + (int) (BoardView.CELL_SIZE * (tower.getTile().getX())))
+				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY())))
+				.setAlpha(1)
+				.setLineWidth(0)
+				.setFillColor(0x3D3B40);
+
+		graphics.commitEntityState(0, canonBall);
+
 		commitSprites();
 		updateTooltip();
+
+
+
+
+
 	}
 
 	@Override
@@ -26,12 +45,26 @@ public class GunTowerView extends TowerView {
 		attackSprite.setAlpha(1);
 		attackSprite.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX() + .8)));
 		attackSprite.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY() + .5)));
+
 		attackLine.setAlpha(1);
 		attackLine.setX2((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX() + .8 + 0.5)));
 		attackLine.setY2((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY() + 0.5 + 0.5)));
 
+		canonBall
+				.setAlpha(.8, Curve.EASE_OUT)
+				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX())))
+				.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY())));
+
+
+		graphics.commitEntityState(1, canonBall);
+//		graphics.commitEntityState(0, attackLine);
 		graphics.commitEntityState(0, attackSprite, attackLine);
-		attackSprite.setAlpha(0);
+//		graphics.commitEntityState(1,attackSprite);
+//		attackSprite.setAlpha(0);
 		attackLine.setAlpha(0);
+//		canonBall
+//				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX()+ 0.5)), Curve.IMMEDIATE)
+//				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5)), Curve.IMMEDIATE);
+//		graphics.commitWorldState(1);
 	}
 }
