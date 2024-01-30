@@ -12,7 +12,7 @@ import TowerDefense.Attacker;
 import TowerDefense.SubTile;
 
 public class AttackerView {
-	private static final int WALK_DURATION = 800;
+	private static final int WALK_DURATION = 400;
 	private static final int DEATH_DURATION = 1000;
 
 	private static ArrayList<ArrayList<Group>> spriteCache = new ArrayList<>();
@@ -40,7 +40,7 @@ public class AttackerView {
 	final Random random = new Random();
 
 	private String getResourcePath(String type){
-		if (attacker.getOwner().getIndex()==1){
+		if (attacker.getOwner().getIndex()==0){
 			return "hero_red_"+type+".png";
 		}
 		return "hero_blue_"+type+".png";

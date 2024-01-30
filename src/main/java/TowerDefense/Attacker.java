@@ -47,26 +47,16 @@ public class Attacker {
 		playerAttackerCounter.put(owner.getIndex(), id + 1);
 		//this.remainingPath = path;
 
-		// Errorneous code...
-//		if(owner.getIndex() == 1) {
-//			this.currentTile = grid[0][Constants.MAP_WIDTH-1];
-//			this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
-//		}
-//		else {
-//			this.currentTile = grid[Constants.MAP_HEIGHT-1][0];
-//			this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE*(SubTile.SUBTILE_SIZE-1));
-//		}
+
 
 		if(owner.getIndex() == 1) {
 			this.spawnTile = grid[Constants.MAP_WIDTH-1][spawn_position_y];
-			this.spawnSubtile = spawnTile.getSubTile(0,SubTile.SUBTILE_SIZE-1);
-			//this.currentSubtile = currentTile.getSubTiles().get(((SubTile.SUBTILE_SIZE-1)*(SubTile.SUBTILE_SIZE-1))+(SubTile.SUBTILE_SIZE-1));
+			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+
 		}
 		else {
-//			this.spawnTile = grid[0][Constants.MAP_HEIGHT-1-spawn_position_y];
 			this.spawnTile = grid[0][spawn_position_y];
-			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
-			//this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
+			this.spawnSubtile = spawnTile.getSubTile(0,SubTile.SUBTILE_SIZE-1);
 		}
 
 		this.spawn();
