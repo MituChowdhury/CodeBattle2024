@@ -114,6 +114,7 @@ public class Referee extends AbstractReferee {
 					if (player.getIndex() == 0) {
 						for (String x: xOuts) {
 							playerOneXs.add(Integer.parseInt(x));
+							System.err.println("Pos: " + x);
 						}
 
 						for (int i = 0; i < playerOneXs.size(); ++i) {
@@ -123,6 +124,7 @@ public class Referee extends AbstractReferee {
 					else {
 						for (String x: xOuts) {
 							playerTwoXs.add(Integer.parseInt(x));
+							System.err.println("Pos: " + x);
 						}
 
 						for (int i = 0; i < playerTwoXs.size(); ++i) {

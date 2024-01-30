@@ -63,7 +63,8 @@ public class Attacker {
 			//this.currentSubtile = currentTile.getSubTiles().get(((SubTile.SUBTILE_SIZE-1)*(SubTile.SUBTILE_SIZE-1))+(SubTile.SUBTILE_SIZE-1));
 		}
 		else {
-			this.spawnTile = grid[0][Constants.MAP_HEIGHT-1-spawn_position_y];
+//			this.spawnTile = grid[0][Constants.MAP_HEIGHT-1-spawn_position_y];
+			this.spawnTile = grid[0][spawn_position_y];
 			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
 			//this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
 		}

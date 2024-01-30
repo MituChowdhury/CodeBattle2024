@@ -71,8 +71,8 @@ public class AttackerView {
 			break;
 		}
 		if (group == null) {
-			healthBarRed = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-100).setY(-5).setFillColor(0xff0000);
-			healthBarGreen = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-100).setY(-5).setFillColor(0x00ff00);
+			healthBarRed = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-60).setY(70).setFillColor(0xff0000);
+			healthBarGreen = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-60).setY(70).setFillColor(0x00ff00);
 
 			String[] attackerBodySprites = graphics.createSpriteSheetSplitter()
 					.setSourceImage(getResourcePath("walk"))
