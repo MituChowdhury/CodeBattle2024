@@ -24,8 +24,7 @@ public class Attacker {
 	private Player enemy;
 	private AttackerView view;
 	private static int idCounter;
-	private ArrayList<SubTile> steps;
-	public Tile lastTile;
+private ArrayList<SubTile> steps;
 
 	Tile spawnTile;
 	SubTile spawnSubtile;
@@ -128,6 +127,7 @@ public class Attacker {
 		return currentSubtile;
 	}
 
+
 	public void kill() {
 		dealDamage(hitPoints);
 	}
@@ -179,7 +179,9 @@ public class Attacker {
 	}
 
 
+
 	public void setCurrentSubtile(SubTile t){
+
 		this.currentSubtile = t;
 		this.currentTile = currentSubtile.getTile();
 	}

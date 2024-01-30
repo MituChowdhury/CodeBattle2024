@@ -11,6 +11,9 @@ import com.codingame.gameengine.module.tooltip.TooltipModule;
 import TowerDefense.Attacker;
 import TowerDefense.SubTile;
 
+import static TowerDefense.Constants.BOARD_DASH_WIDTH;
+import static view.BoardView.CELL_SIZE;
+
 public class AttackerView {
 	private static final int WALK_DURATION = 800;
 	private static final int DEATH_DURATION = 1000;
@@ -96,7 +99,7 @@ public class AttackerView {
 		//tooltips.setTooltipText(sprite, getTooltipString());
 
 
-        shockWaveEffect = graphics.createCircle();
+
     }
 
 

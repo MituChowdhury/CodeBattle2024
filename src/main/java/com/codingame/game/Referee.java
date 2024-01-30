@@ -17,6 +17,7 @@ import com.google.inject.Inject;
 
 import view.BoardView;
 
+import static TowerDefense.Constants.BOARD_DASH_WIDTH;
 import static view.BoardView.CELL_SIZE;
 
 public class Referee extends AbstractReferee {
@@ -184,15 +185,19 @@ public class Referee extends AbstractReferee {
 			gameManager.endGame();
 		}
 
+
+
 		for(Attacker attacker: board.getAttackers()){
 
-//			double calculationX = (double) (CELL_SIZE * attacker.getLocation().getX())
-//					* (double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE)
+			double calculationX = (double) ((CELL_SIZE-1) * attacker.getCurrentSubTile().getX())
+					* (double) board.view.graphics.getWorld().getHeight() / (board.getHeight() * (CELL_SIZE-1));
+			double calculationY = (double) ((CELL_SIZE-1) * attacker.getCurrentSubTile().getY())
+					* (double) board.view.graphics.getWorld().getHeight() / (board.getHeight() * (CELL_SIZE-1));
 
 
 			Circle shockWaveEffect = graphicEntityModule.createCircle()
-				.setX((int) (CELL_SIZE * attacker.getLocation().getX()))
-				.setY((int) (CELL_SIZE * attacker.getLocation().getY()))
+				.setX((int) calculationX + BOARD_DASH_WIDTH )
+				.setY((int) calculationY )
 				.setRadius(20,Curve.EASE_IN)
 				.setLineWidth(3, Curve.EASE_IN)
 				.setLineAlpha(1,Curve.EASE_IN)
@@ -200,15 +205,7 @@ public class Referee extends AbstractReferee {
 				.setFillAlpha(0);
 
 		graphicEntityModule.commitEntityState(0, shockWaveEffect);
-//
-////		shockWaveEffect.setRadius(50,Curve.EASE_IN)
-////				.setLineAlpha(.5,Curve.EASE_IN);
-////		graphics.commitEntityState(.4, shockWaveEffect);
-////
-////		shockWaveEffect.setRadius(70,Curve.EASE_IN)
-////				.setLineAlpha(.2,Curve.EASE_IN);
-////		graphics.commitEntityState(.8, shockWaveEffect);
-//
+
 		shockWaveEffect
 				.setRadius(100,Curve.EASE_OUT)
 				.setLineAlpha(0,Curve.EASE_OUT)
