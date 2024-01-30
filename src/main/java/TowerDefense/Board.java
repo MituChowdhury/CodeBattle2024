@@ -213,6 +213,26 @@ public class Board {
 		attackers.add(a);
 	}
 
+	public void createAttackerAtPositions(Player owner, Player enemy, int[] positionY) {
+		for (int i = 0; i < Constants.CHARACTER_COUNT; ++i) {
+			Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy, positionY[i]);
+			AttackerView a_view = view.addAttacker(a);
+			a.setView(a_view);
+
+			attackers.add(a);
+		}
+	}
+
+	public void createAttackerAtPositions(Player owner, Player enemy, ArrayList<Integer> positionY) {
+		for (int i = 0; i < Constants.CHARACTER_COUNT; ++i) {
+			Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy, positionY.get(i));
+			AttackerView a_view = view.addAttacker(a);
+			a.setView(a_view);
+
+			attackers.add(a);
+		}
+	}
+
 	public void test() {
 		for (int i = attackers.size() - 1; i >= 0; i--) {
 			Attacker a = attackers.get(i);

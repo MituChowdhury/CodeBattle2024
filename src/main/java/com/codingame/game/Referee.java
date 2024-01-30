@@ -129,6 +129,12 @@ public class Referee extends AbstractReferee {
 							System.out.printf("(%d, 16)\n", playerTwoXs.get(i));
 						}
 					}
+
+//					for (int pos: playerOneXs) {
+					Player owner = board.getPlayer(player.getIndex());
+					Player opponent = board.getPlayer(player.getIndex() ^ 1);
+					board.createAttackerAtPositions(owner, opponent, player.getIndex() == 0 ? playerOneXs: playerTwoXs);
+//					}
 				}
 				else {
 //					actions.forEach(actionList -> {
@@ -180,7 +186,7 @@ public class Referee extends AbstractReferee {
 
 		board.moveAttackers(turn);
 		board.fireTowers();
-		board.spawnAttackers(turn);
+//		board.spawnAttackers(turn);
 
 
 		board.updateView();
