@@ -1,0 +1,145 @@
+<div id="statement_back" class="statement_back" style="display:none"></div>
+<div class="statement-body">
+  <!-- GOAL -->
+  <div class="statement-section statement-goal">
+    <h1>
+      <span class="icon icon-goal">&nbsp;</span>
+      <span>The Goal</span>
+    </h1>
+    <div class="statement-goal-content">
+      Survive attack waves longer than your opponent by building towers to stop them.
+    </div>
+  </div>
+  <!-- RULES -->
+  <div class="statement-section statement-rules">
+    <h1>
+      <span class="icon icon-rules">&nbsp;</span>
+      <span>Rules</span>
+    </h1>
+    <div>
+      <div class="statement-rules-content">The game is played on a map of size <const>17</const>x<const>17</const>, the origin being at the top left corner. The map contains a canyon going from the right side of the map to the left. Attackers will spawn on both ends, approaching towards the other side. <br>
+	  Your task is to stop the opponent attackers from reaching your side and to support your own attackers. <br>
+	  Each player starts with <const>350</const> money and has <const>20</const> lives, losing one for each attacker reaching the own base.
+	  <br>
+	  
+	  <h3>Attackers</h3>
+	  Attackers have a player owning them, a location on the map, movement speed, hitpoints and a bounty for killing them. <br>
+	  They will spawn at both ends of the canyon symmetrically, those attacking player 1 on the left, player 2 on the right. Each turn they move towards the base of their opponent by their movement speed. In case of multiple shortest paths, they will pick one at random. <br>
+	  When their opponent kills them, it will be rewarded by the attacker's bounty.
+	  <br>
+
+	  <h3>Towers</h3>
+	  A tower has an owner, a location, damage, range, reload and cooldown time.
+	  When a tower has an attacker in range and a cooldown time of 0, the tower will shoot at the attacker and be inactive for the next few turns, depending on the reload time. <br>
+	  An attacker is in range of a tower, when the pythagorean distance between them is less than or equal to the tower range. <br>
+	  A player can build and upgrade different types of towers as follows:
+	  <br><h4>Building towers</h4>
+	  Towers can only be built on plateaus, not in the canyon. It is not possible to build a tower at the same cell as another tower.
+	  <br><h5>Gun tower</h5>
+	  The gun tower attacks one unit at a time, reducing the hit point by its damage value. In case of multiple possible targets, it will always take the one closest to the own base.
+	  <br><h5>Fire tower</h5>
+	  The fire tower damages all opponent attackers in its range. The attack will last <const>2</const> turns, damaging the units that are in range during the turn of the attack happening or one turn after.
+	  <br><h5>Glue tower</h5>
+	  The glue tower does not cause any damage to the attackers. Instead it will slow them down for some turns. It targets all attackers in range, ignoring those which are already slowed down.
+	  <br><h5>Heal tower</h5>
+	  The heal tower does not shoot at opponent attackers. Instead it will heal the attackers of the own team, making it harder for the opponent to kill them.
+	  
+	  <br><h4>Upgrading towers</h4>
+	  It is possible to make towers stronger by increasing the damage and range as well as reducing the reload time. Each of these can be upgraded independently up to three times. The upgrade costs for the first, second and third level are <const>50</const>, <const>100</const> and <const>150</const>.
+	  
+	  <br><h4>Tower strengths</h4>
+	  The tower strengths are as follows:
+	  <!--<table>
+	  <tr><th width="100"></th><th colspan="3">Gun tower (cost: <const>100</const>)</th><th colspan="3">Fire tower (cost: <const>100</const>)</th><th colspan="3">Glue tower (cost: <const>70</const>)</th><th colspan="3">Heal tower (cost: <const>100</const>)</th></tr>
+	  <tr><th></th><th>damage</th><th>range</th><th>reload</th><th>damage</th><th>range</th><th>reload</th><th>damage</th><th>range</th><th>reload</th><th>damage</th><th>range</th><th>reload</th></tr>
+	  <tr><td>Initial</td><td><const>5</const></td><td><const>3</const></td><td><const>5</const></td><td><const>2</const></td><td><const>1.5</const></td><td><const>8</const></td><td><const>8</const></td><td><const>3</const></td><td><const>4</const></td><td><const>5</const></td><td><const>3</const></td><td><const>5</const></td></tr>
+	  <tr><td>Upgrade 1</td><td><const>8</const></td><td><const>4</const></td><td><const>4</const></td><td><const>3</const></td><td><const>2</const></td><td><const>7</const></td><td><const>15</const></td><td><const>4</const></td><td><const>3</const></td><td><const>8</const></td><td><const>4</const></td><td><const>4</const></td></tr>
+	  <tr><td>Upgrade 2</td><td><const>15</const></td><td><const>5</const></td><td><const>3</const></td><td><const>5</const></td><td><const>2.3</const></td><td><const>6</const></td><td><const>25</const></td><td><const>5</const></td><td><const>2</const></td><td><const>15</const></td><td><const>5</const></td><td><const>3</const></td></tr>
+	  <tr><td>Upgrade 3</td><td><const>30</const></td><td><const>6</const></td><td><const>2</const></td><td><const>7</const></td><td><const>2.5</const></td><td><const>5</const></td><td><const>40</const></td><td><const>6</const></td><td><const>1</const></td><td><const>30</const></td><td><const>6</const></td><td><const>2</const></td></tr>
+	  </table>-->
+          <img src="https://i.imgur.com/p7JWEYi.png"/>
+	  
+    </div>
+  </div>
+  <!-- EXPERT RULES -->
+  <div class="statement-section statement-expertrules">
+    <h1>
+      <span class="icon icon-expertrules">&nbsp;</span>
+      <span>Expert Rules</span>
+    </h1>
+    You can find the source code of the game at <a href="https://github.com/eulerscheZahl/TowerDefense/">https://github.com/eulerscheZahl/TowerDefense/</a> <br>
+    <div class="statement-expert-rules-content">
+      The turn order is the following:
+	  <ul>
+	  <li>Upgrade commands are handled</li>
+	  <li>Build commands are handled</li>
+	  <li>Towers shoot and kill attackers</li>
+	  <li>Alive attackers move</li>
+	  <li>Attackers, which reached the opponent base, disappear and reduce the player lives</li>
+	  <li>Players with no life remaining lose</li>
+	  </ul> <br>
+	  Towers shoot in the following order: heal towers, fire towers, gun towers, glue towers. Among the same category, towers closest to the own base will shoot first. <br>
+	  In case of both players trying to build a tower at the same cell in the same turn, the player building closer to the own base will succeed. The upper half of the middle column is considered closer to player 1, the lower half to player 2.
+    </div>
+  </div>
+  <!-- PROTOCOL -->
+  <div class="statement-section statement-protocol">
+    <h1>
+      <span class="icon icon-protocol">&nbsp;</span>
+      <span>Game Input</span>
+    </h1>
+    <!-- Protocol block -->
+    <div class="blk">
+      <div class="title">Initial input</div>
+      <div class="text">
+        <p><span class="statement-lineno">Line 1: </span><var>playerId</var>, either <const>0</const> (you defend the left side) or <const>1</const> (you defend the right side)</p>
+        <p><span class="statement-lineno">Line 2: </span><var>width</var> <var>height</var>, the size of the map</p>
+        <p><span class="statement-lineno">Next <var>height</var> lines: </span>the map. A character can be <const>.</const> for a canyon or <const>#</const> for a plateau.</p>
+      </div>
+    </div>
+    <!-- Protocol block -->
+    <div class="blk">
+      <div class="title">Turn input</div>
+      <div class="text">
+        <p><span class="statement-lineno">Line 1: </span><var>myMoney</var> <var>myLives</var>, the amount of money and lives that your player has.</p>
+        <p><span class="statement-lineno">Line 2: </span><var>opponentMoney</var> <var>opponentLives</var>, the amount of money and lives that the opponent player has.</p>
+        <p><span class="statement-lineno">Line 3: </span><var>towerCount</var>, the number of towers on the map</p>
+        <p><span class="statement-lineno">Next <var>towerCount</var> lines: </span><var>towerType</var> <var>towerId</var> <var>owner</var> <var>x</var> <var>y</var> <var>damage</var> <var>range</var> <var>reload</var> <var>coolDown</var></p>
+        <p><span class="statement-lineno">Next line: </span><var>attackerCount</var>, the number of attackers on the map</p>
+        <p><span class="statement-lineno">Next <var>attackerCount</var> lines: </span><var>attackerId</var> <var>owner</var> <var>x</var> <var>y</var> <var>hitPoints</var> <var>maxHitPoints</var> <var>currentSpeed</var> <var>maxSpeed</var> <var>slowTime</var> <var>bounty</var></p>
+		
+      </div>
+    </div>
+
+    <!-- Protocol block -->
+    <div class="blk">
+      <div class="title">Output</div>
+      <div class="text">
+        <span class="statement-lineno">A single line</span> containing your actions, separated by a <const>;</const> <br>
+		an action can be:
+		<ul>
+		<li><action>BUILD x y type</action> to build at a given location. <action>type</action> can be <const>GUNTOWER</const>, <const>FIRETOWER</const>, <const>GLUETOWER</const> or <const>HEALTOWER</const></li>
+		<li><action>UPGRADE id type</action> to upgrade a tower with a given id. <action>type</action> can be <const>DAMAGE</const>, <const>RANGE</const> or <const>RELOAD</const></li>
+		<li><action>PASS</action> to do nothing</li>
+		<li><action>MSG text</action> to print a message</li>
+        <br>
+      </div>
+    </div>
+
+    <!-- Protocol block -->
+    <div class="blk">
+      <div class="title">Constraints</div>
+      <div class="text"><var>...</var> contains between 1 and 500 characters.<br>
+        <br>Allotted response time for per turn
+        is &le; <const>50</const> ms (<const>1000</const> ms for the first turn).</div>
+    </div>
+  </div>
+
+  <br>
+  <div>Graphics assets:<br>
+  <a href="https://craftpix.net/freebies/free-stone-tower-game-assets/">https://craftpix.net/freebies/free-stone-tower-game-assets/</a> <br>
+  <a href="https://craftpix.net/freebies/free-2d-monster-sprites/">https://craftpix.net/freebies/free-2d-monster-sprites/</a> <br>
+  Special thanks to <a href="https://www.codingame.com/profile/a44c2c75eb5da8d5e52184eaa92342813628822">dbdr</a>,
+   <a href="https://www.codingame.com/profile/433c83b2f60d89f64e138f0fce10b30f8598731">Illedan</a> and
+   <a href="https://www.codingame.com/profile/d0202a2b347a4fd473f840ede3e470427494112">Nixerrr</a>, who helped coding the game and create an apealing UI.
+</div>
