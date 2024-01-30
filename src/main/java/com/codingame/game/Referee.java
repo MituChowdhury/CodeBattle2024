@@ -55,8 +55,8 @@ public class Referee extends AbstractReferee {
 	public void gameTurn(int turn) {
 		try {
 			if( turn == 4 ) {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "GUNTOWER");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 14, 7, "GUNTOWER");
+//				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "GUNTOWER");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 14, 7, "GUNTOWER");
 			}
 
 			if( turn == 12 ) {

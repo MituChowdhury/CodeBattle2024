@@ -46,7 +46,7 @@ public abstract class Tower {
 //		this.view.dealDamage(hitPoints, maxHealth);
 		//...
 		if (isDestroyed())
-			view.destroy();
+			disappear();
 	}
 
 	public void incrementLifeTime() {
@@ -55,6 +55,10 @@ public abstract class Tower {
 
 	public boolean isDestroyed() {
 		return this.hitPoints == 0;
+	}
+
+	public void disappear() {
+		view.destroy();
 	}
 	public boolean canUpgrade(TowerProperty property) {
 		int upgradeState = upgradeStates[property.ordinal()];
@@ -66,6 +70,7 @@ public abstract class Tower {
 	public void upgrade(TowerProperty property) {
 		int upgradeState = upgradeStates[property.ordinal()];
 		int upgradeCost = Constants.TOWER_UPGRADE_COSTS[upgradeState];
+		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
 		owner.spendMoney(upgradeCost);
 		upgradeStates[property.ordinal()]++;
 		view.upgrade();

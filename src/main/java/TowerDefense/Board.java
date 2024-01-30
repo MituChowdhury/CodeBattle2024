@@ -270,15 +270,15 @@ public class Board {
 				}
 			}
 
-//			if( t.getClass() == FireBomb.class && t.getLifetime()  ) {
-//				to_del.add(t_i);
-//			}
+			if( t.isDestroyed() ) {
+				to_del.add(t_i);
+			}
 		}
 
 		Collections.sort(to_del);
 		for( int i=0; i<to_del.size(); i++ ) {
-			Tower t = towers.get(to_del.get(i));
-			t.dealDamage((int) t.getProperty(TowerProperty.HITPOINT));
+			Tower t = towers.get(to_del.get(i)-i);
+			t.disappear();
 			towers.remove(to_del.get(i)-i);
 		}
 
