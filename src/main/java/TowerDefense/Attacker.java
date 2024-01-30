@@ -32,6 +32,8 @@ public class Attacker {
 	private ArrayList<SubTile> steps;
 	public Tile lastTile;
 
+	private boolean attacking = false;
+
 	Tile spawnTile;
 	SubTile spawnSubtile;
 
@@ -147,6 +149,14 @@ public class Attacker {
 		hitPoints = Math.min(hitPoints + health, maxHealth);
 	}
 
+	public void attack(Tile tile) {
+		this.attacking = true;
+		if( tile.obstacleTower != null ) {
+			tile.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE);
+			// TODO: Add attacker attack animation here
+		}
+	}
+
 	//	public void dealDamage(int damage) {
 //		this.hitPoints = Math.max(0, hitPoints - damage);
 //		if (isDead())
@@ -202,6 +212,10 @@ public class Attacker {
 
 	public void move() {
 
+		if( attacking ) {
+			attacking = false;
+			return;
+		}
 
 		boolean[][] optimalTiles = PathFinder.getOptimalPathTiles(currentTile,grid);
 		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);

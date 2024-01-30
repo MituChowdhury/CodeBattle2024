@@ -17,6 +17,8 @@ public class Constants {
 	public static final int PLAYER_SCORE = 0;
 	public static final int PLAYER_DEATH_COUNT = 0;
 
+	public static final int ATTACKER_DAMAGE = 5;
+
 	public static final int GUNTOWER_COST = 100;
 	public static final int FIREBOMB_COST = 100;
 
