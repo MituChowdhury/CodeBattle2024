@@ -29,15 +29,9 @@ public class BoardView {
 		this.graphics = graphics;
 		this.tooltips = tooltips;
 
-//		wave = graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(40).setStrokeColor(0x000000).setStrokeThickness(0.0).setX(855 / 2).setY(540);
 		wave =
 				graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(40).setStrokeColor(0x000000).setStrokeThickness(0.0).setX(Constants.BOARD_DASH_WIDTH / 2).setY(graphics.getWorld().getHeight() / 2);
 
-		// The animating body in the middle of the dashboard...useless..Y E E T....
-//		String[] attackerBodySprites = graphics.createSpriteSheetSplitter().setSourceImage("att_body.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("b").split();
-//		String[] attackerHelmetSprites = graphics.createSpriteSheetSplitter().setSourceImage("att_helmet.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("h").split();
-//		graphics.createSpriteAnimation().setImages(attackerBodySprites).setLoop(true).setPlaying(true).setX(100).setY(440).setScale(2);
-//		graphics.createSpriteAnimation().setImages(attackerHelmetSprites).setLoop(true).setPlaying(true).setX(100).setY(440).setScale(2);
 
 
 		boardGroup = graphics.createGroup();
@@ -58,12 +52,12 @@ public class BoardView {
 					Sprite canyon = Utils.createBoardSprite(graphics, "canyon.png", x, y).setZIndex(-1);
 					tooltips.setTooltipText(canyon, "x: " + x + "\ny: " + y);
 					boardGroup.add(canyon);
-					if (x == 0 && y == board.getHeight()-1) {
+					if (x == 0 && y == board.getHeight()/2) {
 						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png", x, y);
 						headquarter.setTint(board.getPlayer(0).getColor());
 						innerGroup.add(headquarter);
 					}
-					if (x == board.getWidth() - 1 && y == 0) {
+					if (x == board.getWidth() - 1 && y == board.getHeight()/2) {
 						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png", x, y);
 						headquarter.setTint(board.getPlayer(1).getColor());
 						innerGroup.add(headquarter);
