@@ -205,6 +205,7 @@ private ArrayList<SubTile> steps;
 
 		boolean[][] optimalTiles = PathFinder.getOptimalPathTiles(currentTile,grid);
 		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);
+		steps = path;
 
 		int ln = Math.min(path.size(),getSpeed());
 		for (int i = 0; i < ln; i++) {

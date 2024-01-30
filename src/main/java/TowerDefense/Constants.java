@@ -45,10 +45,10 @@ public class Constants {
 //	public static final int[] WAVE_BOUNTY = { 25, 30, 30, 20, 22, 25, 25, 30, 30 };
 
 	public static  final double PLAYER0_X_OFFSET = .8;
-	public static  final double PLAYER0_Y_OFFSET = -.8;
+	public static  final double PLAYER0_Y_OFFSET = 0;
 
-	public static  final double PLAYER1_X_OFFSET = -.5;
-	public static  final double PLAYER1_Y_OFFSET = -.8;
+	public static  final double PLAYER1_X_OFFSET = -.8;
+	public static  final double PLAYER1_Y_OFFSET = 0;
 
 	public static final int HP = 300;
 	public static final int SPEED = 10;

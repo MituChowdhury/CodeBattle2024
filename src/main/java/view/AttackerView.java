@@ -29,12 +29,12 @@ public class AttackerView {
 	public static final int HEALTH_BAR_LEN = 100;  // Length of the health bar...
 	private GraphicEntityModule graphics;
 	private TooltipModule tooltips;
-	private String[] attackerBodySprites;
-	private String[] attackerHelmetSprites;
-	private String[] attackerBodyDeathSprites;
-	private String[] attackerHelmetDeathSprites;
-	private String[] attackerBodyWinSprites;
-	private String[] attackerHelmetWinSprites;
+
+//	private String[] attackerHelmetSprites;
+//	private String[] attackerBodyDeathSprites;
+//	private String[] attackerHelmetDeathSprites;
+//	private String[] attackerBodyWinSprites;
+//	private String[] attackerHelmetWinSprites;
 
 	static {
 		spriteCache.add(new ArrayList<Group>());
@@ -44,18 +44,18 @@ public class AttackerView {
 	Circle shockWaveEffect;
 	final Random random = new Random();
 
-	public AttackerView(Attacker attacker, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
-
-
-		if (attackerBodySprites == null) {
-			attackerBodySprites = graphics.createSpriteSheetSplitter().setSourceImage("att_body.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("ab").split();
-			attackerHelmetSprites = graphics.createSpriteSheetSplitter().setSourceImage("att_helmet.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("ah").split();
-			attackerBodyDeathSprites = graphics.createSpriteSheetSplitter().setSourceImage("die_body.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("db").split();
-			attackerHelmetDeathSprites = graphics.createSpriteSheetSplitter().setSourceImage("die_helmet.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("dh").split();
-			attackerBodyWinSprites = graphics.createSpriteSheetSplitter().setSourceImage("jump_body.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("jb").split();
-			attackerHelmetWinSprites = graphics.createSpriteSheetSplitter().setSourceImage("jump_helmet.png").setHeight(94).setWidth(100).setImageCount(10).setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("jh").split();
+	private String getResourcePath(String type){
+		if (attacker.getOwner().getIndex()==1){
+			return "hero_red_"+type+".png";
 		}
+		return "hero_blue_"+type+".png";
+	}
+
+
+	public AttackerView(Attacker attacker, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
 		this.attacker = attacker;
+
+
 		this.graphics = graphics;
 		this.tooltips = tooltips;
 		attacker.setView(this);
@@ -76,21 +76,32 @@ public class AttackerView {
 			break;
 		}
 		if (group == null) {
-			healthBarRed = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-100).setY(-10).setFillColor(0xff0000);
-			healthBarGreen = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-100).setY(-10).setFillColor(0x00ff00);
+			healthBarRed = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-100).setY(-5).setFillColor(0xff0000);
+			healthBarGreen = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-100).setY(-5).setFillColor(0x00ff00);
+
+			String[] attackerBodySprites = graphics.createSpriteSheetSplitter()
+					.setSourceImage(getResourcePath("walk"))
+					.setHeight(64).setWidth(64).setImageCount(3)
+					.setImagesPerRow(3).setOrigRow(0).setOrigCol(0).setName("ah"+attacker.getOwner().getIndex())
+					.split();
+
+			for (int i = 0; i <attackerBodySprites.length; i++) {
+				System.out.println(attackerBodySprites[i]);
+			}
 
 			attackerBody = graphics.createSpriteAnimation().
 					setImages(attackerBodySprites).
+					setScale(3).
 					setDuration(WALK_DURATION).setLoop(true).setPlaying(true);
-			attackerHelmet = graphics.createSpriteAnimation().
-					setImages(attackerHelmetSprites).
-					setDuration(WALK_DURATION).setLoop(true).setPlaying(true).
-					setTint(attacker.getOwner().getColor());
-			group = graphics.createGroup(healthBarRed, healthBarGreen, attackerBody, attackerHelmet)
+//			attackerHelmet = graphics.createSpriteAnimation().
+//					setImages(attackerHelmetSprites).
+//					setDuration(WALK_DURATION).setLoop(true).setPlaying(true).
+//					setTint(attacker.getOwner().getColor());
+			group = graphics.createGroup(healthBarRed, healthBarGreen, attackerBody)
 					.setX((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getX()))
 					.setY((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getY()));
 			attackerBody.setX(-BoardView.CELL_SIZE);
-			attackerHelmet.setX(-BoardView.CELL_SIZE);
+//			attackerHelmet.setX(-BoardView.CELL_SIZE);
 			if (attacker.getOwner().getIndex() == 1) {
 				group.setScaleX(-1); // sprite ke y axis borabor invert kore
 			}
@@ -107,67 +118,12 @@ public class AttackerView {
 
 
 
-	private int finalY = -1;
-
 
 	public void move(SubTile nextSubTile) {
-//		if (attacker.isSlow()) {
-//			if (glueSprite == null) {
-//				glueSprite = graphics.createSprite().setImage("glue" + (1 + attacker.getId() % 3) + ".png").setScale(0.3).setY(50);
-//				if (attacker.getOwner().getIndex() == 1) {
-//					glueSprite.setX(-BoardView.CELL_SIZE);
-//				}
-//				group.add(glueSprite);
-//				graphics.commitEntityState(0, group, glueSprite);
-//			}
-//			if (glueSprite.getAlpha() == 0) {
-//				glueSprite.setAlpha(1);
-//				graphics.commitEntityState(0, glueSprite);
-//			}
-//		} else if (glueSprite != null && glueSprite.getAlpha() == 1) {
-//			glueSprite.setAlpha(0);
-//			graphics.commitEntityState(0, glueSprite);
-//		}
-
 
 
 		graphics.commitEntityState(0, attackerBody);
-		graphics.commitEntityState(0, attackerHelmet);
 
-//		ArrayList<SubTile> neighbours = attacker.getCurrentSubTile().getNeighbors();
-//
-//		double destination_x = attacker.getEnemy().getIndex() == 0 ? 0 : ((Constants.MAP_WIDTH-1)+(((double)SubTile.SUBTILE_SIZE-1)/SubTile.SUBTILE_SIZE));
-//		double destination_y = attacker.getEnemy().getIndex() == 0 ? ((Constants.MAP_HEIGHT-1)+(((double)SubTile.SUBTILE_SIZE-1)/SubTile.SUBTILE_SIZE)) : 0;
-//		double minDist = Double.MAX_VALUE;
-//		SubTile nextSubTile = attacker.getCurrentSubTile();
-//
-//		for (SubTile st : neighbours) {
-//			if(st.getTile().isDobstacle()) continue;
-//			double dx = st.getX() - destination_x;
-//			double dy = st.getY() - destination_y;
-//			double dist = Math.sqrt(dx * dx + dy * dy);
-//			if(dist < minDist) {
-//				minDist = dist;
-//			}
-//		}
-//
-//		ArrayList<SubTile>all = new ArrayList<>();
-//
-//		for (SubTile st : neighbours) {
-//
-//			if(st.getTile().isDobstacle()) {
-//				continue;
-//			}
-//			double dx = st.getX() - destination_x;
-//			double dy = st.getY() - destination_y;
-//			double dist = Math.sqrt(dx * dx + dy * dy);
-//			if(dist == minDist) {
-//				all.add(st);
-//			}
-//		}
-
-		//if(!all.isEmpty()) nextSubTile = all.get(random.nextInt(all.size()));
-//
 		if(attacker.getOwner().getIndex()==0) {
 			group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER0_X_OFFSET)));
 			group.setY((int) (BoardView.CELL_SIZE * (nextSubTile.getY() +Constants.PLAYER0_Y_OFFSET)));
@@ -229,9 +185,9 @@ public class AttackerView {
 
 	public void kill() {
 		if (attacker.canRespawn()) {
-			changeAnimation(attackerBodyWinSprites, attackerHelmetWinSprites);
+//			changeAnimation(attackerBodyWinSprites, attackerHelmetWinSprites);
 		} else {
-			changeAnimation(attackerBodyDeathSprites, attackerHelmetDeathSprites);
+//			changeAnimation(attackerBodyDeathSprites, attackerHelmetDeathSprites);
 			graphics.commitEntityState(0.9, group);
 			group.setVisible(false);
 			//spriteCache.get(attacker.getOwner().getIndex()).add(group);

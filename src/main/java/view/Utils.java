@@ -36,4 +36,6 @@ public class Utils {
 	public static Sprite createTowerSprite(GraphicEntityModule graphics, String image, int x, int y) {
 		return graphics.createSprite().setImage(image).setX(BoardView.CELL_SIZE * x).setY(BoardView.CELL_SIZE * y);
 	}
+
+
 }
