@@ -22,8 +22,8 @@ public class FireBombView extends TowerView {
 	@Override
 	public void attack(Attacker a) {
 		attackLine.setAlpha(1);
-		attackLine.setX2((int) (BoardView.CELL_SIZE * (a.getLocation().getX() + 0.5)));
-		attackLine.setY2((int) (BoardView.CELL_SIZE * a.getLocation().getY()));
+		attackLine.setX2((int) (BoardView.CELL_SIZE * (a.getLocation().getX())));
+		attackLine.setY2((int) (BoardView.CELL_SIZE * a.getLocation().getY()+.5));
 
 		graphics.commitEntityState(0, attackLine);
 		attackLine.setAlpha(0);

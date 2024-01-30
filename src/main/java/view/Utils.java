@@ -21,8 +21,8 @@ public class Utils {
 		return sprites;
 	}
 
-	public static Sprite createBoardSprite(GraphicEntityModule graphics, String image, int x, int y) {
-		return graphics.createSprite().setImage(image).setX(BoardView.CELL_SIZE * x).setY(BoardView.CELL_SIZE * y);
+	public static Sprite createBoardSprite(GraphicEntityModule graphics, String image, double x, double y) {
+		return graphics.createSprite().setImage(image).setX((int)(BoardView.CELL_SIZE * x)).setY((int)(BoardView.CELL_SIZE * y));
 	}
 
 	public static SpriteAnimation createAnimation(GraphicEntityModule graphics, String[] images) {

@@ -22,9 +22,12 @@ public class SpringTrap extends Tower {
 		properties[TowerProperty.DAMAGE.ordinal()] = Constants.SPRINGTRAP_DAMAGE;
 		properties[TowerProperty.RANGE.ordinal()] = Constants.SPRINGTRAP_RANGE;
 		properties[TowerProperty.RELOAD.ordinal()] = Constants.SPRINGTRAP_RELOAD;
-		cost = Constants.GUNTOWER_COST;
+		properties[TowerProperty.HITPOINT.ordinal()] = Constants.SPRINGTRAP_HITPOINT;
+		properties[TowerProperty.FUSETIME.ordinal()] = Constants.SPRINGTRAP_FUSETIME;
+		cost = Constants.SPRINGTRAP_COST;
 		this.dir = dir;
 		this.board = board;
+		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
 	}
 
 	public int getSpringDistance() {

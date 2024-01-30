@@ -1,23 +1,23 @@
 package TowerDefense;
 
-import java.util.List;
-
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.entities.Group;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
-
 import view.GunTowerView;
 import view.TowerView;
+import view.WallView;
 
-public class GunTower extends Tower {
-	public GunTower(Tile tile) {
-		super("GUNTOWER", tile);
-		properties[TowerProperty.DAMAGE.ordinal()] = Constants.GUNTOWER_DAMAGE;
-		properties[TowerProperty.RANGE.ordinal()] = Constants.GUNTOWER_RANGE;
-		properties[TowerProperty.RELOAD.ordinal()] = Constants.GUNTOWER_RELOAD;
-		properties[TowerProperty.HITPOINT.ordinal()] = Constants.GUNTOWER_HITPOINT;
-		properties[TowerProperty.FUSETIME.ordinal()] = Constants.GUNTOWER_FUSETIME;
-		cost = Constants.GUNTOWER_COST;
+import java.util.List;
+
+public class Wall extends Tower {
+	public Wall(Tile tile) {
+		super("WALL", tile);
+		properties[TowerProperty.DAMAGE.ordinal()] = Constants.WALL_DAMAGE;
+		properties[TowerProperty.RANGE.ordinal()] = Constants.WALL_RANGE;
+		properties[TowerProperty.RELOAD.ordinal()] = Constants.WALL_RELOAD;
+		properties[TowerProperty.HITPOINT.ordinal()] = Constants.WALL_HITPOINT;
+		properties[TowerProperty.FUSETIME.ordinal()] = Constants.WALL_FUSETIME;
+		cost = Constants.WALL_COST;
 		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
 	}
 
@@ -45,6 +45,6 @@ public class GunTower extends Tower {
 
 	@Override
 	public TowerView createView(Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltipModule) {
-		return new GunTowerView(this, boardGroup, graphics, tooltipModule);
+		return new WallView(this, boardGroup, graphics, tooltipModule);
 	}
 }

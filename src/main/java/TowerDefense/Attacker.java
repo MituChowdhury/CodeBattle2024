@@ -1,6 +1,8 @@
 package TowerDefense;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeMap;
 
 import com.codingame.game.Player;
 
@@ -23,8 +25,17 @@ public class Attacker {
 	private Player owner;
 	private Player enemy;
 	private AttackerView view;
+<<<<<<< HEAD
 	private static int idCounter;
 private ArrayList<SubTile> steps;
+=======
+//	private static int idCounter;
+//	private static int playerOneAttackerIdCounter = 0;
+//	private static int playerTwoAttackerIdCounter = 0;
+	private static TreeMap<Integer, Integer> playerAttackerCounter = new TreeMap<>();
+	private ArrayList<SubTile> steps;
+	public Tile lastTile;
+>>>>>>> bc3af09b7cda1a10b8da82daf4d6451eb0570f4e
 
 	Tile spawnTile;
 	SubTile spawnSubtile;
@@ -32,28 +43,25 @@ private ArrayList<SubTile> steps;
 	private boolean reachOpponentBase;
 
 	public Attacker(Tile[][] grid, int hp, int speed, int bounty, Player owner, Player enemy, int spawn_position_y) {
-		id = idCounter++;
+//		id = idCounter++;
+		if (!playerAttackerCounter.containsKey(owner.getIndex())) {
+			playerAttackerCounter.put(owner.getIndex(), 0);
+		}
+//		id = (owner.getIndex() == 0 ? playerOneAttackerIdCounter++: playerTwoAttackerIdCounter++);
+		id = playerAttackerCounter.get(owner.getIndex());
+		playerAttackerCounter.put(owner.getIndex(), id + 1);
 		//this.remainingPath = path;
 
-		// Errorneous code...
-//		if(owner.getIndex() == 1) {
-//			this.currentTile = grid[0][Constants.MAP_WIDTH-1];
-//			this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
-//		}
-//		else {
-//			this.currentTile = grid[Constants.MAP_HEIGHT-1][0];
-//			this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE*(SubTile.SUBTILE_SIZE-1));
-//		}
+
 
 		if(owner.getIndex() == 1) {
 			this.spawnTile = grid[Constants.MAP_WIDTH-1][spawn_position_y];
-			this.spawnSubtile = spawnTile.getSubTile(0,SubTile.SUBTILE_SIZE-1);
-			//this.currentSubtile = currentTile.getSubTiles().get(((SubTile.SUBTILE_SIZE-1)*(SubTile.SUBTILE_SIZE-1))+(SubTile.SUBTILE_SIZE-1));
+			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+
 		}
 		else {
-			this.spawnTile = grid[0][Constants.MAP_HEIGHT-1-spawn_position_y];
-			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
-			//this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
+			this.spawnTile = grid[0][spawn_position_y];
+			this.spawnSubtile = spawnTile.getSubTile(0,SubTile.SUBTILE_SIZE-1);
 		}
 
 		this.spawn();

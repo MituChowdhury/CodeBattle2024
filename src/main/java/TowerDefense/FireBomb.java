@@ -19,15 +19,19 @@ public class FireBomb extends Tower {
 		properties[TowerProperty.HITPOINT.ordinal()] = Constants.FIREBOMB_HITPOINTS;
 		properties[TowerProperty.FUSETIME.ordinal()] = Constants.FIREBOMB_FUSETIME;
 		cost = Constants.FIREBOMB_COST;
-		int g = this.properties.length;
+	}
+
+	@Override
+	public boolean isDestroyed() {
+		return this.getProperty(TowerProperty.FUSETIME) == this.getLifetime();
 	}
 
 	@Override
 	boolean doAttack(List<Attacker> attackers) {
-		if( this.getLifetime() < 2 ) {
+		this.incrementLifeTime();
+		if( this.getLifetime() < this.getProperty(TowerProperty.FUSETIME)  ) {
 			return false;
 		}
-		this.incrementLifeTime();
 		boolean attacked = false;
 		for (Attacker a : attackers) {
 			if (getOwner() == a.getOwner() || !inRange(a) || a.isSlow())

@@ -34,6 +34,7 @@ public abstract class Tower {
 		this.tile = tile;
 		this.upgradeStates = new int[TowerProperty.values().length];
 		this.properties = new double[TowerProperty.values().length][];
+		tile.setDestructibleObject();
 	}
 
 	public int getLifetime() {
@@ -46,7 +47,7 @@ public abstract class Tower {
 //		this.view.dealDamage(hitPoints, maxHealth);
 		//...
 		if (isDestroyed())
-			view.destroy();
+			disappear();
 	}
 
 	public void incrementLifeTime() {
@@ -55,6 +56,12 @@ public abstract class Tower {
 
 	public boolean isDestroyed() {
 		return this.hitPoints == 0;
+	}
+
+	// TODO: add disappear animation here in view.destroy()
+	public void disappear() {
+		this.tile.unsetDestructibleObject();
+		view.destroy();
 	}
 	public boolean canUpgrade(TowerProperty property) {
 		int upgradeState = upgradeStates[property.ordinal()];
@@ -66,6 +73,7 @@ public abstract class Tower {
 	public void upgrade(TowerProperty property) {
 		int upgradeState = upgradeStates[property.ordinal()];
 		int upgradeCost = Constants.TOWER_UPGRADE_COSTS[upgradeState];
+		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
 		owner.spendMoney(upgradeCost);
 		upgradeStates[property.ordinal()]++;
 		view.upgrade();
