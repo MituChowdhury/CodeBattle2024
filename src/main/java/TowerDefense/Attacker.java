@@ -1,6 +1,8 @@
 package TowerDefense;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeMap;
 
 import com.codingame.game.Player;
 
@@ -23,7 +25,10 @@ public class Attacker {
 	private Player owner;
 	private Player enemy;
 	private AttackerView view;
-	private static int idCounter;
+//	private static int idCounter;
+//	private static int playerOneAttackerIdCounter = 0;
+//	private static int playerTwoAttackerIdCounter = 0;
+	private static TreeMap<Integer, Integer> playerAttackerCounter = new TreeMap<>();
 	private ArrayList<SubTile> steps;
 	public Tile lastTile;
 
@@ -33,7 +38,13 @@ public class Attacker {
 	private boolean reachOpponentBase;
 
 	public Attacker(Tile[][] grid, int hp, int speed, int bounty, Player owner, Player enemy, int spawn_position_y) {
-		id = idCounter++;
+//		id = idCounter++;
+		if (!playerAttackerCounter.containsKey(owner.getIndex())) {
+			playerAttackerCounter.put(owner.getIndex(), 0);
+		}
+//		id = (owner.getIndex() == 0 ? playerOneAttackerIdCounter++: playerTwoAttackerIdCounter++);
+		id = playerAttackerCounter.get(owner.getIndex());
+		playerAttackerCounter.put(owner.getIndex(), id + 1);
 		//this.remainingPath = path;
 
 		// Errorneous code...
