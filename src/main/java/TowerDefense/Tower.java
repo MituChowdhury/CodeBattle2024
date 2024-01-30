@@ -46,8 +46,6 @@ public abstract class Tower {
 		//...
 //		this.view.dealDamage(hitPoints, maxHealth);
 		//...
-		if (isDestroyed())
-			disappear();
 	}
 
 	public void incrementLifeTime() {
@@ -118,12 +116,12 @@ public abstract class Tower {
 		this.owner = owner;
 	}
 
-	public void attack(List<Attacker> attackers) {
+	public void attack(List<Attacker> attackers, List<Tower> towers) {
 		if (cooldown > 0) {
 			cooldown--;
 			return;
 		}
-		if (doAttack(attackers)) {
+		if (doAttack(attackers, towers)) {
 			cooldown = (int) getProperty(TowerProperty.RELOAD) - 1;
 		}
 	}
@@ -132,17 +130,30 @@ public abstract class Tower {
 	public boolean inRange(Attacker a) {
 //		for (SubTile sub : a.getSteps()) {
 		SubTile sub = a.getCurrentSubTile();
-			double dx = sub.getX() - tile.getX();
-			double dy = sub.getY() - tile.getY();
-			int rangeIndex = TowerProperty.RANGE.ordinal();
-			double range = properties[rangeIndex][upgradeStates[rangeIndex]];
-			double dist = Math.sqrt(dx * dx + dy * dy);
-			if (range >= dist) return true;
+		double dx = sub.getX() - tile.getSubTile(Constants.SUBTILE_SIZE/2, Constants.SUBTILE_SIZE/2).getX();
+		double dy = sub.getY() - tile.getSubTile(Constants.SUBTILE_SIZE/2, Constants.SUBTILE_SIZE/2).getY();
+		int rangeIndex = TowerProperty.RANGE.ordinal();
+		double range = properties[rangeIndex][upgradeStates[rangeIndex]];
+		double dist = Math.sqrt(dx * dx + dy * dy);
+		if (range >= dist) return true;
 //		}
 		return false;
 	}
 
-	abstract boolean doAttack(List<Attacker> attackers);
+	public boolean inRange(Tower a) {
+//		for (SubTile sub : a.getSteps()) {
+		Tile tower_tile = a.getTile();
+		double dx = tower_tile.getX() - this.tile.getSubTile(Constants.SUBTILE_SIZE/2, Constants.SUBTILE_SIZE/2).getX();
+		double dy = tower_tile.getY() - this.tile.getSubTile(Constants.SUBTILE_SIZE/2, Constants.SUBTILE_SIZE/2).getY();
+		int rangeIndex = TowerProperty.RANGE.ordinal();
+		double range = properties[rangeIndex][upgradeStates[rangeIndex]];
+		double dist = Math.sqrt(dx * dx + dy * dy);
+		if (range >= dist) return true;
+//		}
+		return false;
+	}
+
+	abstract boolean doAttack(List<Attacker> attackers, List<Tower> towers);
 
 	public String getPlayerInput() {
 		StringBuilder sb = new StringBuilder();

@@ -265,6 +265,24 @@ public class Board {
 		}
 	}
 
+	public void updateTowers(){
+		ArrayList<Integer> to_del = new ArrayList<Integer>();
+
+		for (int t_i=0; t_i<towers.size(); t_i++) {
+			if( towers.get(t_i).isDestroyed() ) {
+				to_del.add(t_i);
+			}
+		}
+
+		// for firebomb only
+		Collections.sort(to_del);
+		for( int i=0; i<to_del.size(); i++ ) {
+			Tower t = towers.get(to_del.get(i)-i);
+			t.disappear();
+			towers.remove(to_del.get(i)-i);
+		}
+	}
+
 	public void fireTowers() {
 		Collections.sort(towers, new Comparator<Tower>() {
 			@Override
@@ -287,7 +305,7 @@ public class Board {
 
 		for (int t_i=0; t_i<towers.size(); t_i++) {
 			Tower t = towers.get(t_i);
-			t.attack(attackers);
+			t.attack(attackers, towers);
 			for (int i = attackers.size() - 1; i >= 0; i--) {
 				Attacker a = attackers.get(i);
 				if (a.isDead()) {
@@ -297,18 +315,8 @@ public class Board {
 					t.getOwner().kill(a);
 				}
 			}
-
-			if( t.isDestroyed() ) {
-				to_del.add(t_i);
-			}
 		}
 
-		Collections.sort(to_del);
-		for( int i=0; i<to_del.size(); i++ ) {
-			Tower t = towers.get(to_del.get(i)-i);
-			t.disappear();
-			towers.remove(to_del.get(i)-i);
-		}
 
 
 		for (int i = attackers.size() - 1; i >= 0; i--) {
@@ -369,6 +377,7 @@ public class Board {
 	public boolean executeBuilds() throws InvalidActionException {
 		if (buildActions.size() == 0)
 			return false;
+
 		BuildAction buildAction = null;
 		for (BuildAction action : buildActions) {
 			if (action.isPriorityBuild()) {
@@ -385,6 +394,7 @@ public class Board {
 	private void build(Player player, int x, int y, String type) throws InvalidActionException {
 		if (x < 0 || x >= width || y < 0 || y >= height) throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
 
+
 		if (!grid[x][y].canBuild()) {
 			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
 		}
@@ -392,31 +402,31 @@ public class Board {
 		Tower tower = null;
 		switch (type.toUpperCase()) {
 
-		case "GUNTOWER":
+		case "GUN_TOWER":
 			tower = new GunTower(grid[x][y]);
 			break;
-		case "FIRETOWER":
+		case "FIRE_TOWER":
 			tower = new FireTower(grid[x][y]);
 			break;
-		case "GLUETOWER":
+		case "GLUE_TOWER":
 			tower = new GlueTower(grid[x][y]);
 			break;
-		case "HEALTOWER":
-			tower = new HealTower(grid[x][y]);
-			break;
-		case "SPRINGTRAP_U":
+//		case "HEALTOWER":
+//			tower = new HealTower(grid[x][y]);
+//			break;
+		case "SPRINGTRAP_NORTH":
 			tower = new SpringTrap(grid[x][y], 1,this);
 			break;
-		case "SPRINGTRAP_R":
+		case "SPRINGTRAP_EAST":
 			tower = new SpringTrap(grid[x][y], 2,this);
 			break;
-		case "SPRINGTRAP_D":
+		case "SPRINGTRAP_SOUTH":
 			tower = new SpringTrap(grid[x][y], 3,this);
 			break;
-		case "SPRINGTRAP_L":
+		case "SPRINGTRAP_WEST":
 			tower = new SpringTrap(grid[x][y], 4,this);
 			break;
-		case "FIREBOMB":
+		case "BOMB":
 			tower = new FireBomb(grid[x][y]);
 			break;
 		case "WALL":

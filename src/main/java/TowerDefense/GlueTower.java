@@ -22,7 +22,7 @@ public class GlueTower extends Tower {
 	}
 
 	@Override
-	boolean doAttack(List<Attacker> attackers) {
+	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
 		boolean attacked = false;
 		for (Attacker a : attackers) {
 			if (getOwner() == a.getOwner() || !inRange(a) || a.isSlow())
