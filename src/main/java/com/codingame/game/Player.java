@@ -11,6 +11,8 @@ import view.PlayerView;
 public class Player extends AbstractMultiplayerPlayer {
 	private int money = Constants.PLAYER_MONEY;
 	private int lives = Constants.PLAYER_LIVES;
+	private int scores = Constants.PLAYER_SCORE;
+	private int deathCount = Constants.PLAYER_DEATH_COUNT;
 	private PlayerView view;
 	private String message = "";
 
@@ -18,7 +20,7 @@ public class Player extends AbstractMultiplayerPlayer {
 
 	@Override
 	public int getExpectedOutputLines() {
-		return 1;
+		return 5;
 	}
 
 	public void initView(GraphicEntityModule graphics) {
@@ -47,6 +49,22 @@ public class Player extends AbstractMultiplayerPlayer {
 
 	public String getPlayerInput() {
 		return money + " " + lives;
+	}
+
+	public String getPlayerMoneyInput() {
+		return "" + money;
+	}
+
+	public String getPlayerLivesInput() {
+		return "" + lives;
+	}
+
+	public String getPlayerScoresInput() {
+		return "" + scores;
+	}
+
+	public String getPlayerDeathCountInput() {
+		return "" + deathCount;
 	}
 
 	public void loseLife() {
