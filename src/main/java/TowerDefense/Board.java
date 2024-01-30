@@ -203,8 +203,7 @@ public class Board {
 	// creating attackers
 	int gg = 7;
 	public void createAttackerAtBase(Player owner,Player enemy) {
-
-		Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy, 7);
+		Attacker a =new Attacker(grid, Constants.HP, Constants.SPEED, Constants.BOUNTY, owner, enemy, owner.getIndex()==0?Constants.MAP_HEIGHT-1:0);
 		AttackerView a_view = view.addAttacker(a);
 		a.setView(a_view);
 

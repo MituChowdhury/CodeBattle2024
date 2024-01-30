@@ -47,12 +47,12 @@ public class Attacker {
 //		}
 
 		if(owner.getIndex() == 1) {
-			this.spawnTile = grid[Constants.MAP_WIDTH-1][spawn_position_y];
+			this.spawnTile = grid[Constants.MAP_WIDTH-1][spawn_position_y+(id%Constants.CHARACTER_COUNT)];
 			this.spawnSubtile = spawnTile.getSubTile(0,SubTile.SUBTILE_SIZE-1);
 			//this.currentSubtile = currentTile.getSubTiles().get(((SubTile.SUBTILE_SIZE-1)*(SubTile.SUBTILE_SIZE-1))+(SubTile.SUBTILE_SIZE-1));
 		}
 		else {
-			this.spawnTile = grid[0][Constants.MAP_HEIGHT-1-spawn_position_y];
+			this.spawnTile = grid[0][spawn_position_y-(id%Constants.CHARACTER_COUNT)];
 			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
 			//this.currentSubtile = currentTile.getSubTiles().get(SubTile.SUBTILE_SIZE-1);
 		}
@@ -184,6 +184,26 @@ public class Attacker {
 		this.currentTile = currentSubtile.getTile();
 	}
 
+	private ArrayList<SubTile> getSteps(ArrayList<Tile>path) {
+		ArrayList<SubTile>steps = new ArrayList<>();
+		int x = this.currentSubtile.getSubX();
+		int y = this.currentSubtile.getSubY();
+		for (int i=1;i<path.size();i++) {
+			Tile cur = path.get(i-1);
+			Tile next = path.get(i);
+			if (cur.getX()==next.getX() && next.getY()<cur.getY()) {
+				for (int j=i==1?y:SubTile.SUBTILE_SIZE-1;j>=0;j--) steps.add(cur.getSubTile(this.currentSubtile.getSubX(),j));
+			} else if (cur.getX()==next.getX() && next.getY()>cur.getY()) {
+				for (int j=i==1?y:0;j<SubTile.SUBTILE_SIZE;j++) steps.add(cur.getSubTile(this.currentSubtile.getSubX(),j));
+			} else if (cur.getY()==next.getY() && next.getX()>cur.getX()) {
+				for (int j=i==1?x:0;j<SubTile.SUBTILE_SIZE;j++) steps.add(cur.getSubTile(j,this.currentSubtile.getSubY()));
+			} else if (cur.getY()==next.getY() && next.getX()<cur.getX()) {
+				for (int j=i==1?x:SubTile.SUBTILE_SIZE-1;j>=0;j--) steps.add(cur.getSubTile(j,this.currentSubtile.getSubY()));
+			}
+		}
+		return steps;
+	}
+
 	public int getDirection() {
 		int dir = 0;
 
@@ -199,7 +219,6 @@ public class Attacker {
 	}
 
 	public void move() {
-
 
 		boolean[][] optimalTiles = PathFinder.getOptimalPathTiles(currentTile,grid);
 		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);
