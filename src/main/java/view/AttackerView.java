@@ -5,6 +5,7 @@ import java.util.Random;
 
 import TowerDefense.Constants;
 import TowerDefense.Tile;
+import com.codingame.game.Player;
 import com.codingame.gameengine.module.entities.*;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 
@@ -15,8 +16,9 @@ import static TowerDefense.Constants.BOARD_DASH_WIDTH;
 import static view.BoardView.CELL_SIZE;
 
 public class AttackerView {
-	private static final int WALK_DURATION = 400;
+	private static final int WALK_DURATION = 200;
 	private static final int DEATH_DURATION = 1000;
+	private static final int HURT_DURATION = 150;
 
 	private static ArrayList<ArrayList<Group>> spriteCache = new ArrayList<>();
 
@@ -24,6 +26,8 @@ public class AttackerView {
 	private Group group;
 	private Sprite glueSprite = null;
 	private SpriteAnimation attackerBody, attackerHelmet;
+	private SpriteAnimation attackerHurt;
+	private SpriteAnimation currentSprite, prevSprite = null;
 	private Rectangle healthBarRed; // Health bar...
 	private Rectangle healthBarGreen; // Health bar...
 	public static final int HEALTH_BAR_LEN = 100;  // Length of the health bar...
@@ -49,6 +53,10 @@ public class AttackerView {
 			return "hero_red_"+type+".png";
 		}
 		return "hero_blue_"+type+".png";
+	}
+
+	private String getPathForAction(Player owner, String action) {
+		return String.format("hero/sheet_hero_%s/sheet_hero_%s", (owner.getIndex() == 0 ? "blue": "red"), action);
 	}
 
 
@@ -82,7 +90,7 @@ public class AttackerView {
 			String[] attackerBodySprites = graphics.createSpriteSheetSplitter()
 					.setSourceImage(getResourcePath("walk"))
 					.setHeight(64).setWidth(64).setImageCount(3)
-					.setImagesPerRow(3).setOrigRow(0).setOrigCol(0).setName("ah"+attacker.getOwner().getIndex())
+					.setImagesPerRow(3).setOrigRow(0).setOrigCol(0).setName("ah"+attacker.getOwner().getIndex()+attacker.getId())
 					.split();
 
 			for (int i = 0; i <attackerBodySprites.length; i++) {
@@ -93,6 +101,7 @@ public class AttackerView {
 					setImages(attackerBodySprites).
 					setScale(3).
 					setDuration(WALK_DURATION).setLoop(true).setPlaying(true);
+			currentSprite = attackerBody;
 //			attackerHelmet = graphics.createSpriteAnimation().
 //					setImages(attackerHelmetSprites).
 //					setDuration(WALK_DURATION).setLoop(true).setPlaying(true).
@@ -109,20 +118,63 @@ public class AttackerView {
 		}
 		//tooltips.setTooltipText(sprite, getTooltipString());
 
+		// Creating the animation of attacker getting attacked...
+		String[] attackerHurtSprites = graphics.createSpriteSheetSplitter()
+				.setSourceImage(getResourcePath("hurt"))
+				.setHeight(64).setWidth(64).setImageCount(4)
+				.setImagesPerRow(4).setOrigRow(0).setOrigCol(0).
+				setName("hurt"+attacker.getOwner().getIndex()+attacker.getId()).split();
 
+		attackerHurt = graphics.createSpriteAnimation().
+				setImages(attackerHurtSprites).
+				setScale(3).
+				setDuration(HURT_DURATION).setLoop(true).setPlaying(true).setAlpha(0);
 
-    }
+		group.add(attackerHurt);
+	}
 
+	public void animateAttackerHurt() {
+//		group.remove(attackerBody);
+//		group.add(attackerHurt);
 
+		prevSprite = currentSprite;
+		currentSprite = attackerHurt;
 
+		group.remove(attackerBody);
+		group.add(attackerHurt);
 
+		attackerBody.setAlpha(0).setX(-BoardView.CELL_SIZE).setY(-BoardView.CELL_SIZE);
+		attackerHurt.setAlpha(1).setX(-BoardView.CELL_SIZE).setY(-BoardView.CELL_SIZE);
 
+		graphics.commitEntityState(0, attackerBody);
+		graphics.commitEntityState(0, attackerHurt);
+
+		attackerHurt.setAlpha(0).setX(-BoardView.CELL_SIZE).setY(-BoardView.CELL_SIZE);
+		attackerBody.setAlpha(1).setX(-BoardView.CELL_SIZE).setY(-BoardView.CELL_SIZE);
+
+		graphics.commitEntityState(0.5, attackerHurt);
+		graphics.commitEntityState(0.5, attackerBody);
+
+		group.remove(attackerHurt);
+		group.add(attackerBody);
+	}
 
 
 	public void move(SubTile nextSubTile) {
 
+//		if (prevSprite != null) {
+//			group.remove(prevSprite);
+//			group.add(currentSprite);
+//
+//			prevSprite.setAlpha(0);
+//			currentSprite.setAlpha(1);
+//		}
+
+		attackerHurt.setAlpha(0);
+		attackerBody.setAlpha(1);
 
 		graphics.commitEntityState(0, attackerBody);
+//		graphics.commitEntityState(0, attackerHurt);
 
 		if(attacker.getOwner().getIndex()==0) {
 			group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER0_X_OFFSET)));
@@ -135,39 +187,18 @@ public class AttackerView {
 		}
 		attacker.setCurrentSubtile(nextSubTile);
 
+		prevSprite = currentSprite;
+		currentSprite = attackerBody;
 
-//		shockWaveEffect
-//				.setX((int) (BoardView.CELL_SIZE * nextSubTile.getX()))
-//				.setY((int) (BoardView.CELL_SIZE * nextSubTile.getY()))
-//				.setRadius(20,Curve.EASE_IN)
-//				.setLineWidth(3, Curve.EASE_IN)
-//				.setLineAlpha(1,Curve.EASE_IN)
-//				.setLineColor(0xffffff,Curve.EASE_IN)
-//				.setFillAlpha(0);
-//
-//		graphics.commitEntityState(0, shockWaveEffect);
-//
-////		shockWaveEffect.setRadius(50,Curve.EASE_IN)
-////				.setLineAlpha(.5,Curve.EASE_IN);
-////		graphics.commitEntityState(.4, shockWaveEffect);
-////
-////		shockWaveEffect.setRadius(70,Curve.EASE_IN)
-////				.setLineAlpha(.2,Curve.EASE_IN);
-////		graphics.commitEntityState(.8, shockWaveEffect);
-//
-//		shockWaveEffect
-//				.setRadius(100,Curve.EASE_OUT)
-//				.setLineAlpha(0,Curve.EASE_OUT)
-//				.setLineWidth(0,Curve.EASE_OUT);
-//
-//		graphics.commitEntityState(1, shockWaveEffect);
-
+//		prevSprite.setAlpha(0);
+//		currentSprite.setAlpha(1);
 		//tooltips.setTooltipText(sprite, getTooltipString());
 	}
 
 	public void dealDamage(int hp, int maxHp) {
 		System.err.println("Bar length: " + (int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
 		this.healthBarGreen.setWidth((int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
+		animateAttackerHurt();
 	}
 
 	public String getTooltipString() {

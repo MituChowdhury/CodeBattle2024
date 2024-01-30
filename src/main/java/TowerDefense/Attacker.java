@@ -25,8 +25,7 @@ public class Attacker {
 	private Player owner;
 	private Player enemy;
 	private AttackerView view;
-
-//	private static int idCounter;
+	//	private static int idCounter;
 //	private static int playerOneAttackerIdCounter = 0;
 //	private static int playerTwoAttackerIdCounter = 0;
 	private static TreeMap<Integer, Integer> playerAttackerCounter = new TreeMap<>();

@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Constants {
 	public static final int SUBTILE_SIZE = 10;
-	public static final int MAP_WIDTH = 22; // keep the dimensions odd for best map generation results
-	public static final int MAP_HEIGHT = 17;
+	public static final int MAP_WIDTH = 20; // keep the dimensions odd for best map generation results
+	public static final int MAP_HEIGHT = 15;
 	public static final double ENFORCE_BRANCHING_PROBABILITY = 0.6;
 	public static final int TURN_COUNT = 50;
 	public static final int MIN_PATH_LENGTH = 30;

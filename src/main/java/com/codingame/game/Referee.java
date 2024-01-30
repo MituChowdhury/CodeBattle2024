@@ -1,9 +1,6 @@
 package com.codingame.game;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 import TowerDefense.*;
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
@@ -170,9 +167,11 @@ public class Referee extends AbstractReferee {
 //					actions.forEach(System.out::println);
 
 					// Parse the output lines from the players and do actions...
+					TreeSet<Integer> usedAttackers = new TreeSet<>();
+
 					actions.forEach(action -> {
 						try {
-							executeCommand(parseCommand(player, action.split(" ")));
+							executeCommand(parseCommand(player, usedAttackers, action.split(" ")));
 						} catch (BadCommandException ex) {
 							System.err.println("\t[Exception] " + ex.getMessage());
 						}
@@ -268,7 +267,7 @@ public class Referee extends AbstractReferee {
 		}
 	}
 
-	public Command parseCommand(Player commander, String[] commandArgs) throws BadCommandException {
+	public Command parseCommand(Player commander, TreeSet<Integer> usedAttackers, String[] commandArgs) throws BadCommandException {
 		if (commandArgs.length == 1 && commandArgs[0].equals("")) {
 			// Gotta throw an exception for bad input....
 			System.err.println("[X] Wrong: (Empty)");
@@ -283,16 +282,28 @@ public class Referee extends AbstractReferee {
 			// Implementation for "go" command...
 			cmd = Util.getGoCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
+
+			throwIfAttackerUsed(usedAttackers, attacker.getId());
+			usedAttackers.add(attacker.getId());
+
 			System.out.println(cmd.toString());
 		} else if (commandArgs[0].equals("build")) {
 			// Implementation for "build" command...
 			cmd = Util.getBuildCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
+
+			throwIfAttackerUsed(usedAttackers, attacker.getId());
+			usedAttackers.add(attacker.getId());
+
 			System.out.println(cmd.toString());
 		} else if (commandArgs[0].equals("attack") && Util.checkAttackStructure(commandArgs)) {
 			// Implementation for "attack" command...
 			cmd = Util.getAttackCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
+
+			throwIfAttackerUsed(usedAttackers, attacker.getId());
+			usedAttackers.add(attacker.getId());
+
 			System.out.println(cmd.toString());
 		} else {
 			// Exceptions for invalid commands...
@@ -300,6 +311,12 @@ public class Referee extends AbstractReferee {
 		}
 
 		return cmd;
+	}
+
+	public void throwIfAttackerUsed(TreeSet<Integer> usedAttackers, int id) throws BadCommandException {
+		if (usedAttackers.contains(id)) {
+			throw new BadCommandException("Attacker has already been given a command.");
+		}
 	}
 
 	public void eliminatePlayer(Player player) {
