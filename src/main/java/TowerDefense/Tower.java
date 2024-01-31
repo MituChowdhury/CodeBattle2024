@@ -26,6 +26,7 @@ public abstract class Tower {
 
 	static int idCounter = 0;
 
+	static Player lastAttackedPlayer;
 	protected Attacker lastAttacked = null;
 
 	public Tower(String type, Tile tile) {
@@ -41,11 +42,16 @@ public abstract class Tower {
 		return lifetime;
 	}
 
-	public void dealDamage(int damage) {
+	public void dealDamage(int damage, Player dealtBy) {
 		this.hitPoints = Math.max(0, hitPoints - damage);
 		//...
 //		this.view.dealDamage(hitPoints, maxHealth);
 		//...
+		lastAttackedPlayer = dealtBy;
+	}
+
+	public Player getDestroyer() {
+		return lastAttackedPlayer;
 	}
 
 	public void incrementLifeTime() {

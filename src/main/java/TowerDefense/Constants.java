@@ -85,7 +85,7 @@ public class Constants {
 	public static  final double PLAYER1_X_OFFSET = -.05;
 	public static  final double PLAYER1_Y_OFFSET = -1.75;
 
-	public static final int HP = 100;
+	public static final int HP = 20;
 	public static final int SPEED = 10;
 	public static final int BOUNTY = 25;
 	public static final int NUM_UPGRADE_SPRITES = 3;

@@ -41,11 +41,11 @@ public class FireBomb extends Tower {
 			getView().attack(a);
 			attacked = true;
 		}
-		for (Tower a : towers) {
-			if (getOwner() == a.getOwner() || !inRange(a))
+		for (Tower t : towers) {
+			if (getOwner() == t.getOwner() || !inRange(t))
 				continue;
 			int d = (int) getProperty(TowerProperty.DAMAGE);
-			a.dealDamage((int) getProperty(TowerProperty.DAMAGE));
+			t.dealDamage((int) getProperty(TowerProperty.DAMAGE), getOwner());
 //			getView().attack(a);
 			attacked = true;
 		}

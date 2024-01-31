@@ -252,6 +252,7 @@ public class Board {
 		for( int i=0; i<to_del.size(); i++ ) {
 			Tower t = towers.get(to_del.get(i)-i);
 			t.disappear();
+			t.getDestroyer().
 			towers.remove(to_del.get(i)-i);
 		}
 	}

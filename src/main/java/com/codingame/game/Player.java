@@ -33,6 +33,11 @@ public class Player extends AbstractMultiplayerPlayer {
 
 	public void kill(Attacker a) {
 		this.money += a.getBounty();
+		this.score ++.
+	}
+
+	public void destroy(Tower t) {
+		this.score += t.getBounty();
 	}
 
 	public boolean buy(Tower tower) {

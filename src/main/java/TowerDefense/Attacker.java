@@ -235,7 +235,7 @@ public class Attacker {
 
 	public void attack(Tile target) {
 		if( target.obstacleTower != null ) {
-			target.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE);
+			target.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE, getOwner());
 		}
 		// TODO: Add attacker attack animation here
 	}
