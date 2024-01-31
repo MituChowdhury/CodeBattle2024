@@ -41,9 +41,14 @@ public class PlayerView {
 	public void createPlayerView() {
 		int baseWidth = 713;
 		int baseHeight = 367;
+		int textColor = 0xEDE0C9;
 
 		Sprite frame =
-				graphics.createSprite().setZIndex(-10000).setImage("panel.png").setTint(0xebebeb).setX(0).setY(0).setBaseWidth((int) (Constants.BOARD_DASH_WIDTH)).setBaseHeight(Constants.BOARD_DASH_HEIGHT);
+				graphics.createSprite().setZIndex(-10000).setImage("panel.png")
+						.setX(0)
+						.setY(0)
+						.setBaseWidth(Constants.BOARD_DASH_WIDTH)
+						.setBaseHeight(Constants.BOARD_DASH_HEIGHT);
 //		avatar = graphics.createSprite().setAnchor(0.5).setBaseHeight(0).setBaseWidth(0).setImage(player.getAvatarToken()).setX(132).setY(239).setZIndex(20);
 
 		//background = entityModule.createSprite().setAnchor(0).setImage("HUD_" + color + ".png").setX(238 - 50 - PLAYER_AVATAR_RADIUS / 2).setY(baseY);
@@ -63,31 +68,34 @@ public class PlayerView {
 						.setFillColor(player.getColor())
 						.setZIndex(-1);
 //		int textPos = 490;
-		int textPos = (int) (Constants.BOARD_DASH_WIDTH * 0.68723 * 0.8);
+//		int textPos = (int) (Constants.BOARD_DASH_WIDTH * 0.68723 * 0.8);
 		int textStartX = 120;
 		int textYGap = 70;
 		int fontsize = 35;
 
 		coins = graphics.createText("")
 				.setAnchorY(0.5)
-				.setFillColor(0x000000).setFontSize(fontsize)
-				.setStrokeColor(0x000000).setStrokeThickness(1.0)
+				.setFillColor(textColor).setFontSize(fontsize)
+				.setStrokeColor(0x000000)
+				.setStrokeThickness(1.0)
 				.setX(textStartX)
 				.setY(154)
 				.setTextAlign(TextBasedEntity.TextAlign.LEFT);
 
 		scores = graphics.createText("")
 						.setAnchorY(0.5)
-						.setFillColor(0x000000).setFontSize(fontsize)
-						.setStrokeColor(0x000000).setStrokeThickness(1.0)
+						.setFillColor(textColor).setFontSize(fontsize)
+						.setStrokeColor(0x000000)
+						.setStrokeThickness(1.0)
 						.setX(textStartX)
 						.setY(coins.getY() + textYGap)
 						.setTextAlign(TextBasedEntity.TextAlign.LEFT);
 
 		killCount = graphics.createText("")
 						.setAnchorY(0.5)
-						.setFillColor(0x000000).setFontSize(fontsize)
-						.setStrokeColor(0x000000).setStrokeThickness(0.0)
+						.setFillColor(textColor).setFontSize(fontsize)
+						.setStrokeColor(0x000000)
+						.setStrokeThickness(0.0)
 						.setX(textStartX)
 						.setY(scores.getY() + textYGap)
 						.setZIndex(-1)
