@@ -52,7 +52,7 @@ public class Utils {
 
 		return graphics.createSpriteAnimation()
 				.setImages(spriteImages)
-				.setX(BoardView.CELL_SIZE * x).setY(BoardView.CELL_SIZE * (y-1))  // THIS SHOULDN'T HAVE -1 but thats how it works
+				.setX(BoardView.CELL_SIZE * x).setY(BoardView.CELL_SIZE * y)  // THIS SHOULDN'T HAVE -1 but thats how it works
 				.setDuration(1000)
 //				.setScale(1.5)
 //				.setAnchor(.5)
@@ -79,8 +79,9 @@ public class Utils {
 		return graphics.createSpriteAnimation()
 				.setImages(spriteImages)
 				.setAlpha(0)
-//				.setX(BoardView.CELL_SIZE * x).setY(BoardView.CELL_SIZE * y)
-				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
+//				.setX(BoardView.CELL_SIZE * tower.getTile().getX()).setY(BoardView.CELL_SIZE * tower.getTile().getY())
+				//TODO: make concrete calculation
+				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX()+ 1 + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
 				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg))
 				.setDuration(500)
 //				.setScale(1.5)

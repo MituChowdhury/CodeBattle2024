@@ -25,8 +25,6 @@ public class GunTowerView extends TowerView {
 		shootSpriteAnimation
 				.setScale(1.2)
 				.setAlpha(0)
-				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
-				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg))
 				.setAnchor(.5);
 
 		// canonball
@@ -51,26 +49,18 @@ public class GunTowerView extends TowerView {
 
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
 
+		//TODO: make concrete calculation
 		shootSpriteAnimation.setAlpha(1, Curve.EASE_OUT)
-				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH)
+				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()+1) * gg) + Constants.BOARD_DASH_WIDTH)
 				.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY()) * gg))
-				.setRotation(Math.PI * 2 - 1);
-//				.setRotation(Math.atan(((BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg) - (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY()) * gg))/
-//						(( (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)- ((BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH))), Curve.IMMEDIATE);
-
-
-		//canonball
-//		canonBall
-//				.setAlpha(1, Curve.EASE_OUT)
-//				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH)
-//				.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY()) * gg));
-//		graphics.commitEntityState(.45, canonBall);
+		;
 
 		graphics.commitEntityState(.45, shootSpriteAnimation);
 
+		//TODO: make concrete calculation
 		shootSpriteAnimation
 				.setAlpha(0, Curve.IMMEDIATE)
-				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
+				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 1 + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
 				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg));
 
 	}
