@@ -28,7 +28,7 @@ import static TowerDefense.Constants.BOARD_DASH_WIDTH;
 import static view.BoardView.CELL_SIZE;
 
 public class Referee extends AbstractReferee {
-	public static final int FRAME_DURATION = 500;
+	public static final int FRAME_DURATION = 500; // THIS THING IS NEVER USED SO CHANGING IT HAS NO EFFECT
 	public static Random random;
 
 	@Inject
@@ -206,9 +206,15 @@ public class Referee extends AbstractReferee {
 			}
 		}
 
-		board.moveAttackers(turn);
+
+		if(turn!=1)
+			board.moveAttackers(turn);
+
 		board.updateTowers();
 		board.fireTowers();
+		board.spawnAttackers(turn); //spawn those that were killed in previous turn
+		board.checkDeadAttacker(); //add those that are killed in this turn
+
 //		board.spawnAttackers(turn);
 
 
