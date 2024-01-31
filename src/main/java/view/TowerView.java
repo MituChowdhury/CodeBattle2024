@@ -19,7 +19,10 @@ public abstract class TowerView {
 
 	protected GraphicEntityModule graphics;
 	protected TooltipModule tooltipModule;
-	protected Group boardGroup;
+	protected Group boardGroup,group;
+	private Rectangle healthBarRed; // Health bar...
+	private Rectangle healthBarGreen; // Health bar...
+	public static final int HEALTH_BAR_LEN = 100;
 
 	String spriteFileBaseName;
 	int upgradeLevel = 0;
@@ -29,12 +32,27 @@ public abstract class TowerView {
 		this.graphics = graphics;
 		tower.setView(this);
 		this.tooltipModule = tooltips;
-		this.boardGroup = boardGroup;
 		this.spriteFileBaseName = sprite;
 //		towerSprite = Utils.createTowerSprite(graphics, sprite + upgradeLevel + ".png", tower.getTile().getX(), tower.getTile().getY());
 //		towerSprite.setTint(tower.getOwner().getColor());
 		towerSpriteAnimation = Utils.createTowerSpriteAnimation(graphics, sprite + ".png", tower.getTile().getX(), tower.getTile().getY(), w, h, img_c, img_pr);
 //		towerSpriteAnimation.setTint(tower.getOwner().getColor());
+
+		//health bar code start
+		healthBarRed = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setFillColor(0xff0000);
+		healthBarGreen = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setFillColor(0x00ff00);
+
+		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
+
+		group = graphics.createGroup(healthBarRed, healthBarGreen).setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() ) ))
+				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY()-.25)));
+
+		boardGroup.add(group);
+		graphics.commitEntityState(0,group);
+		//health bar code ended
+
+		this.boardGroup=boardGroup;
+		//health bar code end
 
 	}
 
@@ -60,6 +78,16 @@ public abstract class TowerView {
 		if (towerFixedSpriteAnimation != null)
 			graphics.commitEntityState(0, towerFixedSpriteAnimation);
 	}
+
+
+
+
+
+	public void dealDamage(int hp, int maxHp) {
+		System.err.println("Bar length: " + (int) (TowerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
+		this.healthBarGreen.setWidth((int) (TowerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
+	}
+
 
 	public void updateTooltip() {
 		StringBuilder sb = new StringBuilder();
