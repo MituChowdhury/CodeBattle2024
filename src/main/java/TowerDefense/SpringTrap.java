@@ -31,6 +31,8 @@ public class SpringTrap extends Tower {
 		this.board = board;
 		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
 		this.tile.unsetDestructibleObject();
+		this.bounty = Constants.SPRINGTRAP_BOUNTY;
+		this.tile.unsetDestructibleObject();
 	}
 
 	public int getSpringDistance() {
@@ -123,11 +125,11 @@ public class SpringTrap extends Tower {
 				continue;
 			if (target == null)  // lagte pare
 				target = a;
+			target.relocate( this.getRelocateSubTile(target) );
 		}
 		if (target == null)
 			return false;
 
-		target.relocate( this.getRelocateSubTile(target) );
 		return true;
 	}
 

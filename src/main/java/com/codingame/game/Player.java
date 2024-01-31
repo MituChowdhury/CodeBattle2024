@@ -11,8 +11,10 @@ import view.PlayerView;
 public class Player extends AbstractMultiplayerPlayer {
 	private int money = Constants.PLAYER_MONEY;
 	private int lives = Constants.PLAYER_LIVES;
-	private int scores = Constants.PLAYER_SCORE;
+	private int coins = Constants.PLAYER_MONEY;
+	private int score = Constants.PLAYER_SCORE;
 	private int deathCount = Constants.PLAYER_DEATH_COUNT;
+	private int killCount = Constants.PLAYER_DEATH_COUNT;
 	private PlayerView view;
 	private String message = "";
 
@@ -32,32 +34,37 @@ public class Player extends AbstractMultiplayerPlayer {
 	}
 
 	public void kill(Attacker a) {
-		this.money += a.getBounty();
-		this.score ++.
+		this.coins += a.getBounty();
+		this.score++;
+		a.getOwner().incrementDeathCount();
+	}
+
+	public void incrementDeathCount() {
+		deathCount++;
 	}
 
 	public void destroy(Tower t) {
-		this.score += t.getBounty();
+		this.coins += t.getBounty();
 	}
 
 	public boolean buy(Tower tower) {
-		if (money < tower.getCost())
+		if (coins < tower.getCost())
 			return false;
-		money -= tower.getCost();
+		coins -= tower.getCost();
 		tower.setOwner(this);
 		return true;
 	}
 
-	public void spendMoney(int money) {
-		this.money -= money;
+	public void spendCoins(int coins) {
+		this.coins -= coins;
 	}
 
 	public String getPlayerInput() {
-		return money + " " + lives;
+		return coins + " " + lives;
 	}
 
 	public String getPlayerMoneyInput() {
-		return "" + money;
+		return "" + coins;
 	}
 
 	public String getPlayerLivesInput() {
@@ -65,7 +72,7 @@ public class Player extends AbstractMultiplayerPlayer {
 	}
 
 	public String getPlayerScoresInput() {
-		return "" + scores;
+		return "" + score;
 	}
 
 	public String getPlayerDeathCountInput() {
@@ -112,5 +119,29 @@ public class Player extends AbstractMultiplayerPlayer {
 
 	public void updateView() {
 		view.updateView();
+	}
+
+	public int getCoins() {
+		return coins;
+	}
+
+	public int getKillCount() {
+		return deathCount;  // CAUTION: function name doesnt match with variable name beware in callers
+	}
+
+	public int getScores() {
+		return score;
+	}
+
+	public void setCoins(int coins) {
+		this.coins = coins;
+	}
+
+	public void setKillCount(int killCount) {
+		this.killCount = killCount;
+	}
+
+	public void setScores(int scores) {
+		this.score = scores;
 	}
 }

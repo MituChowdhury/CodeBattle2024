@@ -287,7 +287,7 @@ public class Referee extends AbstractReferee {
 		int[] scores = gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray();
 		String[] texts = new String[2];
 		for (int i = 0; i < scores.length; i++) {
-			texts[i] = gameManager.getPlayers().get(i).getLives() + " lives, " + gameManager.getPlayers().get(i).getMoney() + " gold";
+			texts[i] = gameManager.getPlayers().get(i).getKillCount() + " deaths, " + gameManager.getPlayers().get(i).getCoins() + " gold";
 		}
 		endScreenModule.setScores(scores, texts);
 		//String endSprite = "tie";

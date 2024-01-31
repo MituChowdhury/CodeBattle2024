@@ -19,6 +19,7 @@ public class FireBomb extends Tower {
 		properties[TowerProperty.HITPOINT.ordinal()] = Constants.FIREBOMB_HITPOINTS;
 		properties[TowerProperty.FUSETIME.ordinal()] = Constants.FIREBOMB_FUSETIME;
 		cost = Constants.FIREBOMB_COST;
+		this.bounty = Constants.FIREBOMB_BOUNTY;
 	}
 
 	@Override

@@ -18,33 +18,63 @@ public class BoardView {
 	public double gg() {
 		return (double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE);
 	}
+	private Sprite sponsor;
+	private Sprite logo;
 
 	public BoardView(Board board, GraphicEntityModule graphics, TooltipModule tooltips) {
 		int width = 1920;
 		int height = 1080;
 
-		graphics.createRectangle().setFillColor(0xebebfb).setHeight(height).setWidth(width);
+		int boardBackgroundColor = 0xebebeb;
+		int dashboardBackgroundColor = 0x1f0342;
+//		int dashboardBackgroundColor = 0x3e0684;
+
+		graphics.createRectangle().setFillColor(dashboardBackgroundColor)
+				.setWidth(width)
+				.setHeight(height);
+
+		graphics.createRectangle().setFillColor(boardBackgroundColor)
+				.setWidth(width)
+				.setHeight(height)
+				.setX(Constants.BOARD_DASH_WIDTH * 4/3);
+
 		this.board = board;
 		board.setView(this);
 		this.graphics = graphics;
 		this.tooltips = tooltips;
 
-		wave =
-				graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(40).setStrokeColor(0x000000).setStrokeThickness(0.0).setX(Constants.BOARD_DASH_WIDTH / 2).setY(graphics.getWorld().getHeight() / 2);
+//		wave = graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(40).setStrokeColor(0x000000).setStrokeThickness(0.0).setX(Constants.BOARD_DASH_WIDTH / 2).setY(graphics
+//		.getWorld().getHeight() / 2);
 
+		// The images of the sponsor and the event...
+		int yOffset = 100;
 
+		sponsor = graphics.createSprite().setImage("logo_kinetik.png")
+				.setAnchorX(0.8)
+				.setAnchorY(1)
+				.setScale(0.5)
+				.setX(Constants.BOARD_DASH_WIDTH / 2)
+				.setY((graphics.getWorld().getHeight() / 2) - yOffset + 40);
+
+		logo = graphics.createSprite().setImage("logo_carnival.png")
+				.setAnchorX(0.5)
+				.setAnchorY(0)
+				.setScale(0.8)
+				.setX(Constants.BOARD_DASH_WIDTH / 2)
+				.setY(graphics.getWorld().getHeight() / 2 - yOffset);
+		// ==========================================
 
 		double g = graphics.getWorld().getHeight();
 
 		boardGroup = graphics.createGroup();
 
 		boardGroup.setScale((double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE));
-		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
-		boardGroup.setX(Constants.BOARD_DASH_WIDTH);
+//		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
+		boardGroup.setX((int) (Constants.BOARD_DASH_WIDTH * 4/3));
 
-		//rabbani: should be uncomment
 		Group gridGroup = graphics.createGroup();
 		boardGroup.add(gridGroup);
+
 		Group innerGroup = graphics.createGroup();
 		gridGroup.add(innerGroup);
 
@@ -93,13 +123,17 @@ public class BoardView {
 		TowerView view = tower.createView(boardGroup, graphics, tooltips);
 	}
 
+//	public void updateView() {
+////		String text = board.getWaveInfo();
+//		String text = "HELLOOO";
+//		// Debug....
+////		String text = "" + graphics.getWorld().getWidth() + ", " + graphics.getWorld().getHeight();
+//		// end Debug....
+//		if (!text.equals(wave.getText()))
+//			wave.setText(text);
+//	}
+
 	public void updateView() {
-//		String text = board.getWaveInfo();
-		String text = "HELLOOO";
-		// Debug....
-//		String text = "" + graphics.getWorld().getWidth() + ", " + graphics.getWorld().getHeight();
-		// end Debug....
-		if (!text.equals(wave.getText()))
-			wave.setText(text);
+		// It's here, because it doesn't break the code...
 	}
 }

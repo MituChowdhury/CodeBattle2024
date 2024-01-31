@@ -28,6 +28,7 @@ public abstract class Tower {
 
 	static Player lastAttackedPlayer;
 	protected Attacker lastAttacked = null;
+	protected int bounty;
 
 	public Tower(String type, Tile tile) {
 		this.id = idCounter++;
@@ -38,6 +39,9 @@ public abstract class Tower {
 		tile.setDestructibleObject(this);
 	}
 
+	public int getBounty() {
+		return this.bounty;
+	}
 	public int getLifetime() {
 		return lifetime;
 	}
@@ -78,7 +82,7 @@ public abstract class Tower {
 		int upgradeState = upgradeStates[property.ordinal()];
 		int upgradeCost = Constants.TOWER_UPGRADE_COSTS[upgradeState];
 		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
-		owner.spendMoney(upgradeCost);
+		owner.spendCoins(upgradeCost);
 		upgradeStates[property.ordinal()]++;
 		view.upgrade();
 		view.updateTooltip();

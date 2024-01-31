@@ -32,12 +32,10 @@ public class Attacker {
 	private ArrayList<SubTile> steps;
 	public Tile lastTile;
 
-
+	public boolean reachOpponentBase;
 
 	Tile spawnTile;
 	SubTile spawnSubtile;
-
-	private boolean reachOpponentBase;
 
 	public Attacker(Tile[][] grid, Player owner, Player enemy, int spawn_position_y) {
 //		id = idCounter++;
@@ -53,7 +51,7 @@ public class Attacker {
 
 		if(owner.getIndex() == 1) {
 			this.spawnTile = grid[Constants.MAP_WIDTH-1][spawn_position_y];
-			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, SubTile.SUBTILE_SIZE-1);
 
 		}
 		else {
