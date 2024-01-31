@@ -13,41 +13,21 @@ import TowerDefense.Tower;
 public class GunTowerView extends TowerView {
 
 
-	private SpriteAnimation canonballAnim;
+	private SpriteAnimation shootSpriteAnimation;
 	public GunTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
-		super(tower, boardGroup, graphics, tooltips, "gunTower");
-		attackSprite = graphics.createSprite().setImage("gunTowerAttack.png").setAlpha(0);
-		attackLine = graphics.createLine();
-		attackLine.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5)));
-		attackLine.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5)));
-		attackLine.setLineColor(0xff0000).setAlpha(0);
-		attackLine.setLineWidth(5);
-
-		String[] fireballSprites = graphics.createSpriteSheetSplitter()
-				.setSourceImage("fireball_sprite.png")
-				.setHeight(48).setWidth(48).setImageCount(8)
-				.setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("fireBallSprite").split();
-
-//		String[] fireballSprites = graphics.createSpriteSheetSplitter()
-//				.setSourceImage("fireball_effect_3.png")
-//				.setHeight(64).setWidth(64).setImageCount(60)
-//				.setImagesPerRow(60).setOrigRow(0).setOrigCol(0).setName("fireballSprite").split();
-
-
+		super(tower, boardGroup, graphics, tooltips, "gunTower",70, 130, 6, 6);
+		towerSpriteAnimation.setScale(1.5).setAnchorY(.5).setAnchorX(0);
 
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
 
-		canonballAnim = graphics.createSpriteAnimation()
-				.setImages(fireballSprites)
+
+		shootSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower,"fireball_sprite.png", 48,48,8, 4);
+		shootSpriteAnimation
 				.setScale(1.2)
-				.setDuration(500)
-				.setLoop(true).setPlaying(true)
-				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
-				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg))
-				.setAnchor(.5)
+				.setAlpha(0)
+				.setAnchor(.5);
 
-				.setAlpha(0);
-
+		// canonball
 //		canonBall = graphics.createCircle();
 //		canonBall
 //				.setRadius(10)
@@ -66,29 +46,21 @@ public class GunTowerView extends TowerView {
 
 	@Override
 	public void attack(Attacker a) {
+
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
 
-		canonballAnim.setAlpha(1, Curve.EASE_OUT)
-				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH)
+		//TODO: make concrete calculation
+		shootSpriteAnimation.setAlpha(1, Curve.EASE_OUT)
+				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()+1) * gg) + Constants.BOARD_DASH_WIDTH)
 				.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY()) * gg))
-				.setRotation(Math.PI * 2 - 1);
-//				.setRotation(Math.atan(((BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg) - (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY()) * gg))/
-//						(( (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)- ((BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH))), Curve.IMMEDIATE);
+		;
 
-//		canonBall
-//				.setAlpha(1, Curve.EASE_OUT)
-//				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH)
-//				.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY()) * gg));
-//
-//
-//		graphics.commitEntityState(.45, canonBall);
-//		graphics.commitEntityState(0, attackSprite, attackLine);
+		graphics.commitEntityState(.45, shootSpriteAnimation);
 
-		graphics.commitEntityState(.45, canonballAnim);
-//		canonBall
-		canonballAnim
+		//TODO: make concrete calculation
+		shootSpriteAnimation
 				.setAlpha(0, Curve.IMMEDIATE)
-				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
+				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 1 + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
 				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg));
 
 	}

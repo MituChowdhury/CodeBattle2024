@@ -128,8 +128,8 @@ public class Tile {
 	public SubTile getSubTile(int subX, int subY) {
 
 		int gg = subX*(SubTile.SUBTILE_SIZE-1)+subX+subY;
-		if( gg == 101 ) {
-			int x;
+		if( gg >= 100 ) {
+			return subTiles.get(0);
 		}
 		return subTiles.get(subX*(SubTile.SUBTILE_SIZE-1)+subX+subY);
 

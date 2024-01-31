@@ -19,14 +19,15 @@ public class AttackerView {
     private static final int DEATH_DURATION = 800;
     private static final int HURT_DURATION = 250;
     private static final int JUMP_DURATION = 200;
-
+    private static final int STAB_DURATION = 200;
     private static final int CELEBRATE_DURATION = 150;
-
     private static final int SPAWN_DURATION =320;
 
     private static ArrayList<ArrayList<Group>> spriteCache = new ArrayList<>();
-    private final String[] attackerBodySprites, attackerHurtSprites,attackerDeadSprites,attackerSpawnSprites
-            ,attackerJumpSprites;
+    private final String[] attackerBodySprites,  attackerHurtSprites, attackerDeadSprites,
+            attackerSpawnSprites, attackerJumpSprites, attackerUpStabSprites, attackerRightStabSprites,
+            attackerLeftStabSprites, attackerDownStabSprites;;
+
 
     private Attacker attacker;
     private Group group;
@@ -105,8 +106,6 @@ public class AttackerView {
 
         graphics.commitEntityState(1,attackerBody);
 
-
-
         // Creating the animation of attacker getting attacked...
         attackerHurtSprites = graphics.createSpriteSheetSplitter()
                 .setSourceImage(getResourcePath("hurt"))
@@ -129,9 +128,34 @@ public class AttackerView {
         attackerJumpSprites =graphics.createSpriteSheetSplitter()
                 .setSourceImage(getResourcePath("jump"))
                 .setHeight(64).setWidth(64).setImageCount(4)
-                .setImagesPerRow(8).setOrigRow(0).setOrigCol(0).
+                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
                 setName("jump" + attacker.getOwner().getIndex() ).split();
 
+        // attacker stabbing
+        attackerRightStabSprites =graphics.createSpriteSheetSplitter()
+                .setSourceImage(getResourcePath("stab"))
+                .setHeight(64).setWidth(64).setImageCount(4)
+                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
+                setName("stab" + attacker.getOwner().getIndex() ).split();
+
+        attackerLeftStabSprites = graphics.createSpriteSheetSplitter()
+                .setSourceImage(getResourcePath("stab"))
+                .setHeight(64).setWidth(64).setImageCount(4)
+                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
+                setName("stab" + attacker.getOwner().getIndex() ).split();
+        //not flipped still;
+
+        attackerUpStabSprites =graphics.createSpriteSheetSplitter()
+                .setSourceImage(getResourcePath("upstab"))
+                .setHeight(64).setWidth(64).setImageCount(4)
+                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
+                setName("upstab" + attacker.getOwner().getIndex() ).split();
+
+        attackerDownStabSprites = graphics.createSpriteSheetSplitter()
+                .setSourceImage(getResourcePath("downstab"))
+                .setHeight(64).setWidth(64).setImageCount(4)
+                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
+                setName("downstab" + attacker.getOwner().getIndex()).split();
 
         spawnAnimation();
     }
@@ -144,13 +168,29 @@ public class AttackerView {
             changeAnimation(attackerBodySprites,WALK_DURATION);
     }
 
+    public void animateAttackerStab(String dir) {
+        switch (dir) {
+            case "UP":
+                changeAnimation(attackerUpStabSprites,STAB_DURATION);
+                break;
+            case "DOWN":
+                changeAnimation(attackerDownStabSprites,STAB_DURATION);
+                break;
+            case "LEFT":
+                changeAnimation(attackerLeftStabSprites,STAB_DURATION);
+                break;
+            case "RIGHT":
+                changeAnimation(attackerRightStabSprites,STAB_DURATION);
+                break;
+        }
+    }
+
     public void spawnAnimation() {
         SubTile t = attacker.getCurrentSubTile();
         if (attacker.getOwner().getIndex() == 0) {
             group.setX((int) (BoardView.CELL_SIZE * (t.getX() + Constants.PLAYER0_X_OFFSET)));
             group.setY((int) (BoardView.CELL_SIZE * (t.getY() + Constants.PLAYER0_Y_OFFSET)));
         } else {
-
             group.setX((int) (BoardView.CELL_SIZE * (t.getX() + Constants.PLAYER1_X_OFFSET)));
             group.setY((int) (BoardView.CELL_SIZE * (t.getY() + Constants.PLAYER1_Y_OFFSET)));
         }
@@ -178,8 +218,6 @@ public class AttackerView {
     public void move(SubTile nextSubTile) {
 
 
-
-
         graphics.commitEntityState(0, attackerBody);
 
 
@@ -191,9 +229,10 @@ public class AttackerView {
             group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER1_X_OFFSET)));
             group.setY((int) (BoardView.CELL_SIZE * (nextSubTile.getY() + Constants.PLAYER1_Y_OFFSET)));
         }
+
+
+
         attacker.setCurrentSubtile(nextSubTile);
-
-
 
     }
 

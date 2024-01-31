@@ -26,7 +26,9 @@ public abstract class Tower {
 
 	static int idCounter = 0;
 
+	static Player lastAttackedPlayer;
 	protected Attacker lastAttacked = null;
+	protected int bounty;
 
 	public Tower(String type, Tile tile) {
 		this.id = idCounter++;
@@ -37,15 +39,22 @@ public abstract class Tower {
 		tile.setDestructibleObject(this);
 	}
 
+	public int getBounty() {
+		return this.bounty;
+	}
 	public int getLifetime() {
 		return lifetime;
 	}
 
-	public void dealDamage(int damage) {
+	public void dealDamage(int damage, Player dealtBy) {
 		this.hitPoints = Math.max(0, hitPoints - damage);
-		//...
-//		this.view.dealDamage(hitPoints, maxHealth);
-		//...
+
+		this.view.dealDamage(hitPoints,  (int) this.getProperty(TowerProperty.HITPOINT));
+		lastAttackedPlayer = dealtBy;
+	}
+
+	public Player getDestroyer() {
+		return lastAttackedPlayer;
 	}
 
 	public void incrementLifeTime() {
@@ -72,7 +81,7 @@ public abstract class Tower {
 		int upgradeState = upgradeStates[property.ordinal()];
 		int upgradeCost = Constants.TOWER_UPGRADE_COSTS[upgradeState];
 		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
-		owner.spendMoney(upgradeCost);
+		owner.spendCoins(upgradeCost);
 		upgradeStates[property.ordinal()]++;
 		view.upgrade();
 		view.updateTooltip();
@@ -117,6 +126,7 @@ public abstract class Tower {
 	}
 
 	public void attack(List<Attacker> attackers, List<Tower> towers) {
+		Tower t = this;
 		if (cooldown > 0) {
 			cooldown--;
 			return;

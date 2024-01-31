@@ -18,6 +18,7 @@ public class GlueTower extends Tower {
 		properties[TowerProperty.HITPOINT.ordinal()] = Constants.GLUETOWER_HITPOINT;
 		properties[TowerProperty.FUSETIME.ordinal()] = Constants.GLUETOWER_FUSETIME;
 		cost = Constants.GLUETOWER_COST;
+		this.bounty = Constants.GLUETOWER_BOUNTY;
 		hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
 	}
 

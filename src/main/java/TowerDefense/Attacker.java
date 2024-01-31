@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import com.codingame.game.Player;
 
+import com.codingame.game.Referee;
 import view.AttackerView;
 
 
@@ -32,12 +33,10 @@ public class Attacker {
 	private ArrayList<SubTile> steps;
 	public Tile lastTile;
 
-
+	public boolean reachOpponentBase;
 
 	Tile spawnTile;
 	SubTile spawnSubtile;
-
-	private boolean reachOpponentBase;
 
 	public Attacker(Tile[][] grid, Player owner, Player enemy, int spawn_position_y) {
 //		id = idCounter++;
@@ -53,7 +52,7 @@ public class Attacker {
 
 		if(owner.getIndex() == 1) {
 			this.spawnTile = grid[Constants.MAP_WIDTH-1][spawn_position_y];
-			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, 0);
+			this.spawnSubtile = spawnTile.getSubTile(SubTile.SUBTILE_SIZE-1, SubTile.SUBTILE_SIZE-1);
 
 		}
 		else {
@@ -189,7 +188,28 @@ public class Attacker {
 		return steps;
 	}
 
+	public void attack() {
 
+		Tile src = this.currentTile;
+		Tile[] neighbors = src.getNeighbors();
+		for (Tile t : neighbors) {
+			if(t == null) continue;
+			if (t.hasAnyObject()) {
+				if (t.getY() == src.getY()+1) {
+					view.animateAttackerStab("DOWN");
+				}
+				else if(t.getY() == src.getY()-1) {
+					view.animateAttackerStab("UP");
+				}
+				else if(t.getX() == src.getX()+1) {
+					view.animateAttackerStab("RIGHT");
+				}
+				else {
+					view.animateAttackerStab("LEFT");
+				}
+			}
+		}
+	}
 
 	public void setCurrentSubtile(SubTile t){
 
@@ -220,7 +240,22 @@ public class Attacker {
 		int ln = Math.min(path.size(),getSpeed());
 
 		view.animateAttackerWalk();
+//		for (Attacker a: Board.getAttackers()){
+//			if (this.enemy.getIndex() == a.owner.getIndex()) {
+//				if (a.getCurrentTile().getX() == this.getCurrentTile().getX()){
+//					if (a.currentTile.getY()+1 == this.currentTile.getY()) {
+//						view.animateAttackerStab();
+//					}
+//				}
+//				else if (a.getCurrentTile().getY() == this.getCurrentTile().getY()){
+//					if (a.currentTile.getX()+1 == this.currentTile.getX()) {
+//						view.animateAttackerStab();
+//					}
+//				}
+//			}
+//		}
 		for (int i = 0; i < ln; i++) {
+			if((i&1) == 1) attack();
 			view.move(path.get(i));
 		}
 
@@ -235,7 +270,7 @@ public class Attacker {
 
 	public void attack(Tile target) {
 		if( target.obstacleTower != null ) {
-			target.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE);
+			target.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE, getOwner());
 		}
 		// TODO: Add attacker attack animation here
 	}

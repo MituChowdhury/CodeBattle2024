@@ -18,9 +18,9 @@ public class BoardView {
 	public double gg() {
 		return (double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE);
 	}
-
 	private Sprite sponsor;
 	private Sprite logo;
+
 
 	public BoardView(Board board, GraphicEntityModule graphics, TooltipModule tooltips) {
 		int width = 1920;

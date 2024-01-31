@@ -16,6 +16,7 @@ public class HealTower extends Tower {
 		properties[TowerProperty.RANGE.ordinal()] = Constants.HEALTOWER_RANGE;
 		properties[TowerProperty.RELOAD.ordinal()] = Constants.HEALTOWER_RELOAD;
 		cost = Constants.HEALTOWER_COST;
+		this.bounty = Constants.HEALTOWER_BOUNTY;
 	}
 
 	@Override

@@ -77,7 +77,38 @@ public class Referee extends AbstractReferee {
 
 	@Override
 	public void gameTurn(int turn) {
+		try {
+			if (turn == 4) {
+//				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "WALL");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 6, 7, "WALL");
 
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 6, 7, "SPRINGTRAP_U");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 7, "SPRINGTRAP_U");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 7, "GUN_TOWER");
+
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 6, 8, "SPRINGTRAP_U");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 8, "SPRINGTRAP_U");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 8, "GUN_TOWER");
+
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 6, 9, "SPRINGTRAP_U");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 9, "SPRINGTRAP_U");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 9, "GUN_TOWER");
+
+
+			}
+		} catch ( InvalidActionException e ) {
+			System.out.println(e.getMessage());
+		}
+
+
+
+		for( Attacker a:board.getAttackers() ) {
+			int x = a.getCurrentTile().getX();
+			int y = a.getCurrentTile().getY();
+			if( x == 8 && y == 7 && board.getGrid()[x+1][y].hasDestructibleObject() ) {
+				a.attack(board.getGrid()[x+1][y]);
+			}
+		}
 
 		for (Player player : gameManager.getActivePlayers()) {
 			for (String line : board.getPlayerInput(player, turn == 1)) {
@@ -286,7 +317,7 @@ public class Referee extends AbstractReferee {
 		int[] scores = gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray();
 		String[] texts = new String[2];
 		for (int i = 0; i < scores.length; i++) {
-			texts[i] = gameManager.getPlayers().get(i).getLives() + " lives, " + gameManager.getPlayers().get(i).getMoney() + " gold";
+			texts[i] = gameManager.getPlayers().get(i).getKillCount() + " deaths, " + gameManager.getPlayers().get(i).getCoins() + " gold";
 		}
 		endScreenModule.setScores(scores, texts);
 		//String endSprite = "tie";

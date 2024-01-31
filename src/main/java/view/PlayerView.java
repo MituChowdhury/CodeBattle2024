@@ -73,14 +73,6 @@ public class PlayerView {
 		int textYGap = 70;
 		int fontsize = 35;
 
-		coins = graphics.createText("")
-				.setAnchorY(0.5)
-				.setFillColor(textColor).setFontSize(fontsize)
-				.setStrokeColor(0x000000)
-				.setStrokeThickness(1.0)
-				.setX(textStartX)
-				.setY(154)
-				.setTextAlign(TextBasedEntity.TextAlign.LEFT);
 
 		scores = graphics.createText("")
 						.setAnchorY(0.5)
@@ -88,8 +80,18 @@ public class PlayerView {
 						.setStrokeColor(0x000000)
 						.setStrokeThickness(1.0)
 						.setX(textStartX)
-						.setY(coins.getY() + textYGap)
+//						.setY(coins.getY() + textYGap)
+						.setY(154)
 						.setTextAlign(TextBasedEntity.TextAlign.LEFT);
+
+		coins = graphics.createText("")
+				.setAnchorY(0.5)
+				.setFillColor(textColor).setFontSize(fontsize)
+				.setStrokeColor(0x000000)
+				.setStrokeThickness(1.0)
+				.setX(textStartX)
+				.setY(scores.getY() + textYGap)
+				.setTextAlign(TextBasedEntity.TextAlign.LEFT);
 
 		killCount = graphics.createText("")
 						.setAnchorY(0.5)
@@ -97,7 +99,7 @@ public class PlayerView {
 						.setStrokeColor(0x000000)
 						.setStrokeThickness(0.0)
 						.setX(textStartX)
-						.setY(scores.getY() + textYGap)
+						.setY(coins.getY() + textYGap)
 						.setZIndex(-1)
 						.setTextAlign(TextBasedEntity.TextAlign.LEFT);
 
@@ -107,18 +109,18 @@ public class PlayerView {
 	}
 
 	public void updateView() {
-		if (player.getCoins() != this.currentCoins) {
-			this.currentCoins = player.getCoins();
-			this.coins.setText(currentCoins + "");
-		}
-
 		if (player.getScores() != this.currentScores) {
 			this.currentScores = player.getScores();
 			this.scores.setText(currentScores + "");
 		}
 
+		if (player.getCoins() != this.currentCoins) {
+			this.currentCoins = player.getCoins();
+			this.coins.setText(currentCoins + "");
+		}
+
 		if (player.getKillCount() != this.currentKillCount) {
-			this.currentKillCount = player.getKillCount();
+			this.currentKillCount = player.getKillCount();  // CAUTION: function name doesnt match with variable name beware in callers. this is actually deathcount
 			this.killCount.setText(this.currentKillCount + "");  // Debuggin code...
 		}
 	}

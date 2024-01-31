@@ -10,7 +10,7 @@ import TowerDefense.Tower;
 public class HealTowerView extends TowerView {
 
 	public HealTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
-		super(tower, boardGroup, graphics, tooltips, "healTower");
+		super(tower, boardGroup, graphics, tooltips, "healTower",70, 130, 6, 6);
 		attackSprite = graphics.createSprite().setImage("heal.png").setAlpha(0).setScale(0.3);
 		attackLine = graphics.createLine();
 		attackLine.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5)));

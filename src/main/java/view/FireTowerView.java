@@ -11,7 +11,7 @@ import TowerDefense.TowerProperty;
 public class FireTowerView extends TowerView {
 
 	public FireTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
-		super(tower, boardGroup, graphics, tooltips, "fireTower");
+		super(tower, boardGroup, graphics, tooltips, "fireTower",70, 130, 6, 6);
 		towerFixedSprite = Utils.createTowerSprite(graphics, "fireTowerFixed" + upgradeLevel + ".png", tower.getTile().getX(), tower.getTile().getY());
 		attackSprite = graphics.createSprite().setImage("fireTowerAttack.png").setAlpha(0).setScale(tower.getProperty(TowerProperty.RANGE));
 		attackSprite.setAnchor(0.5).setZIndex(-1);

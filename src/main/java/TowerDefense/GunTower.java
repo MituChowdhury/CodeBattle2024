@@ -18,6 +18,7 @@ public class GunTower extends Tower {
 		properties[TowerProperty.HITPOINT.ordinal()] = Constants.GUNTOWER_HITPOINT;
 		properties[TowerProperty.FUSETIME.ordinal()] = Constants.GUNTOWER_FUSETIME;
 		cost = Constants.GUNTOWER_COST;
+		this.bounty = Constants.GUNTOWER_BOUNTY;
 		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
 	}
 
