@@ -18,7 +18,7 @@ import view.BoardView;
 
 public class Board {
 	private Tile[][] grid;
-	private List<Attacker> attackers = new ArrayList<>();
+	private static List<Attacker> attackers = new ArrayList<>();
 	private List<Attacker> veterans = new ArrayList<>();
 	private List<Tower> towers = new ArrayList<>();
 	private int width;
@@ -304,7 +304,7 @@ public class Board {
 		}
 	}
 
-	public List<Attacker> getAttackers() {
+	public static List<Attacker> getAttackers() {
 		return attackers;
 	}
 
