@@ -13,9 +13,10 @@ import TowerDefense.TowerProperty;
 public abstract class TowerView {
 	protected Tower tower;
 	protected Sprite towerSprite, towerFixedSprite;
+	protected SpriteAnimation towerSpriteAnimation, towerFixedSpriteAnimation;
 	protected Sprite attackSprite;
 	protected Line attackLine;
-	protected Circle canonBall;
+
 	protected GraphicEntityModule graphics;
 	protected TooltipModule tooltipModule;
 	protected Group boardGroup;
@@ -30,19 +31,33 @@ public abstract class TowerView {
 		this.tooltipModule = tooltips;
 		this.boardGroup = boardGroup;
 		this.spriteFileBaseName = sprite;
-		towerSprite = Utils.createTowerSprite(graphics, sprite + upgradeLevel + ".png", tower.getTile().getX(), tower.getTile().getY());
-		towerSprite.setTint(tower.getOwner().getColor());
+//		towerSprite = Utils.createTowerSprite(graphics, sprite + upgradeLevel + ".png", tower.getTile().getX(), tower.getTile().getY());
+//		towerSprite.setTint(tower.getOwner().getColor());
+		towerSpriteAnimation = Utils.createTowerSpriteAnimation(graphics, sprite + ".png", tower.getTile().getX(), tower.getTile().getY(), 70, 130, 6, 6);
+//		towerSpriteAnimation.setTint(tower.getOwner().getColor());
+
 	}
 
 	protected void commitSprites() {
-		boardGroup.add(towerSprite);
-		if (towerFixedSprite != null)
-			boardGroup.add(towerFixedSprite);
-		if (attackSprite != null) boardGroup.add(attackSprite);
-		if (attackLine != null) boardGroup.add(attackLine);
-		graphics.commitEntityState(0, boardGroup, towerSprite);
-		if (towerFixedSprite != null)
-			graphics.commitEntityState(0, towerFixedSprite);
+//		boardGroup.add(towerSprite);
+
+		boardGroup.add(towerSpriteAnimation);
+//		if (towerFixedSprite != null) {
+//			boardGroup.add(towerFixedSprite);
+//		}
+		if (towerFixedSpriteAnimation != null) {
+			boardGroup.add(towerFixedSpriteAnimation);
+		}
+//		if (attackSprite != null) boardGroup.add(attackSprite);
+//		if (attackLine != null) boardGroup.add(attackLine);
+//		graphics.commitEntityState(0, boardGroup, towerSprite);
+
+		graphics.commitEntityState(0, boardGroup, towerSpriteAnimation);
+//		if (towerFixedSprite != null)
+//			graphics.commitEntityState(0, towerFixedSprite);
+
+		if (towerFixedSpriteAnimation != null)
+			graphics.commitEntityState(0, towerFixedSpriteAnimation);
 	}
 
 	public void updateTooltip() {
@@ -55,7 +70,10 @@ public abstract class TowerView {
 			sb.append("\n").append(p).append(": ").append(new DecimalFormat("0.#").format(tower.getProperty(p)));
 		}
 		//sb.append("\ncooldown: ").append(tower.getCooldown());
-		tooltipModule.setTooltipText(towerSprite, sb.toString());
+
+//		tooltipModule.setTooltipText(towerSprite, sb.toString());
+		tooltipModule.setTooltipText(towerSpriteAnimation, sb.toString());
+
 	}
 
 	public abstract void attack(Attacker a);
@@ -71,6 +89,7 @@ public abstract class TowerView {
 
 	// TODO: Add animation here
 	public void destroy() {
-		towerSprite.setVisible(false);
+		towerSpriteAnimation.setVisible(false);
+//		towerSprite.setVisible(false);
 	}
 }
