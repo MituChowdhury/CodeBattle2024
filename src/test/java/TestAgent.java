@@ -8,10 +8,12 @@ import java.math.*;
  **/
 class TestAgent {
 
+
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
 //        int playerId = in.nextInt();
         // Initial inputs...
+        int side = 0;
         int width = in.nextInt();
         int height = in.nextInt();
 
@@ -27,7 +29,7 @@ class TestAgent {
             System.err.printf("line: %s\n", line);
         }
 
-        String yCoords = "0 2 4 8 9";
+        String yCoords = "0 2 4 12 13";
 
         System.out.println(yCoords);
         System.out.println("PASS");
@@ -54,6 +56,7 @@ class TestAgent {
                 in.nextLine();
             }
 
+            int offset = 5;
             if (cnt != 0) {
                 // At first, there is neither attackers nor veterans....
                 System.err.println("Player characters: ");
@@ -64,6 +67,28 @@ class TestAgent {
                     int playerPosY = in.nextInt();
                     int playerHealth = in.nextInt();
                     int playerSpeed = in.nextInt();
+
+                    if( cnt == 1 && playerPosX < 10 ) {
+                        side = 0;
+                    } else {
+                        side = 1;
+                    }
+
+                    if( i == 2 ) {
+                        if( cnt == offset ) {
+                            System.out.println("build " + playerCharId + " SPRING_NORTH " + playerPosX + " " + (int)(playerPosY));
+                        } else if( cnt == offset+1) {
+                            System.out.println("build " + playerCharId + " GUN_TOWER " + playerPosX + " " + (playerPosY+1));
+                        } else if( cnt == offset+2) {
+                            System.out.println("build " + playerCharId + " BOMB " + playerPosX + " " + (playerPosY-1));
+                        } else if( cnt == offset+3) {
+                            System.out.println("build " + playerCharId + " WALL " + (playerPosX+1) + " " + playerPosY);
+                        } else {
+                            System.out.println("go " + playerCharId);
+                        }
+                    } else {
+                        System.out.println("go " + playerCharId);// + " " + side + " " + i);
+                    }
 
                     System.err.printf("\tId: %d, Pos_X: %d, Pos_Y: %d, Health: %d, Speed: %d\n", playerCharId, playerPosX, playerPosY, playerHealth, playerSpeed);
 
@@ -144,27 +169,29 @@ class TestAgent {
 //            else
 //            if( cnt == 4 ){
 //                System.out.println("BUILD 5 5 GUNTOWER");
-                System.out.println("go 1");
 
-                if( cnt == 3 ) {
-                    System.out.println("build 1 GUN_TOWER 13 6");
-                } else {
-                    System.out.println("");
-                }
 
-                if(cnt == 4) {
-                    System.out.println("build 1 BOMB 9 6");
-                } else System.out.println("");
 
-                if( cnt >= 8 && cnt <= 12 ) {
-                    System.out.println("attack 2 NORTH");
-                } else {
-                    System.out.println("");
-                };
+
+//                if( cnt == 3 ) {
+//                    System.out.println("build 1 GUN_TOWER 13 6");
+//                } else {
+//                    System.out.println("");
+//                }
+//
+//                if(cnt == 4) {
+//                    System.out.println("build 1 BOMB 9 6");
+//                } else System.out.println("");
+//
+//                if( cnt >= 8 && cnt <= 12 ) {
+//                    System.out.println("attack 2 NORTH");
+//                } else {
+//                    System.out.println("");
+//                };
 
 //                System.out.println("forte");
-                System.out.println("");
-                System.out.println("wtf");
+//                System.out.println("");
+//                System.out.println("wtf");
 //            }
 
 //             Write an action using System.out.println()
