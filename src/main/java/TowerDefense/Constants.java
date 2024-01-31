@@ -24,7 +24,7 @@ public class Constants {
 
 	public static final double[] GUNTOWER_DAMAGE = { 5, 8, 15, 30 };
 	public static final double[] GUNTOWER_RANGE = { 3, 4, 5, 6 };
-	public static final double[] GUNTOWER_RELOAD = { 0, 4, 3, 2 };
+	public static final double[] GUNTOWER_RELOAD = { 2, 4, 3, 2 };
 	public static final double[] GUNTOWER_HITPOINT = { 5, 10, 15, 20 };
 	public static final double[] GUNTOWER_FUSETIME = { 2, 1, 0, 0 };
 	public static final int GUNTOWER_BOUNTY = 10;
@@ -66,7 +66,7 @@ public class Constants {
 	public static final int GLUETOWER_COST = 70;
 	public static final double[] GLUETOWER_DAMAGE = { 8, 15, 25, 40 }; // duration of slowdown effect
 	public static final double[] GLUETOWER_RANGE = { 3, 4, 5, 6 };
-	public static final double[] GLUETOWER_RELOAD = { 4, 3, 2, 1 };
+	public static final double[] GLUETOWER_RELOAD = { 5, 3, 2, 1 };
 	public static final double[] GLUETOWER_HITPOINT = { 5, 10, 15, 20 };
 	public static final double[] GLUETOWER_FUSETIME = { 0, 0, 0, 0 };
 	public static final int GLUE_SLOWDOWN = 4;

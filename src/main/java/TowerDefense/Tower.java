@@ -127,6 +127,7 @@ public abstract class Tower {
 	}
 
 	public void attack(List<Attacker> attackers, List<Tower> towers) {
+		Tower t = this;
 		if (cooldown > 0) {
 			cooldown--;
 			return;
