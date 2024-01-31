@@ -11,8 +11,10 @@ import view.PlayerView;
 public class Player extends AbstractMultiplayerPlayer {
 	private int money = Constants.PLAYER_MONEY;
 	private int lives = Constants.PLAYER_LIVES;
+	private int coins = Constants.PLAYER_MONEY;
 	private int scores = Constants.PLAYER_SCORE;
 	private int deathCount = Constants.PLAYER_DEATH_COUNT;
+	private int killCount = Constants.PLAYER_DEATH_COUNT;
 	private PlayerView view;
 	private String message = "";
 
@@ -107,5 +109,29 @@ public class Player extends AbstractMultiplayerPlayer {
 
 	public void updateView() {
 		view.updateView();
+	}
+
+	public int getCoins() {
+		return coins;
+	}
+
+	public int getKillCount() {
+		return killCount;
+	}
+
+	public int getScores() {
+		return scores;
+	}
+
+	public void setCoins(int coins) {
+		this.coins = coins;
+	}
+
+	public void setKillCount(int killCount) {
+		this.killCount = killCount;
+	}
+
+	public void setScores(int scores) {
+		this.scores = scores;
 	}
 }

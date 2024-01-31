@@ -36,7 +36,7 @@ public class BoardView {
 
 		boardGroup.setScale((double) graphics.getWorld().getHeight() / (board.getHeight() * CELL_SIZE));
 		boardGroup.setX(graphics.getWorld().getWidth() - graphics.getWorld().getHeight() * (1 + Constants.MAP_HEIGHT) / Constants.MAP_HEIGHT);
-		boardGroup.setX(Constants.BOARD_DASH_WIDTH);
+		boardGroup.setX((int) (Constants.BOARD_DASH_WIDTH * 4/3));
 		Group gridGroup = graphics.createGroup();
 		boardGroup.add(gridGroup);
 		Group innerGroup = graphics.createGroup();
