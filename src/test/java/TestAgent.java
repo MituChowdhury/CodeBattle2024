@@ -75,7 +75,7 @@ class TestAgent {
                         } else if( cnt == offset+2) {
                             System.out.println("build " + playerCharId + " GUN_TOWER " + playerPosX + " " + (playerPosY+1));
                         } else if( cnt == offset+4) {
-                            System.out.println("build " + playerCharId + " BOMB " + playerPosX + " " + (playerPosY-1));
+                            System.out.println("build " + playerCharId + " SPRING_NORTH " + playerPosX + " " + (playerPosY));
                         } else if( cnt == offset+6) {
                             System.out.println("build " + playerCharId + " WALL " + (playerPosX+1) + " " + playerPosY);
                         } else {

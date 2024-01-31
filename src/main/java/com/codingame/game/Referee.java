@@ -79,6 +79,7 @@ public class Referee extends AbstractReferee {
 	public void gameTurn(int turn) {
 
 
+
 		for (Player player : gameManager.getActivePlayers()) {
 			for (String line : board.getPlayerInput(player, turn == 1)) {
 				player.sendInputLine(line);

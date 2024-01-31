@@ -68,7 +68,7 @@ public class SpringTrap extends Tower {
 			newSubX = newSubX % Constants.SUBTILE_SIZE;
 		} else if( newSubX < 0 ) {
 			newTileX -= newSubX / Constants.SUBTILE_SIZE + 1;
-			newSubX = Constants.SUBTILE_SIZE - newSubX % Constants.SUBTILE_SIZE;  // why didnt we do -1 here?
+			newSubX = Constants.SUBTILE_SIZE - (-newSubX) % Constants.SUBTILE_SIZE;  // why didnt we do -1 here?
 		}
 
 		if( newSubY > Constants.SUBTILE_SIZE-1 ) {
@@ -76,7 +76,7 @@ public class SpringTrap extends Tower {
 			newSubY = newSubY % Constants.SUBTILE_SIZE;
 		} else if( newSubY < 0 ) {
 			newTileY -= newSubY / Constants.SUBTILE_SIZE + 1;
-			newSubY = Constants.SUBTILE_SIZE - newSubY % Constants.SUBTILE_SIZE;
+			newSubY = Constants.SUBTILE_SIZE - (-newSubY) % Constants.SUBTILE_SIZE;
 		}
 
 		newTileX = Math.min(Constants.MAP_WIDTH-1, newTileX);
