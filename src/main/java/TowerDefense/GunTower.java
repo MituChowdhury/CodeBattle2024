@@ -23,6 +23,7 @@ public class GunTower extends Tower {
 
 	@Override
 	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
+		this.incrementLifeTime();
 		Attacker target = null;
 		for (Attacker a : attackers) {
 			if (getOwner() == a.getOwner() || !inRange(a))

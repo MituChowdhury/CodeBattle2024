@@ -157,6 +157,8 @@ public class Attacker {
 
 
 
+
+
 	//	public void dealDamage(int damage) {
 //		this.hitPoints = Math.max(0, hitPoints - damage);
 //		if (isDead())
@@ -220,7 +222,7 @@ public class Attacker {
 	public int getDirection() {
 		int dir = 0;
 
-		if( steps.size() == 0 ) return getOwner().getIndex() == 0 ? 2 : 4;
+		if( steps.size() <= 2 ) return getOwner().getIndex() == 0 ? 2 : 4;
 
 		if( steps.get(0).getSubX() == steps.get(1).getSubX() ) {
 			if( steps.get(0).getSubY() - steps.get(1).getSubY() > 0 ) dir = 3;

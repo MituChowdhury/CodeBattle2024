@@ -40,6 +40,7 @@ public class FireTower extends Tower {
 
 	@Override
 	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
+		this.incrementLifeTime();
 		if (cooldown == 0) alreadyAttacked.clear();
 		boolean firing = false;
 		for (Attacker a : attackers) {

@@ -358,22 +358,22 @@ public class Board {
 		case "FIRE_TOWER":
 			tower = new FireTower(grid[x][y]);
 			break;
-		case "GLUE_TOWER":
+		case "STUN_TOWER":
 			tower = new GlueTower(grid[x][y]);
 			break;
 //		case "HEALTOWER":
 //			tower = new HealTower(grid[x][y]);
 //			break;
-		case "SPRINGTRAP_NORTH":
+		case "SPRING_NORTH":
 			tower = new SpringTrap(grid[x][y], 1,this);
 			break;
-		case "SPRINGTRAP_EAST":
+		case "SPRING_EAST":
 			tower = new SpringTrap(grid[x][y], 2,this);
 			break;
-		case "SPRINGTRAP_SOUTH":
+		case "SPRING_SOUTH":
 			tower = new SpringTrap(grid[x][y], 3,this);
 			break;
-		case "SPRINGTRAP_WEST":
+		case "SPRING_WEST":
 			tower = new SpringTrap(grid[x][y], 4,this);
 			break;
 		case "BOMB":

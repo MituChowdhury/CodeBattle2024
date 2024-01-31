@@ -78,14 +78,7 @@ public class Referee extends AbstractReferee {
 	@Override
 	public void gameTurn(int turn) {
 
-//		if(turn == 10) {
-//			try{
-//			board.cacheBuild(gameManager.getActivePlayers().get(0), 11, 2, "GUN_TOWER");
-//			} catch (InvalidActionException e) {
-//				System.out.println("ERROR: #################################################################################################################################");
-//				System.out.println(e.getMessage());
-//			}
-//		}
+
 		for( Attacker a:board.getAttackers() ) {
 			int x = a.getCurrentTile().getX();
 			int y = a.getCurrentTile().getY();

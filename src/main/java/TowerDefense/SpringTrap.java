@@ -5,6 +5,8 @@ import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.entities.Group;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 import view.GunTowerView;
+import view.HealTowerView;
+import view.SpringTrapView;
 import view.TowerView;
 
 import java.util.ArrayList;
@@ -37,6 +39,9 @@ public class SpringTrap extends Tower {
 		return (int) range;
 	}
 
+	public boolean isDestroyed() {
+		return this.getProperty(TowerProperty.FUSETIME) == this.getLifetime();
+	}
 
 	private SubTile getRelocateSubTile( Attacker target ) {
 		int newSubX = target.getCurrentSubTile().subX;
@@ -58,22 +63,26 @@ public class SpringTrap extends Tower {
 		}
 
 
-		if( newSubX > Constants.SUBTILE_SIZE ) {
+		if( newSubX > Constants.SUBTILE_SIZE -1 ) {
 			newTileX += newSubX / Constants.SUBTILE_SIZE;
 			newSubX = newSubX % Constants.SUBTILE_SIZE;
 		} else if( newSubX < 0 ) {
 			newTileX -= newSubX / Constants.SUBTILE_SIZE + 1;
-			newSubX = Constants.SUBTILE_SIZE - newSubX / Constants.SUBTILE_SIZE -1;
+			newSubX = Constants.SUBTILE_SIZE - newSubX % Constants.SUBTILE_SIZE;  // why didnt we do -1 here?
 		}
 
-		if( newSubY > Constants.SUBTILE_SIZE ) {
+		if( newSubY > Constants.SUBTILE_SIZE-1 ) {
 			newTileY += newSubY / Constants.SUBTILE_SIZE;
 			newSubY = newSubY % Constants.SUBTILE_SIZE;
 		} else if( newSubY < 0 ) {
 			newTileY -= newSubY / Constants.SUBTILE_SIZE + 1;
-			newSubY = Constants.SUBTILE_SIZE - newSubY / Constants.SUBTILE_SIZE -1;
+			newSubY = Constants.SUBTILE_SIZE - newSubY % Constants.SUBTILE_SIZE;
 		}
 
+		newTileX = Math.min(Constants.MAP_WIDTH-1, newTileX);
+		newTileX = Math.max(0, newTileX);
+		newTileY = Math.min(Constants.MAP_WIDTH-1, newTileY);
+		newTileY = Math.max(0, newTileY);
 
 		Tile t = board.getGrid()[newTileX][newTileY];
 
@@ -104,6 +113,7 @@ public class SpringTrap extends Tower {
 
 	@Override
 	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
+		this.incrementLifeTime();
 		Attacker target = null;
 		for (Attacker a : attackers) {
 			Player p1 = getOwner();
@@ -123,6 +133,6 @@ public class SpringTrap extends Tower {
 
 	@Override
 	public TowerView createView(Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltipModule) {
-		return new GunTowerView(this, boardGroup, graphics, tooltipModule);
+		return new SpringTrapView(this, boardGroup, graphics, tooltipModule);
 	}
 }
