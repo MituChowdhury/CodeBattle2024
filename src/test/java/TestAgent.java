@@ -69,7 +69,7 @@ class TestAgent {
                     int playerSpeed = in.nextInt();
 
 
-                    if( i == 2 ) {
+                    if( i == 10000 ) {
                         if( cnt == offset ) {
                             System.out.println("build " + playerCharId + " SPRING_NORTH " + playerPosX + " " + (int)(playerPosY));
                         } else if( cnt == offset+2) {
