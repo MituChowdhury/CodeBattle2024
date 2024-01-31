@@ -6,6 +6,7 @@ import com.codingame.gameengine.module.entities.Group;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 import view.GunTowerView;
 import view.HealTowerView;
+import view.SpringTrapView;
 import view.TowerView;
 
 import java.util.ArrayList;
@@ -38,6 +39,9 @@ public class SpringTrap extends Tower {
 		return (int) range;
 	}
 
+	public boolean isDestroyed() {
+		return this.getProperty(TowerProperty.FUSETIME) == this.getLifetime();
+	}
 
 	private SubTile getRelocateSubTile( Attacker target ) {
 		int newSubX = target.getCurrentSubTile().subX;
@@ -64,7 +68,7 @@ public class SpringTrap extends Tower {
 			newSubX = newSubX % Constants.SUBTILE_SIZE;
 		} else if( newSubX < 0 ) {
 			newTileX -= newSubX / Constants.SUBTILE_SIZE + 1;
-			newSubX = Constants.SUBTILE_SIZE - newSubX / Constants.SUBTILE_SIZE;
+			newSubX = Constants.SUBTILE_SIZE - newSubX % Constants.SUBTILE_SIZE;  // why didnt we do -1 here?
 		}
 
 		if( newSubY > Constants.SUBTILE_SIZE-1 ) {
@@ -72,7 +76,7 @@ public class SpringTrap extends Tower {
 			newSubY = newSubY % Constants.SUBTILE_SIZE;
 		} else if( newSubY < 0 ) {
 			newTileY -= newSubY / Constants.SUBTILE_SIZE + 1;
-			newSubY = Constants.SUBTILE_SIZE - newSubY / Constants.SUBTILE_SIZE;
+			newSubY = Constants.SUBTILE_SIZE - newSubY % Constants.SUBTILE_SIZE;
 		}
 
 		newTileX = Math.min(Constants.MAP_WIDTH-1, newTileX);
@@ -109,6 +113,7 @@ public class SpringTrap extends Tower {
 
 	@Override
 	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
+		this.incrementLifeTime();
 		Attacker target = null;
 		for (Attacker a : attackers) {
 			Player p1 = getOwner();

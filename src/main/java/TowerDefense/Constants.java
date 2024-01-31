@@ -29,8 +29,8 @@ public class Constants {
 	public static final double[] GUNTOWER_FUSETIME = { 2, 1, 0, 0 };
 
 
-	public static final double[] FIREBOMB_DAMAGE = { 1, 8, 15, 30 };
-	public static final double[] FIREBOMB_RANGE = { 10, 4, 5, 6 };
+	public static final double[] FIREBOMB_DAMAGE = { 5, 8, 15, 30 };
+	public static final double[] FIREBOMB_RANGE = { 2, 4, 5, 6 };
 	public static final double[] FIREBOMB_RELOAD = { 0, 0, 0, 0 };
 	public static final double[] FIREBOMB_HITPOINTS = { 5, 10, 15, 20 };
 	public static final double[] FIREBOMB_FUSETIME = { 2, 1, 0, 0 };
@@ -40,7 +40,9 @@ public class Constants {
 	public static final double[] SPRINGTRAP_RANGE = { 1, 0, 0, 0 };
 	public static final double[] SPRINGTRAP_RELOAD = { 0, 4, 3, 2 };
 	public static final double[] SPRINGTRAP_HITPOINT = { 5, 10, 15, 20 };
-	public static final double[] SPRINGTRAP_FUSETIME = { 0, 0, 0, 0 };
+
+	// DEBUG: spring lifetime 100
+	public static final double[] SPRINGTRAP_FUSETIME = { 100, 3, 3, 3 }; // FUSETIME IS LIFETIME FOR SPRINGTRAP
 	public static final int SPRINGTRAP_COST = 10;
 
 
@@ -83,7 +85,7 @@ public class Constants {
 	public static  final double PLAYER1_X_OFFSET = -.05;
 	public static  final double PLAYER1_Y_OFFSET = -1.75;
 
-	public static final int HP = 300;
+	public static final int HP = 10;
 	public static final int SPEED = 10;
 	public static final int BOUNTY = 25;
 	public static final int NUM_UPGRADE_SPRITES = 3;
