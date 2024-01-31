@@ -43,9 +43,9 @@ public abstract class Tower {
 
 	public void dealDamage(int damage) {
 		this.hitPoints = Math.max(0, hitPoints - damage);
-		//...
-//		this.view.dealDamage(hitPoints, maxHealth);
-		//...
+
+		this.view.dealDamage(hitPoints, (int)getProperty(TowerProperty.HITPOINT));
+
 		if (isDestroyed())
 			disappear();
 	}

@@ -17,7 +17,7 @@
       <span>Rules</span>
     </h1>
     <div>
-      <div class="statement-rules-content">The game is played on a map of size <const>17</const>x<const>17</const>, the origin being at the top left corner. The map contains a canyon going from the right side of the map to the left. Attackers will spawn on both ends, approaching towards the other side. <br>
+      <div class="statement-rules-content">The game is played on a map of size <const>22</const>x<const>17</const>, the origin being at the top left corner. The map contains a canyon going from the right side of the map to the left. Attackers will spawn on both ends, approaching towards the other side. <br>
 	  Your task is to stop the opponent attackers from reaching your side and to support your own attackers. <br>
 	  Each player starts with <const>350</const> money and has <const>20</const> lives, losing one for each attacker reaching the own base.
 	  <br>
@@ -43,10 +43,7 @@
 	  The glue tower does not cause any damage to the attackers. Instead it will slow them down for some turns. It targets all attackers in range, ignoring those which are already slowed down.
 	  <br><h5>Heal tower</h5>
 	  The heal tower does not shoot at opponent attackers. Instead it will heal the attackers of the own team, making it harder for the opponent to kill them.
-	  
-	  <br><h4>Upgrading towers</h4>
-	  It is possible to make towers stronger by increasing the damage and range as well as reducing the reload time. Each of these can be upgraded independently up to three times. The upgrade costs for the first, second and third level are <const>50</const>, <const>100</const> and <const>150</const>.
-	  
+
 	  <br><h4>Tower strengths</h4>
 	  The tower strengths are as follows:
 	  <!--<table>
@@ -71,12 +68,13 @@
     <div class="statement-expert-rules-content">
       The turn order is the following:
 	  <ul>
-	  <li>Upgrade commands are handled</li>
 	  <li>Build commands are handled</li>
 	  <li>Towers shoot and kill attackers</li>
 	  <li>Alive attackers move</li>
 	  <li>Attackers, which reached the opponent base, disappear and reduce the player lives</li>
-	  <li>Players with no life remaining lose</li>
+	  <li>The player reaching the opponent’s base maximum number of times wins </li>
+          <li>The player reaching the opponent’s base maximum number of times wins </li>
+
 	  </ul> <br>
 	  Towers shoot in the following order: heal towers, fire towers, gun towers, glue towers. Among the same category, towers closest to the own base will shoot first. <br>
 	  In case of both players trying to build a tower at the same cell in the same turn, the player building closer to the own base will succeed. The upper half of the middle column is considered closer to player 1, the lower half to player 2.

@@ -58,6 +58,12 @@ public abstract class TowerView {
 
 	}
 
+
+	public void dealDamage(int hp, int maxHp) {
+		System.err.println("Bar length: " + (int) (TowerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
+		this.healthBarGreen.setWidth((int) (TowerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
+	}
+
 	protected void commitSprites() {
 		boardGroup.add(towerSprite);
 		if (towerFixedSprite != null)
