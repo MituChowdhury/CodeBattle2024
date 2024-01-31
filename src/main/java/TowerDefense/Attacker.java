@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import com.codingame.game.Player;
 
+import com.codingame.game.Referee;
 import view.AttackerView;
 
 
@@ -187,7 +188,28 @@ public class Attacker {
 		return steps;
 	}
 
+	public void attack() {
 
+		Tile src = this.currentTile;
+		Tile[] neighbors = src.getNeighbors();
+		for (Tile t : neighbors) {
+			if(t == null) continue;
+			if (t.hasAnyObject()) {
+				if (t.getY() == src.getY()+1) {
+					view.animateAttackerStab("DOWN");
+				}
+				else if(t.getY() == src.getY()-1) {
+					view.animateAttackerStab("UP");
+				}
+				else if(t.getX() == src.getX()+1) {
+					view.animateAttackerStab("RIGHT");
+				}
+				else {
+					view.animateAttackerStab("LEFT");
+				}
+			}
+		}
+	}
 
 	public void setCurrentSubtile(SubTile t){
 
@@ -218,7 +240,22 @@ public class Attacker {
 		int ln = Math.min(path.size(),getSpeed());
 
 		view.animateAttackerWalk();
+//		for (Attacker a: Board.getAttackers()){
+//			if (this.enemy.getIndex() == a.owner.getIndex()) {
+//				if (a.getCurrentTile().getX() == this.getCurrentTile().getX()){
+//					if (a.currentTile.getY()+1 == this.currentTile.getY()) {
+//						view.animateAttackerStab();
+//					}
+//				}
+//				else if (a.getCurrentTile().getY() == this.getCurrentTile().getY()){
+//					if (a.currentTile.getX()+1 == this.currentTile.getX()) {
+//						view.animateAttackerStab();
+//					}
+//				}
+//			}
+//		}
 		for (int i = 0; i < ln; i++) {
+			if((i&1) == 1) attack();
 			view.move(path.get(i));
 		}
 
