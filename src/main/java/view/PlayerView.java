@@ -2,10 +2,7 @@ package view;
 
 import TowerDefense.Constants;
 import com.codingame.game.Player;
-import com.codingame.gameengine.module.entities.GraphicEntityModule;
-import com.codingame.gameengine.module.entities.Group;
-import com.codingame.gameengine.module.entities.Sprite;
-import com.codingame.gameengine.module.entities.Text;
+import com.codingame.gameengine.module.entities.*;
 //import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 public class PlayerView {
@@ -17,11 +14,22 @@ public class PlayerView {
 	private Text lives;
 	private Text pseudo;
 	private Text message;
+
+	// Text sections for code battle game...
+	private Text coins;
+	private Text scores;
+	private Text killCount;
+	// =========================================
 	private Sprite avatar;
 
 	private int currentGold;
 	private int currentLives;
 	private String currentMessage;
+	// =========================================
+	private int currentCoins = -1;
+	private int currentScores = -1;
+	private int currentKillCount = -1;
+	// =========================================
 
 	public PlayerView(Player player, GraphicEntityModule graphics) {
 		this.player = player;
@@ -33,43 +41,101 @@ public class PlayerView {
 	public void createPlayerView() {
 		int baseWidth = 713;
 		int baseHeight = 367;
+		int textColor = 0xEDE0C9;
 
 		Sprite frame =
-				graphics.createSprite().setZIndex(-10000).setImage("Player_panel.png").setTint(0xebebeb).setX(0).setY(0).setBaseWidth((int) (Constants.BOARD_DASH_WIDTH * 0.8)).setBaseHeight(Constants.BOARD_DASH_HEIGHT);
-		avatar = graphics.createSprite().setAnchor(0.5).setBaseHeight(0).setBaseWidth(0).setImage(player.getAvatarToken()).setX(132).setY(239).setZIndex(20);
+				graphics.createSprite().setZIndex(-10000).setImage("panel.png")
+						.setX(0)
+						.setY(0)
+						.setBaseWidth(Constants.BOARD_DASH_WIDTH)
+						.setBaseHeight(Constants.BOARD_DASH_HEIGHT);
+//		avatar = graphics.createSprite().setAnchor(0.5).setBaseHeight(0).setBaseWidth(0).setImage(player.getAvatarToken()).setX(132).setY(239).setZIndex(20);
 
 		//background = entityModule.createSprite().setAnchor(0).setImage("HUD_" + color + ".png").setX(238 - 50 - PLAYER_AVATAR_RADIUS / 2).setY(baseY);
 
 		// pseudo -> The name of the player in the dashboard...
 //		int nameStartX = 361;
 		int nameStartX = 140;
-		pseudo =
-				graphics.createText(player.getNicknameToken()).setAnchor(0.5).setFontSize(45).setStrokeColor(4).setStrokeColor(0x000000).setStrokeThickness(1.0).setY(57).setX(nameStartX).setFillColor(player.getColor()).setZIndex(-1);
+//		int nameStartX = 5;
+
+		pseudo = graphics.createText(player.getNicknameToken())
+						.setAnchor(0.5)
+						.setFontSize(45)
+						.setStrokeColor(4).setStrokeColor(0x000000)
+						.setStrokeThickness(1.0)
+						.setY(57)
+						.setX(nameStartX)
+						.setFillColor(player.getColor())
+						.setZIndex(-1);
 //		int textPos = 490;
-		int textPos = (int) (Constants.BOARD_DASH_WIDTH * 0.68723 * 0.8);
-		int textGap = 87;
-		gold = graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(50).setStrokeColor(0x000000).setStrokeThickness(1.0).setX(textPos).setY(154);
+//		int textPos = (int) (Constants.BOARD_DASH_WIDTH * 0.68723 * 0.8);
+		int textStartX = 120;
+		int textYGap = 70;
+		int fontsize = 35;
 
-		lives = graphics.createText("").setAnchor(0.5).setFillColor(0x000000).setFontSize(50).setStrokeColor(0x000000).setStrokeThickness(1.0).setX(textPos).setY(gold.getY()+textGap);
+		coins = graphics.createText("")
+				.setAnchorY(0.5)
+				.setFillColor(textColor).setFontSize(fontsize)
+				.setStrokeColor(0x000000)
+				.setStrokeThickness(1.0)
+				.setX(textStartX)
+				.setY(154)
+				.setTextAlign(TextBasedEntity.TextAlign.LEFT);
 
-		message = graphics.createText("").setAnchorY(0.5).setAnchorX(0).setFillColor(0x000000).setFontSize(35).setStrokeColor(0x000000).setStrokeThickness(0.0).setX(textPos-120).setY(lives.getY()+textGap).setZIndex(-1);
+		scores = graphics.createText("")
+						.setAnchorY(0.5)
+						.setFillColor(textColor).setFontSize(fontsize)
+						.setStrokeColor(0x000000)
+						.setStrokeThickness(1.0)
+						.setX(textStartX)
+						.setY(coins.getY() + textYGap)
+						.setTextAlign(TextBasedEntity.TextAlign.LEFT);
+
+		killCount = graphics.createText("")
+						.setAnchorY(0.5)
+						.setFillColor(textColor).setFontSize(fontsize)
+						.setStrokeColor(0x000000)
+						.setStrokeThickness(0.0)
+						.setX(textStartX)
+						.setY(scores.getY() + textYGap)
+						.setZIndex(-1)
+						.setTextAlign(TextBasedEntity.TextAlign.LEFT);
 
 		group = graphics.createGroup().setScale(1).setX(0).setY(player.getIndex() == 0 ? 0 : (1080-375));
-		group.add( avatar, pseudo, gold, lives, message, frame);
+//		group.add( avatar, pseudo, gold, lives, message, frame);
+		group.add(pseudo, scores, coins, killCount, frame);
 	}
 
 	public void updateView() {
-		if (player.getMoney() != this.currentGold) {
-			this.currentGold = player.getMoney();
-			this.gold.setText(currentGold+"");
+		if (player.getCoins() != this.currentCoins) {
+			this.currentCoins = player.getCoins();
+			this.coins.setText(currentCoins + "");
 		}
-		if (player.getLives() != this.currentLives) {
-			this.currentLives = player.getLives();
-			this.lives.setText(currentLives+"");
+
+		if (player.getScores() != this.currentScores) {
+			this.currentScores = player.getScores();
+			this.scores.setText(currentScores + "");
 		}
-		if (!player.getMessage().equals(currentMessage)) {
-			this.currentMessage = player.getMessage();
-			this.message.setText((currentMessage+"                ").substring(0, 15));
+
+		if (player.getKillCount() != this.currentKillCount) {
+			this.currentKillCount = player.getKillCount();
+			this.killCount.setText(this.currentKillCount + "");  // Debuggin code...
 		}
 	}
+
+//	public void updateView() {
+//		if (player.getMoney() != this.currentGold) {
+//			this.currentGold = player.getMoney();
+//			this.gold.setText(currentGold+"");
+//		}
+//		if (player.getLives() != this.currentLives) {
+//			this.currentLives = player.getLives();
+//			this.lives.setText(currentLives+"");
+//		}
+//		if (!player.getMessage().equals(currentMessage)) {
+//			this.currentMessage = player.getMessage();
+////			this.message.setText((currentMessage+"                ").substring(0, 15));
+//			this.message.setText(currentMessage+"Nah");  // Debuggin code...
+//		}
+//	}
 }

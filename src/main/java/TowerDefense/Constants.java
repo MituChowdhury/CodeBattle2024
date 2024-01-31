@@ -93,7 +93,7 @@ public class Constants {
 	public static int CHARACTER_COUNT = 5;
 
 	// Authored by: mdmab
-	public static int BOARD_DASH_WIDTH = 350;
+	public static int BOARD_DASH_WIDTH = 280;
 	public static int BOARD_DASH_HEIGHT = 367;
 
 //	public static List<String> VALID_OBJECT_NAMES = Arrays.asList(new String[]{
