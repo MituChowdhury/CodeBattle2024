@@ -24,7 +24,7 @@ public abstract class TowerView {
 	String spriteFileBaseName;
 	int upgradeLevel = 0;
 	
-	public TowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips, String sprite) {
+	public TowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips, String sprite, int w, int h, int img_c, int img_pr) {
 		this.tower = tower;
 		this.graphics = graphics;
 		tower.setView(this);
@@ -33,7 +33,7 @@ public abstract class TowerView {
 		this.spriteFileBaseName = sprite;
 //		towerSprite = Utils.createTowerSprite(graphics, sprite + upgradeLevel + ".png", tower.getTile().getX(), tower.getTile().getY());
 //		towerSprite.setTint(tower.getOwner().getColor());
-		towerSpriteAnimation = Utils.createTowerSpriteAnimation(graphics, sprite + ".png", tower.getTile().getX(), tower.getTile().getY(), 70, 130, 6, 6);
+		towerSpriteAnimation = Utils.createTowerSpriteAnimation(graphics, sprite + ".png", tower.getTile().getX(), tower.getTile().getY(), w, h, img_c, img_pr);
 //		towerSpriteAnimation.setTint(tower.getOwner().getColor());
 
 	}
@@ -53,6 +53,7 @@ public abstract class TowerView {
 //		graphics.commitEntityState(0, boardGroup, towerSprite);
 
 		graphics.commitEntityState(0, boardGroup, towerSpriteAnimation);
+		graphics.commitEntityState(0,towerSpriteAnimation);
 //		if (towerFixedSprite != null)
 //			graphics.commitEntityState(0, towerFixedSprite);
 

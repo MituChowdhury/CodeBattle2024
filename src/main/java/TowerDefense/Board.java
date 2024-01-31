@@ -402,9 +402,10 @@ public class Board {
 		case "GLUETOWER":
 			tower = new GlueTower(grid[x][y]);
 			break;
-		case "HEALTOWER":
-			tower = new HealTower(grid[x][y]);
-			break;
+			//for debug don't know why it is happening
+//		case "HEALTOWER":
+//			tower = new HealTower(grid[x][y]);
+//			break;
 		case "SPRINGTRAP_U":
 			tower = new SpringTrap(grid[x][y], 1,this);
 			break;

@@ -4,33 +4,25 @@ import TowerDefense.Attacker;
 import TowerDefense.Tower;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.entities.Group;
+import com.codingame.gameengine.module.entities.SpriteAnimation;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 
 public class WallView extends TowerView {
 
+	private SpriteAnimation wallSpriteAnimation;
+
 	public WallView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
-		super(tower, boardGroup, graphics, tooltips, "fireTowerFixed");
-		attackSprite = graphics.createSprite().setImage("fireTowerFixed1.png").setAlpha(0);
-		attackLine = graphics.createLine();
-		attackLine.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5)));
-		attackLine.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5)));
-		attackLine.setLineColor(0xff0000).setAlpha(0);
-		attackLine.setLineWidth(5);
+		super(tower, boardGroup, graphics, tooltips, "rock",64, 64, 1, 1);
+		towerSpriteAnimation.setScale(1.5);
+
+
+
 		commitSprites();
 		updateTooltip();
 	}
 
 	@Override
 	public void attack(Attacker a) {
-		attackSprite.setAlpha(1);
-		attackSprite.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX() + .8)));
-		attackSprite.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY() + .5)));
-		attackLine.setAlpha(1);
-		attackLine.setX2((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX() + .8 + 0.5)));
-		attackLine.setY2((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY() + 0.5 + 0.5)));
 
-		graphics.commitEntityState(0, attackSprite, attackLine);
-		attackSprite.setAlpha(0);
-		attackLine.setAlpha(0);
 	}
 }

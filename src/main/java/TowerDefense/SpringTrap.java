@@ -4,7 +4,7 @@ import com.codingame.game.Player;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.entities.Group;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
-import view.GunTowerView;
+import view.SpringTrapView;
 import view.TowerView;
 
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ public class SpringTrap extends Tower {
 		this.dir = dir;
 		this.board = board;
 		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
+		this.tile.unsetDestructibleObject();
 	}
 
 	public int getSpringDistance() {
@@ -120,6 +121,6 @@ public class SpringTrap extends Tower {
 
 	@Override
 	public TowerView createView(Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltipModule) {
-		return new GunTowerView(this, boardGroup, graphics, tooltipModule);
+		return new SpringTrapView(this, boardGroup, graphics, tooltipModule);
 	}
 }

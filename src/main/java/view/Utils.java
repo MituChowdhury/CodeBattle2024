@@ -54,7 +54,7 @@ public class Utils {
 				.setImages(spriteImages)
 				.setX(BoardView.CELL_SIZE * x).setY(BoardView.CELL_SIZE * y)
 				.setDuration(1000)
-				.setScale(1.5)
+//				.setScale(1.5)
 //				.setAnchor(.5)
 				.setZIndex(-1)
 				.setLoop(true).setPlaying(true);
