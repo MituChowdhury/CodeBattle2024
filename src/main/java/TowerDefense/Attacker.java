@@ -32,7 +32,7 @@ public class Attacker {
 	private ArrayList<SubTile> steps;
 	public Tile lastTile;
 
-	private boolean attacking = false;
+
 
 	Tile spawnTile;
 	SubTile spawnSubtile;
@@ -154,13 +154,7 @@ public class Attacker {
 		hitPoints = Math.min(hitPoints + health, maxHealth);
 	}
 
-	public void attack(Tile tile) {
-		this.attacking = true;
-		if( tile.obstacleTower != null ) {
-			tile.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE);
-			// TODO: Add attacker attack animation here
-		}
-	}
+
 
 	//	public void dealDamage(int damage) {
 //		this.hitPoints = Math.max(0, hitPoints - damage);
@@ -217,11 +211,6 @@ public class Attacker {
 
 	public void move() {
 
-		if( attacking ) {
-			attacking = false;
-			return;
-		}
-
 		boolean[][] optimalTiles = PathFinder.getOptimalPathTiles(currentTile,grid);
 		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);
 		steps = path;
@@ -238,6 +227,17 @@ public class Attacker {
 			slowCountdown--;
 	}
 
+	public void build(int x, int y){
+
+	}
+
+	public void attack(Tile target) {
+		if( target.obstacleTower != null ) {
+			target.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE);
+		}
+		// TODO: Add attacker attack animation here
+	}
+
 	public Player getOwner() {
 		return owner;
 	}
@@ -246,20 +246,6 @@ public class Attacker {
 		return enemy;
 	}
 
-	public String getPlayerInput() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(id).append(" ");
-		sb.append(owner.getIndex()).append(" ");
-		//sb.append(getLocation().toString()).append(" ");
-		sb.append(hitPoints).append(" ");
-		sb.append(maxHealth).append(" ");
-		sb.append(getSpeed()).append(" ");
-		sb.append(maxSpeed).append(" ");
-		sb.append(slowCountdown).append(" ");
-		sb.append(bounty);
-
-		return sb.toString();
-	}
 
 	public boolean hasReachedTarget() {
 		if(owner.getIndex()==0){
@@ -268,4 +254,6 @@ public class Attacker {
 
 		return  currentTile ==grid[0][Constants.MAP_HEIGHT/2];
 	}
+
+
 }

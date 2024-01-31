@@ -29,11 +29,11 @@ class TestAgent {
 
         String yCoords = "0 2 4 8 9";
 
-        System.out.println(yCoords);
-        System.out.println("PASS");
-        System.out.println("PASS");
-        System.out.println("PASS");
-        System.out.println("PASS");
+        System.out.println(0);
+        System.out.println(2);
+        System.out.println(4);
+        System.out.println(8);
+        System.out.println(9);
 
         int cnt =0;
         // game loop
@@ -120,54 +120,13 @@ class TestAgent {
 //                String line = in.nextLine();
             }
 
-//            int attackerCount = in.nextInt();
-//            System.err.printf("attackerCount: %d\n", attackerCount);
-//
-//            if (in.hasNextLine())
-//                in.nextLine();
-//
-//            for (int i = 0; i < attackerCount; i++) {
-//                String attackerAll = in.nextLine();
-//                System.err.println(attackerAll);
-//            }
 
-//            if (in.hasNextLine()) {
-//                in.nextLine();
-//            }
+            System.out.println("go 0");
+            System.out.println("go 1");
+            System.out.println("go 2");
+            System.out.println("go 3");
+            System.out.println("go 4");
 
-//            if (cnt == 0) {
-//                if (cnt == 0)
-//                    System.out.println("0 2 4 7 10");
-//                else
-//                    System.out.println("1 3 5 8 9");
-//            }
-//            else
-//            if( cnt == 4 ){
-//                System.out.println("BUILD 5 5 GUNTOWER");
-                System.out.println("go 1");
-
-                if( cnt == 3 ) {
-                    System.out.println("build 1 GUN_TOWER 13 6");
-                } else {
-                    System.out.println("");
-                }
-
-                if(cnt == 4) {
-                    System.out.println("build 1 BOMB 9 6");
-                } else System.out.println("");
-
-                if( cnt >= 8 && cnt <= 12 ) {
-                    System.out.println("attack 2 NORTH");
-                } else {
-                    System.out.println("");
-                };
-
-//                System.out.println("forte");
-                System.out.println("");
-                System.out.println("wtf");
-//            }
-
-//             Write an action using System.out.println()
             System.err.println("Debug messages... here "+cnt);
             cnt++;
             System.out.flush();

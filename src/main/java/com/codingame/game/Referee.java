@@ -41,8 +41,7 @@ public class Referee extends AbstractReferee {
 	private EndScreenModule endScreenModule;
 
 	private Board board;
-	private ArrayList<Integer> playerOneXs;
-	private ArrayList<Integer> playerTwoXs;
+
 	public static final ArrayList<String> VALID_OBJECT_NAMES = new ArrayList<>();
 	public static final ArrayList<String> VALID_DIRECTIONS = new ArrayList<>();
 
@@ -59,9 +58,6 @@ public class Referee extends AbstractReferee {
 		for (Player player : gameManager.getPlayers()) {
 			player.initView(graphicEntityModule);
 		}
-
-		playerOneXs = new ArrayList<>();
-		playerTwoXs = new ArrayList<>();
 
 		VALID_OBJECT_NAMES.add("GUN_TOWER");
 		VALID_OBJECT_NAMES.add("HEAL_TOWER");
@@ -81,20 +77,7 @@ public class Referee extends AbstractReferee {
 
 	@Override
 	public void gameTurn(int turn) {
-//		try {
-//			if (turn == 4) {
-////				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "GUNTOWER");
-////				board.cacheBuild(gameManager.getActivePlayers().get(1), 9, 7, "SPRINGTRAP_U");
-//			}
-//
-//			if (turn == 12) {
-////				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 8, "SPRINGTRAP_U");
-//			}
-//		} catch (InvalidActionException e) {
-//			System.out.println("asdasd #################################################################################################################################");
-//			System.out.println(e.getMessage());
-//			throw new NullPointerException();
-//		}
+
 
 		for( Attacker a:board.getAttackers() ) {
 			int x = a.getCurrentTile().getX();
@@ -107,66 +90,42 @@ public class Referee extends AbstractReferee {
 		for (Player player : gameManager.getActivePlayers()) {
 			for (String line : board.getPlayerInput(player, turn == 1)) {
 				player.sendInputLine(line);
-				System.out.println(turn + " - mdmab: " + line);
 			}
 
 			player.execute();
 		}
 
-		playerOneXs.add(Constants.MAP_HEIGHT/2);
-//		if( turn == 1 ) {
-//			board.createAttackerAtPositions( board.getPlayer(0), board.getPlayer(1), playerOneXs );
-//		}
+
 
 
 
 		for (Player player : gameManager.getActivePlayers()) {
 			try {
-//				String actions = player.getOutputs().get(0);
+
 				List<String> actions = player.getOutputs();
 				System.out.println("*************** No timeout ****************");
 
 				// For debugging purpose...
 				// During the 1st turn, the player have to output the y coordinates for their attackers...
 				if (turn == 1) {
-					String coords = actions.get(0);
-					String[] xOuts = coords.split(" ");
 
-					if (player.getIndex() == 0) {
-						for (String x : xOuts) {
-							playerOneXs.add(Integer.parseInt(x));
-							System.err.println("Pos: " + x);
-						}
+					try {
+						for (int i = 0; i < Constants.CHARACTER_COUNT; i++) {
+							Player opponent = board.getPlayer(player.getIndex() ^ 1);
+							int yCord = Integer.parseInt(actions.get(i));
+							board.createAttackerAtPositions(player, opponent, yCord);
 
-						for (int i = 0; i < playerOneXs.size(); ++i) {
-							System.out.printf("(%d, 0)\n", playerOneXs.get(i));
-						}
-					} else {
-						for (String x : xOuts) {
-							playerTwoXs.add(Integer.parseInt(x));
-							System.err.println("Pos: " + x);
-						}
-
-						for (int i = 0; i < playerTwoXs.size(); ++i) {
-							System.out.printf("(%d, 16)\n", playerTwoXs.get(i));
 						}
 					}
+					catch (Exception e){
+						System.err.println("############# Invalid initial output");
+					}
 
-//					for (int pos: playerOneXs) {
-					Player owner = board.getPlayer(player.getIndex());
-					Player opponent = board.getPlayer(player.getIndex() ^ 1);
-					board.createAttackerAtPositions(owner, opponent, player.getIndex() == 0 ? playerOneXs : playerTwoXs);
-//					}
+
 				} else {
-//					actions.forEach(actionList -> {
-//						for (String action: actionList.split(";")) {
-//							System.out.println(action);
-//						}
-//					});
-//					System.out.println("Size of list => " + actions.size());
-//					actions.forEach(System.out::println);
+					PathFinder.init(player.getIndex()^1); //initialize path toward the enemy base.
 
-					// Parse the output lines from the players and do actions...
+
 					TreeSet<Integer> usedAttackers = new TreeSet<>();
 
 					actions.forEach(action -> {
@@ -177,9 +136,6 @@ public class Referee extends AbstractReferee {
 						}
 					});
 				}
-				// ..............................
-
-				System.out.println("*************** No timeout ****************");
 
 			} catch (TimeoutException e) {
 				e.printStackTrace();
@@ -207,26 +163,20 @@ public class Referee extends AbstractReferee {
 		}
 
 
-		if(turn!=1)
-			board.moveAttackers(turn);
 
 		board.updateTowers();
 		board.fireTowers();
 		board.spawnAttackers(turn); //spawn those that were killed in previous turn
 		board.checkDeadAttacker(); //add those that are killed in this turn
-
-//		board.spawnAttackers(turn);
-
-
 		board.updateView();
+
+
 		for (Player player : gameManager.getPlayers()) {
 			player.setScore(player.getScorePoints());
 			if (player.isDead() && player.isActive())
 				player.deactivate(player.getNicknameToken() + ": no lives left");
 		}
-//		if( turn == 20 ) {
-//			board.test();
-//		}
+
 		if (turn == Constants.TURN_COUNT) {
 			gameManager.getActivePlayers().get(0).deactivate();
 			gameManager.getActivePlayers().get(0).deactivate();
@@ -236,11 +186,19 @@ public class Referee extends AbstractReferee {
 
 	private void executeCommand( Command cmd ) throws BadCommandException {
 		try {
+			if(cmd.getAttacker()==null)
+			{
+				System.out.println("############### Command ignored. Player dead");
+				return;
+			}
+
 			if( cmd.getClass() == BuildCommand.class ) {
 				BuildCommand c = (BuildCommand) cmd;
 				board.cacheBuild(c.getPlayer(), c.getPosX(), c.getPosY(), c.getObjectName());
-			} else if( cmd.getClass() == GoCommand.class ) {
+				cmd.getAttacker().build(c.getPosX(),c.getPosY());
 
+			} else if( cmd.getClass() == GoCommand.class ) {
+				cmd.getAttacker().move();
 			} else if( cmd.getClass() == AttackCommand.class ) {
 				AttackCommand c = (AttackCommand) cmd;
 				Attacker a = c.getAttacker();
@@ -289,28 +247,30 @@ public class Referee extends AbstractReferee {
 			cmd = Util.getGoCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
 
-			throwIfAttackerUsed(usedAttackers, attacker.getId());
-			usedAttackers.add(attacker.getId());
-
-			System.out.println(cmd.toString());
+			if(attacker!=null) {
+				throwIfAttackerUsed(usedAttackers, attacker.getId());
+				usedAttackers.add(attacker.getId());
+			}
 		} else if (commandArgs[0].equals("build")) {
 			// Implementation for "build" command...
 			cmd = Util.getBuildCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
 
-			throwIfAttackerUsed(usedAttackers, attacker.getId());
-			usedAttackers.add(attacker.getId());
+			if(attacker!=null) {
+				throwIfAttackerUsed(usedAttackers, attacker.getId());
+				usedAttackers.add(attacker.getId());
+			}
 
-			System.out.println(cmd.toString());
 		} else if (commandArgs[0].equals("attack") && Util.checkAttackStructure(commandArgs)) {
 			// Implementation for "attack" command...
 			cmd = Util.getAttackCommand(commander, this.board, commandArgs);
 			Attacker attacker = cmd.getAttacker();
 
-			throwIfAttackerUsed(usedAttackers, attacker.getId());
-			usedAttackers.add(attacker.getId());
+			if(attacker!=null) {
+				throwIfAttackerUsed(usedAttackers, attacker.getId());
+				usedAttackers.add(attacker.getId());
+			}
 
-			System.out.println(cmd.toString());
 		} else {
 			// Exceptions for invalid commands...
 			throw new BadCommandException("Invalid command sent by the player.");

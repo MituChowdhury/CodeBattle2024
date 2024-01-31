@@ -151,7 +151,7 @@ public class Board {
 
 		for (int i = 0; i <2 ; i++) {
 
-			PathFinder.init(i^1);
+
 			for (Attacker a : attackers)
 				if(a.getOwner().getIndex()==i)
 					a.move();
@@ -209,14 +209,14 @@ public class Board {
 
 
 
-	public void createAttackerAtPositions(Player owner, Player enemy, ArrayList<Integer> positionY) {
-		for (int i = 0; i < Constants.CHARACTER_COUNT; ++i) {
-			Attacker a =new Attacker(grid, owner, enemy, positionY.get(i));
+	public void createAttackerAtPositions(Player owner, Player enemy, int positionY) {
+
+			Attacker a =new Attacker(grid, owner, enemy, positionY);
 			AttackerView a_view = view.addAttacker(a);
 			a.setView(a_view);
 
 			attackers.add(a);
-		}
+
 	}
 
 //	public void test() {
@@ -307,23 +307,6 @@ public class Board {
 		return attackers;
 	}
 
-	public List<Attacker> getVeterans() {
-		return veterans;
-	}
-
-	public List<Attacker> getAllAttackers() {
-		List<Attacker> all = new ArrayList<>();
-
-		for (Attacker attacker: attackers) {
-			all.add(attacker);
-		}
-
-		for (Attacker veteran: veterans) {
-			all.add(veteran);
-		}
-
-		return all;
-	}
 
 	public List<Attacker> getAllAttackersOf(Player player) {
 		List<Attacker> all = new ArrayList<>();
@@ -331,12 +314,6 @@ public class Board {
 		for (Attacker attacker: attackers) {
 			if (attacker.getOwner() == player) {
 				all.add(attacker);
-			}
-		}
-
-		for (Attacker veteran: veterans) {
-			if (veteran.getOwner() == player) {
-				all.add(veteran);
 			}
 		}
 
