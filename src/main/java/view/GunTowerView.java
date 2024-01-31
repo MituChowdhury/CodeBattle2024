@@ -13,36 +13,22 @@ import TowerDefense.Tower;
 public class GunTowerView extends TowerView {
 
 
-	private SpriteAnimation canonballAnim;
+	private SpriteAnimation shootSpriteAnimation;
 	public GunTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
 		super(tower, boardGroup, graphics, tooltips, "gunTower");
 
-
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
 
-		String[] fireballSprites = graphics.createSpriteSheetSplitter()
-				.setSourceImage("fireball_sprite.png")
-				.setHeight(48).setWidth(48).setImageCount(8)
-				.setImagesPerRow(4).setOrigRow(0).setOrigCol(0).setName("fireBallSprite").split();
+		shootSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower,"fireball_sprite.png", 48,48,8, 4);
 
-		canonballAnim = Utils.createEffectSpriteAnimation(graphics,tower,"fireball_sprite.png",tower.getTile().getX(), tower.getTile().getY(), 48,48,8, 4);
-
-
-//		canonballAnim = graphics.createSpriteAnimation()
-//				.setImages(fireballSprites)
-//				.setScale(1.2)
-//				.setDuration(500)
-//				.setLoop(true).setPlaying(true)
-//				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
-//				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg))
-//				.setAnchor(.5)
-//
-//				.setAlpha(0);
-
-		canonballAnim.setScale(1.2)
+		shootSpriteAnimation
+				.setScale(1.2)
 				.setAlpha(0)
+				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
+				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg))
 				.setAnchor(.5);
 
+		// canonball
 //		canonBall = graphics.createCircle();
 //		canonBall
 //				.setRadius(10)
@@ -64,7 +50,7 @@ public class GunTowerView extends TowerView {
 
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
 
-		canonballAnim.setAlpha(1, Curve.EASE_OUT)
+		shootSpriteAnimation.setAlpha(1, Curve.EASE_OUT)
 				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH)
 				.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY()) * gg))
 				.setRotation(Math.PI * 2 - 1);
@@ -72,18 +58,16 @@ public class GunTowerView extends TowerView {
 //						(( (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)- ((BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH))), Curve.IMMEDIATE);
 
 
+		//canonball
 //		canonBall
 //				.setAlpha(1, Curve.EASE_OUT)
 //				.setX((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getX()) * gg) + Constants.BOARD_DASH_WIDTH)
 //				.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY()) * gg));
-//
-
-
 //		graphics.commitEntityState(.45, canonBall);
-		graphics.commitEntityState(.45, canonballAnim);
 
-//		canonBall
-		canonballAnim
+		graphics.commitEntityState(.45, shootSpriteAnimation);
+
+		shootSpriteAnimation
 				.setAlpha(0, Curve.IMMEDIATE)
 				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
 				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg));

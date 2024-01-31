@@ -13,12 +13,10 @@ import TowerDefense.Tower;
 public class GlueTowerView extends TowerView {
 
 
-	private SpriteAnimation stuntAnimation;
+	private SpriteAnimation stuntSpriteAnimation;
 
 	public GlueTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
 		super(tower, boardGroup, graphics, tooltips, "glueTower");
-
-
 
 		String[] stuntSprite = graphics.createSpriteSheetSplitter()
 				.setSourceImage("ground_effect.png")
@@ -28,18 +26,14 @@ public class GlueTowerView extends TowerView {
 
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
 
-		stuntAnimation = graphics.createSpriteAnimation()
+		stuntSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower, "ground_effect.png", 64,64,8,8);
+		stuntSpriteAnimation
 				.setImages(stuntSprite)
 				.setScaleX(5)
 				.setScaleY(12)
 				.setDuration(500)
-				.setLoop(true).setPlaying(true)
-				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
-				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg))
 				.setAnchor(.5)
 				.setVisible(false);
-
-
 
 		commitSprites();
 		updateTooltip();
@@ -48,14 +42,13 @@ public class GlueTowerView extends TowerView {
 	@Override
 	public void attack(Attacker a) {
 
-
-		stuntAnimation
+		stuntSpriteAnimation
 				.setVisible(true)
 				.setAlpha(1);
 
-		graphics.commitEntityState(1, stuntAnimation);
+		graphics.commitEntityState(1, stuntSpriteAnimation);
 
-		stuntAnimation
+		stuntSpriteAnimation
 				.setAlpha(0, Curve.LINEAR)
 				.setVisible(false);
 

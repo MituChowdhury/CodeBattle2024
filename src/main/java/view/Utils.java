@@ -61,7 +61,7 @@ public class Utils {
 
 	}
 
-	public static SpriteAnimation createEffectSpriteAnimation(GraphicEntityModule graphics, Tower tower, String image, int x, int y, int w, int h, int img_c, int img_pr) {
+	public static SpriteAnimation createEffectSpriteAnimation(GraphicEntityModule graphics, Tower tower, String image, int w, int h, int img_c, int img_pr) {
 
 
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
@@ -78,13 +78,14 @@ public class Utils {
 
 		return graphics.createSpriteAnimation()
 				.setImages(spriteImages)
+				.setAlpha(0)
 //				.setX(BoardView.CELL_SIZE * x).setY(BoardView.CELL_SIZE * y)
 				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
 				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg))
-				.setDuration(1000)
+				.setDuration(500)
 //				.setScale(1.5)
 //				.setAnchor(.5)
-				.setZIndex(-1)
+//				.setZIndex(-1)
 				.setLoop(true).setPlaying(true);
 
 	}
