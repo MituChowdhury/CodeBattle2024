@@ -16,7 +16,7 @@ public class SpringTrapView extends TowerView {
 
 	public SpringTrapView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
 		super(tower, boardGroup, graphics, tooltips, "spring3",70, 65, 4, 4);
-		towerSpriteAnimation.setScale(1.5);
+		towerSpriteAnimation.setScale(1.5).setRotation(Math.PI);
 //		towerSpriteAnimation.setPlaying(false);
 
 		commitSprites();
