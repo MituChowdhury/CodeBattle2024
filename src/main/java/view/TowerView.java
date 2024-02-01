@@ -85,10 +85,12 @@ public abstract class TowerView {
 
 	public void healthBarVisibility(boolean a){
 		if(a){
-			group.setVisible(true);
+			group.setAlpha(1);
+			graphics.commitEntityState(0, group);
 		}
 		else {
-			group.setVisible(false);
+			group.setAlpha(0);
+			graphics.commitEntityState(1, group);
 		}
 	}
 

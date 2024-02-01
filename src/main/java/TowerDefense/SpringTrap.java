@@ -126,7 +126,7 @@ public class SpringTrap extends Tower {
 				continue;
 			SubTile xxx = this.getRelocateSubTile(a);
 			if( this.getRelocateSubTile(a).getTile().hasNonDestructibleObject() ) {
-				a.kill();
+				a.relocate( this.getRelocateSubTile(a) );
 			} else {
 				a.relocate( this.getRelocateSubTile(a) );
 			}
