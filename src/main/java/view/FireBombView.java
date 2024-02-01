@@ -13,7 +13,8 @@ public class FireBombView extends TowerView {
 	private SpriteAnimation explosionAnimation;
 
 	public FireBombView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
-		super(tower, boardGroup, graphics, tooltips, "bomb",32, 32, 5, 5);
+
+		super(tower, boardGroup, graphics, tooltips, "bomb.png",32, 32, 5, 5);
 		towerSpriteAnimation.setScale(3);
 
 

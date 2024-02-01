@@ -103,6 +103,7 @@ public class Constants {
 	public static int BOARD_DASH_WIDTH = 280;
 	public static int BOARD_DASH_HEIGHT = 367;
 
+
 //	public static List<String> VALID_OBJECT_NAMES = Arrays.asList(new String[]{
 //			"GUN_TOWER", "HEAL_TOWER", "STUN_TOWER",
 //			"SPRING_NORTH", "SPRING_SOUTH", "SPRING_EAST", "SPRING_WEST",
@@ -112,5 +113,25 @@ public class Constants {
 //	public static List<String> VALID_DIRECTIONS = Arrays.asList(new String[]{
 //			"NORTH", "SOUTH", "EAST", "WEST"
 //	});
+
+}
+
+
+class SpriteInfo{
+	public String imageFileName;
+	public int width;
+	public int height;
+	public int imageCount;
+	public int imagePerRow;
+	public double scale;
+
+	SpriteInfo(String imgFileName, int w, int h, int img_c, int img_pr, double sc){
+		imageFileName = imgFileName;
+		width = w;
+		height = h;
+		imageCount = img_c;
+		imagePerRow = img_pr;
+		scale = sc;
+	}
 
 }

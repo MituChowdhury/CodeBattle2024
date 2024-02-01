@@ -1,10 +1,7 @@
 package view;
 
 import TowerDefense.*;
-import com.codingame.gameengine.module.entities.GraphicEntityModule;
-import com.codingame.gameengine.module.entities.Group;
-import com.codingame.gameengine.module.entities.Sprite;
-import com.codingame.gameengine.module.entities.Text;
+import com.codingame.gameengine.module.entities.*;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 
 public class BoardView {
@@ -86,17 +83,25 @@ public class BoardView {
 					Sprite canyon = Utils.createBoardSprite(graphics, "canyon.png", x, y).setZIndex(-1);
 
 					if (x == 0 && y == board.getHeight()/2) {
-
+						SpriteAnimation playerBase = Utils.createBoardSpriteAnimation(graphics, "base.png",x,y-.5,70,100,6,6);
+						playerBase.setScale(1.5);
 						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png",x,y-.5);
 						headquarter.setTint(board.getPlayer(0).getColor());
 						canyon.setTint(board.getPlayer(0).getColor()).setAlpha(.3);
-						innerGroup.add(headquarter);
+//						innerGroup.add(headquarter);
+						innerGroup.add(playerBase);
+						graphics.commitEntityState(0,playerBase);
 					}
 					if (x == board.getWidth() - 1 && y == board.getHeight()/2) {
+						SpriteAnimation playerBase = Utils.createBoardSpriteAnimation(graphics, "base.png",x,y-.5,70,100,6,6);
+						playerBase.setScale(1.5);
 						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png", x,y-.5);
 						headquarter.setTint(board.getPlayer(1).getColor());
 						canyon.setTint(board.getPlayer(1).getColor()).setAlpha(.3);
-						innerGroup.add(headquarter);
+//						innerGroup.add(headquarter);
+						innerGroup.add(playerBase);
+						graphics.commitEntityState(0,playerBase);
+
 					}
 					 tooltips.setTooltipText(canyon, "x: " + x + "\ny: " + y);
 					 boardGroup.add(canyon);

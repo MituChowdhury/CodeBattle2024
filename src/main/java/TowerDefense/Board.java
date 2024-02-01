@@ -1,4 +1,4 @@
-brapackage TowerDefense;
+package TowerDefense;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -355,9 +355,9 @@ public class Board {
 		case "GUN_TOWER":
 			tower = new GunTower(grid[x][y]);
 			break;
-		case "FIRE_TOWER":
-			tower = new FireTower(grid[x][y]);
-			break;
+//		case "FIRE_TOWER":
+//			tower = new FireTower(grid[x][y]);
+//			break;
 		case "STUN_TOWER":
 			tower = new GlueTower(grid[x][y]);
 			break;

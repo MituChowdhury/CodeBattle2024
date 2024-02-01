@@ -15,31 +15,18 @@ public class GunTowerView extends TowerView {
 
 	private SpriteAnimation shootSpriteAnimation;
 	public GunTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
-		super(tower, boardGroup, graphics, tooltips, "gunTower",70, 130, 6, 6);
-		towerSpriteAnimation.setScale(1.5).setAnchorY(.5).setAnchorX(0);
+		super(tower, boardGroup, graphics, tooltips, "guntower_spritesheet",64, 64, 8, 8);
+		towerSpriteAnimation.setScale(1.8).setAnchorY(.2).setAnchorX(.1).setDuration(1500);
+
 
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
 
 
 		shootSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower,"fireball_sprite.png", 48,48,8, 4);
-//		shootSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower, "destroyed1.png", 762,762,14, 14);
 		shootSpriteAnimation
-				.setScale(.25)
-//				.setScale(1.2)
+				.setScale(.5)
 				.setAlpha(0)
 				.setAnchor(.5);
-
-		// canonball
-//		canonBall = graphics.createCircle();
-//		canonBall
-//				.setRadius(10)
-//				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
-//				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg))
-//				.setAlpha(0)
-//				.setLineWidth(0)
-//				.setFillColor(0x3D3B40);
-//
-//		graphics.commitEntityState(0, canonBall);
 
 		commitSprites();
 		updateTooltip();

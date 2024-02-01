@@ -21,7 +21,6 @@ public class SpringTrapView extends TowerView {
 
 		commitSprites();
 		updateTooltip();
-
 	}
 
 	@Override
