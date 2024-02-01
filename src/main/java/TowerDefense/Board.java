@@ -252,7 +252,6 @@ public class Board {
 		for( int i=0; i<to_del.size(); i++ ) {
 			Tower t = towers.get(to_del.get(i)-i);
 			t.disappear();
-			t.getDestroyer().destroy(t);
 			towers.remove(to_del.get(i)-i);
 		}
 	}
@@ -356,6 +355,9 @@ public class Board {
 		case "GUN_TOWER":
 			tower = new GunTower(grid[x][y]);
 			break;
+//		case "FIRE_TOWER":
+//			tower = new FireTower(grid[x][y]);
+//			break;
 		case "STUN_TOWER":
 			tower = new GlueTower(grid[x][y]);
 			break;
