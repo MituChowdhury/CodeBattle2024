@@ -22,8 +22,10 @@ public class GunTowerView extends TowerView {
 
 
 		shootSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower,"fireball_sprite.png", 48,48,8, 4);
+//		shootSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower, "destroyed1.png", 762,762,14, 14);
 		shootSpriteAnimation
-				.setScale(1.2)
+				.setScale(.25)
+//				.setScale(1.2)
 				.setAlpha(0)
 				.setAnchor(.5);
 
@@ -55,6 +57,9 @@ public class GunTowerView extends TowerView {
 				.setY((int) (BoardView.CELL_SIZE * ( a.getLocationSubTile().getY()) * gg))
 		;
 
+		destroyedSpriteAnimation.setVisible(true);
+
+		graphics.commitEntityState(0,destroyedSpriteAnimation);
 		graphics.commitEntityState(.45, shootSpriteAnimation);
 
 		//TODO: make concrete calculation

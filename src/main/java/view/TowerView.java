@@ -2,6 +2,7 @@ package view;
 
 import java.text.DecimalFormat;
 
+import com.codingame.game.Util;
 import com.codingame.gameengine.module.entities.*;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 
@@ -14,6 +15,8 @@ public abstract class TowerView {
 	protected Tower tower;
 	protected Sprite towerSprite, towerFixedSprite;
 	protected SpriteAnimation towerSpriteAnimation, towerFixedSpriteAnimation;
+
+	protected SpriteAnimation destroyedSpriteAnimation;
 	protected Sprite attackSprite;
 	protected Line attackLine;
 
@@ -31,31 +34,31 @@ public abstract class TowerView {
 		this.tooltipModule = tooltips;
 		this.boardGroup = boardGroup;
 		this.spriteFileBaseName = sprite;
-//		towerSprite = Utils.createTowerSprite(graphics, sprite + upgradeLevel + ".png", tower.getTile().getX(), tower.getTile().getY());
-//		towerSprite.setTint(tower.getOwner().getColor());
+
 		towerSpriteAnimation = Utils.createTowerSpriteAnimation(graphics, sprite + ".png", tower.getTile().getX(), tower.getTile().getY(), w, h, img_c, img_pr);
 //		towerSpriteAnimation.setTint(tower.getOwner().getColor());
 
+		destroyedSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower, "destroyed1.png", 762,762,14, 14);
+		destroyedSpriteAnimation
+				.setDuration(800)
+				.setAnchorY(.55)
+				.setAnchorX(.45)
+				.setScale(.3)
+		;
 	}
 
 	protected void commitSprites() {
-//		boardGroup.add(towerSprite);
 
 		boardGroup.add(towerSpriteAnimation);
-//		if (towerFixedSprite != null) {
-//			boardGroup.add(towerFixedSprite);
-//		}
+
 		if (towerFixedSpriteAnimation != null) {
 			boardGroup.add(towerFixedSpriteAnimation);
 		}
-//		if (attackSprite != null) boardGroup.add(attackSprite);
-//		if (attackLine != null) boardGroup.add(attackLine);
-//		graphics.commitEntityState(0, boardGroup, towerSprite);
 
 		graphics.commitEntityState(0, boardGroup, towerSpriteAnimation);
 		graphics.commitEntityState(0,towerSpriteAnimation);
-//		if (towerFixedSprite != null)
-//			graphics.commitEntityState(0, towerFixedSprite);
+
+		graphics.commitEntityState(0, destroyedSpriteAnimation);
 
 		if (towerFixedSpriteAnimation != null)
 			graphics.commitEntityState(0, towerFixedSpriteAnimation);
@@ -91,6 +94,8 @@ public abstract class TowerView {
 	// TODO: Add animation here
 	public void destroy() {
 		towerSpriteAnimation.setVisible(false);
-//		towerSprite.setVisible(false);
+		destroyedSpriteAnimation.setAlpha(.8);
+		graphics.commitEntityState(1, destroyedSpriteAnimation);
+		destroyedSpriteAnimation.setAlpha(0);
 	}
 }

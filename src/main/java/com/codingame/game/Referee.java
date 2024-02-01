@@ -92,7 +92,7 @@ public class Referee extends AbstractReferee {
 
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 6, 9, "SPRINGTRAP_U");
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 9, "SPRINGTRAP_U");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 9, "GUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 16, 9, "BOMB");
 
 
 			}
