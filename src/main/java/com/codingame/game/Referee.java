@@ -97,7 +97,13 @@ public class Referee extends AbstractReferee {
 				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 9, "STUN_TOWER");
 				board.cacheBuild(gameManager.getActivePlayers().get(0), 16, 9, "BOMB");
 
-
+				// Team blue -_- ....
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 6, "STUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 9, "STUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 5, "GUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 7, "GUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 7, "GUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 4, 7, "BOMB");
 			}
 		} catch ( InvalidActionException e ) {
 			System.out.println(e.getMessage());

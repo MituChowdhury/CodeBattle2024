@@ -15,6 +15,9 @@ public abstract class TowerView {
 	protected Tower tower;
 	protected Sprite towerSprite, towerFixedSprite;
 	protected SpriteAnimation towerSpriteAnimation, towerFixedSpriteAnimation;
+//	protected Rectangle tileTint;  // Sets the tint of the underlying tile to the color of the player...
+	protected Circle tileTint;  // Sets the tint of the underlying tile to the color of the player...
+	protected Sprite tint;
 
 	protected SpriteAnimation destroyedSpriteAnimation;
 	protected Sprite attackSprite;
@@ -37,8 +40,37 @@ public abstract class TowerView {
 		this.tooltipModule = tooltips;
 		this.spriteFileBaseName = sprite;
 
-		towerSpriteAnimation = Utils.createTowerSpriteAnimation(graphics, sprite + ".png", tower.getTile().getX(), tower.getTile().getY(), w, h, img_c, img_pr);
+		towerSpriteAnimation = Utils.createTowerSpriteAnimation(graphics, sprite + ".png", tower.getTile().getX(), tower.getTile().getY(), w, h, img_c, img_pr).setZIndex(1);
 //		towerSpriteAnimation.setTint(tower.getOwner().getColor());
+//		tileTint = graphics.createRectangle()
+//				.setX(BoardView.CELL_SIZE * tower.getTile().getX())
+//				.setY(BoardView.CELL_SIZE * tower.getTile().getY())
+//				.setHeight(BoardView.CELL_SIZE)
+//				.setWidth(BoardView.CELL_SIZE)
+//				.setFillColor(tower.getOwner().getColor())   // tower.getOwner().getColor()
+//				.setAlpha(0.3)
+//				.setZIndex(-1);
+
+//		tileTint = graphics.createCircle()
+//				.setX(BoardView.CELL_SIZE * tower.getTile().getX() + BoardView.CELL_SIZE / 2)
+//				.setY(BoardView.CELL_SIZE * tower.getTile().getY() + BoardView.CELL_SIZE / 2)
+//				.setRadius(0)
+//				.setFillColor(tower.getOwner().getColor())   // tower.getOwner().getColor()
+//				.setAlpha(0.3)
+//				.setZIndex(-1);
+
+		tint = graphics.createSprite()
+				.setImage(tower.getOwner().getIndex() == 0 ? "redblur.png": "blueblur.png")
+				.setAnchor(0.5)
+				.setX(BoardView.CELL_SIZE * tower.getTile().getX() + BoardView.CELL_SIZE / 2)
+				.setY(BoardView.CELL_SIZE * tower.getTile().getY() + BoardView.CELL_SIZE / 2)
+				.setAlpha(0.7)
+				.setZIndex(-1)
+				.setScale(2);
+
+//		graphics.commitEntityState(0, tileTint);
+
+		// Color the underlying tile to the color of the player....
 
 		destroyedSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower, "destroyed1.png", 762,762,14, 14);
 		destroyedSpriteAnimation
@@ -69,6 +101,8 @@ public abstract class TowerView {
 	protected void commitSprites() {
 
 		boardGroup.add(towerSpriteAnimation);
+//		boardGroup.add(tileTint);
+		boardGroup.add(tint);
 
 		if (towerFixedSpriteAnimation != null) {
 			boardGroup.add(towerFixedSpriteAnimation);
@@ -136,5 +170,6 @@ public abstract class TowerView {
 		destroyedSpriteAnimation.setAlpha(0);
 		healthBarVisibility(false);
 //		towerSprite.setVisible(false);
+		tint.setVisible(false);
 	}
 }
