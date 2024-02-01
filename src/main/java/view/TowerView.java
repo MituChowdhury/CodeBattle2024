@@ -108,7 +108,7 @@ public abstract class TowerView {
 			boardGroup.add(towerFixedSpriteAnimation);
 		}
 
-		graphics.commitEntityState(0, boardGroup, towerSpriteAnimation);
+		graphics.commitEntityState(0, boardGroup, towerSpriteAnimation, tint);
 		graphics.commitEntityState(0,towerSpriteAnimation);
 
 		graphics.commitEntityState(0, destroyedSpriteAnimation);
