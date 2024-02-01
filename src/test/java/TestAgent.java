@@ -72,15 +72,17 @@ class TestAgent {
                     if( i == 10000 ) {
                         if( cnt == offset ) {
                             System.out.println("build " + playerCharId + " SPRING_NORTH " + playerPosX + " " + (int)(playerPosY));
-                        } else if( cnt == offset+2) {
-                            System.out.println("build " + playerCharId + " GUN_TOWER " + playerPosX + " " + (playerPosY+1));
-                        } else if( cnt == offset+4) {
-                            System.out.println("build " + playerCharId + " SPRING_NORTH " + playerPosX + " " + (playerPosY));
+//                            System.out.println("attack " + playerCharId + " NORTH");
                         } else if( cnt == offset+6) {
-                            System.out.println("build " + playerCharId + " WALL " + (playerPosX+1) + " " + playerPosY);
+                            System.out.println("build " + playerCharId + " GUN_TOWER " + playerPosX + " " + (playerPosY));
+                        } else if( cnt == offset+9) {
+                            System.out.println("build " + playerCharId + " SPRING_NORTH " + playerPosX + " " + (playerPosY));
+                        } else if( cnt == offset+14) {
+                            System.out.println("build " + playerCharId + " WALL " + (playerPosX) + " " + playerPosY);
                         } else {
                             System.out.println("go " + playerCharId);
                         }
+
                     } else {
                         System.out.println("go " + playerCharId);// + " " + side + " " + i);
                     }

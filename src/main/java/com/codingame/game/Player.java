@@ -93,6 +93,10 @@ public class Player extends AbstractMultiplayerPlayer {
 		return 100 * lives + money;
 	}
 
+	public void addTargetReachScore() {
+		this.score ++;
+	}
+
 	public boolean isDead() {
 		return lives <= 0;
 	}

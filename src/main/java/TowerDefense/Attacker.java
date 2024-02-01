@@ -25,6 +25,7 @@ public class Attacker {
 	private int bounty;
 	private Player owner;
 	private Player enemy;
+	private boolean justRelocatedOnCurrentFrame;
 	private AttackerView view;
 	//	private static int idCounter;
 //	private static int playerOneAttackerIdCounter = 0;
@@ -74,8 +75,10 @@ public class Attacker {
 	}
 
 	public void relocate(SubTile newSubTile) {
+		view.move(newSubTile);
 		this.currentTile = newSubTile.getTile();
 		this.currentSubtile = newSubTile;
+
 	}
 	public void spawn() {
 		this.maxSpeed = Constants.SPEED;
@@ -239,7 +242,7 @@ public class Attacker {
 
 		int ln = Math.min(path.size(),getSpeed());
 
-		view.animateAttackerWalk();
+//		view.animateAttackerWalk();
 //		for (Attacker a: Board.getAttackers()){
 //			if (this.enemy.getIndex() == a.owner.getIndex()) {
 //				if (a.getCurrentTile().getX() == this.getCurrentTile().getX()){

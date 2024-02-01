@@ -554,10 +554,12 @@ public class Board {
 	public void checkDeadAttacker() {
 
 		for(Attacker a:attackers){
+			if( a.hasReachedTarget() ) {
+				a.getOwner().addTargetReachScore();
+			}
 			if(a.hasReachedTarget() || a.isDead()){
 				a.kill();
 				veterans.add(a);
-
 			}
 		}
 
