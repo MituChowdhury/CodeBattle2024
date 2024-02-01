@@ -47,10 +47,12 @@ public abstract class Tower {
 	}
 
 	public void dealDamage(int damage, Player dealtBy) {
+		this.view.healthBarVisibility(true);
 		this.hitPoints = Math.max(0, hitPoints - damage);
 
 		this.view.dealDamage(hitPoints,  (int) this.getProperty(TowerProperty.HITPOINT));
 		lastAttackedPlayer = dealtBy;
+		this.view.healthBarVisibility(false);
 	}
 
 	public Player getDestroyer() {

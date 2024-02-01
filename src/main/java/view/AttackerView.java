@@ -63,7 +63,6 @@ public class AttackerView {
         this.tooltips = tooltips;
         attacker.setView(this);
 
-
         healthBarRed = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-60).setY(70).setFillColor(0xff0000);
         healthBarGreen = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-60).setY(70).setFillColor(0x00ff00);
 

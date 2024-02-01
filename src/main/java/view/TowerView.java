@@ -52,6 +52,7 @@ public abstract class TowerView {
 		//health bar code ended
 
 		this.boardGroup=boardGroup;
+		healthBarVisibility(false);
 		//health bar code end
 
 	}
@@ -79,6 +80,14 @@ public abstract class TowerView {
 			graphics.commitEntityState(0, towerFixedSpriteAnimation);
 	}
 
+	public void healthBarVisibility(boolean a){
+		if(a){
+			group.setVisible(true);
+		}
+		else {
+			group.setVisible(false);
+		}
+	}
 
 
 
@@ -119,6 +128,7 @@ public abstract class TowerView {
 	// TODO: Add animation here
 	public void destroy() {
 		towerSpriteAnimation.setVisible(false);
+		healthBarVisibility(false);
 //		towerSprite.setVisible(false);
 	}
 }
