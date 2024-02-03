@@ -16,15 +16,8 @@ public class GunTowerView extends TowerView {
 
 	private SpriteAnimation shootSpriteAnimation;
 	public GunTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
-//		super(tower, boardGroup, graphics, tooltips, "gun",96, 96, 29, 29);
-//		towerSpriteAnimation.setScale(2.5).setAnchor(.3).setDuration(2500);
-
-
-		super(tower, boardGroup, graphics, tooltips, "canon",48, 48, 30, 30);
-		towerSpriteAnimation.setScale(2).setDuration(4000);
-
-//		super(tower, boardGroup, graphics, tooltips, "guntower_spritesheet",64, 64, 8, 8);
-//		towerSpriteAnimation.setScale(1.8).setAnchorY(.2).setAnchorX(.1).setDuration(1500);
+		super(tower, boardGroup, graphics, tooltips, "guntower_spritesheet",64, 64, 8, 8);
+		towerSpriteAnimation.setScale(1.8).setAnchorY(.2).setAnchorX(.1).setDuration(1500);
 
 
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
