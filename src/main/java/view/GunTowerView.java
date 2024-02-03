@@ -38,7 +38,7 @@ public class GunTowerView extends TowerView {
 
 		//experiment
 		shootSpriteAnimation = Utils.createEffectSpriteAnimation(graphics,tower,"bullet.png", 32,32,8,8);
-		shootSpriteAnimation.setScale(2).setAnchor(.5);
+		shootSpriteAnimation.setScale(4).setAnchor(.5);
 
 		commitSprites();
 		updateTooltip();
@@ -62,7 +62,7 @@ public class GunTowerView extends TowerView {
 		double angle = 90 + -1*Math.toDegrees(Math.atan(dhal));
 //		double m = Math.tan(angle);
 
-		if( ay > ty && ax < tx ) {
+		if( ax < tx ) {
 			angle += 180;
 		}
 

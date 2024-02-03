@@ -232,9 +232,10 @@ public class Attacker {
 
 		view.animateAttackerWalk();
 		for (int i = 0; i < ln; i++) {
-
+			Tile prevTile = currentTile;
 			view.move(path.get(i),i/(double)ln );
-			if(currentTile.getSpring()!=null) {
+			if(prevTile.getSpring()!=null) {
+				view.move(path.get(i),0);
 				relocate(currentTile.getSpring().getRelocateSubTile(this));
 				break;
 			}
