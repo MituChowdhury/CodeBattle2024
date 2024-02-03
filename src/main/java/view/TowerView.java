@@ -178,6 +178,8 @@ public abstract class TowerView {
 
 	// TODO: Add animation here
 	public void destroy() {
+
+		this.tower.getTile().setSpring(false);
 		towerSpriteAnimation.setVisible(false).setZIndex(tower.getTile().getY());
 		destroyedSpriteAnimation.setAlpha(.8).setZIndex(tower.getTile().getY());
 		graphics.commitEntityState(1, destroyedSpriteAnimation);

@@ -139,6 +139,9 @@ public class Referee extends AbstractReferee {
 
 
 
+		board.updateTowers();
+		board.fireTowers();
+
 
 		for (Player player : gameManager.getActivePlayers()) {
 			try {
@@ -205,16 +208,9 @@ public class Referee extends AbstractReferee {
 
 
 
-		board.updateTowers();
-
-		board.fireTowers();
 		board.spawnAttackers(turn); //spawn those that were killed in previous turn
 		board.checkDeadAttacker(); //add those that are killed in this turn
-
-
-
 		board.updateView();
-
 
 		for (Player player : gameManager.getPlayers()) {
 			player.setScore(player.getScorePoints());

@@ -196,23 +196,23 @@ public class AttackerView {
         switch (dir) {
             case "UP":
                 ts=c.getSubTile(cs.getSubX(),0);
-                move(ts);
+                move(ts,.5);
                 changeAnimation(attackerUpStabSprites,STAB_DURATION);
                 //move the attacker closer to attacking tile
                 break;
             case "DOWN":
                 ts=c.getSubTile(cs.getSubX(),SUBTILE_SIZE-1);
-                move(ts);
+                move(ts,.5);
                 changeAnimation(attackerDownStabSprites,STAB_DURATION);
                 break;
             case "LEFT":
                 ts=c.getSubTile(0,cs.getSubY());
-                move(ts);
+                move(ts,.5);
                 changeAnimation(attackerLeftStabSprites,STAB_DURATION);
                 break;
             case "RIGHT":
                 ts=c.getSubTile(SUBTILE_SIZE-1,cs.getSubY());
-                move(ts);
+                move(ts,.5);
                 changeAnimation(attackerLeftStabSprites,STAB_DURATION);
                 break;
         }
@@ -252,11 +252,11 @@ public class AttackerView {
     }
 
 
-    public void move(SubTile nextSubTile) {
+    public void move(SubTile nextSubTile, double t) {
 
         attackerBody.setZIndex(attacker.getCurrentTile().getY());
         group.setZIndex(attacker.getCurrentTile().getY());
-        graphics.commitEntityState(0, attackerBody);
+        graphics.commitEntityState(t, attackerBody);
 
 
         if (attacker.getOwner().getIndex() == 0) {
