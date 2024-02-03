@@ -8,7 +8,7 @@ import java.math.*;
  **/
 class TestAgent {
 
-
+    static String[] directions= {"EAST","EAST","EAST","EAST","EAST"};
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
 //        int playerId = in.nextInt();
@@ -56,7 +56,7 @@ class TestAgent {
                 in.nextLine();
             }
 
-            int offset = 5;
+            int offset = 4;
             if (cnt != 0) {
                 // At first, there is neither attackers nor veterans....
                 System.err.println("Player characters: ");
@@ -69,9 +69,9 @@ class TestAgent {
                     int playerSpeed = in.nextInt();
 
 
-                    if( i == 10000 ) {
-                        if( cnt == offset ) {
-                            System.out.println("build " + playerCharId + " SPRING_NORTH " + playerPosX + " " + (int)(playerPosY));
+                    if( i == 4 ) {
+                        if( cnt >= offset ) {
+                            System.out.println("attack " + playerCharId + " NORTH");
 //                            System.out.println("attack " + playerCharId + " NORTH");
                         } else if( cnt == offset+6) {
                             System.out.println("build " + playerCharId + " GUN_TOWER " + playerPosX + " " + (playerPosY));
@@ -83,7 +83,13 @@ class TestAgent {
                             System.out.println("go " + playerCharId);
                         }
 
-                    } else {
+                    }
+
+//                    else if((cnt&1)==1 && cnt>=10){
+//                        System.err.println("sdfsdfsadf");
+//                        System.out.println("attack "+ playerCharId+" "+directions[i]);
+//                    }
+                    else {
                         System.out.println("go " + playerCharId);// + " " + side + " " + i);
                     }
 
