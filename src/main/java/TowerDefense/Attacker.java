@@ -244,19 +244,16 @@ public class Attacker {
 		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);
 		steps = path;
 
-		if( currentTile.hasNonDestructibleObject() ) {
-			kill();
-			return;
-		}
+
 
 		int ln = Math.min(path.size(),getSpeed());
-
 
 
 		for (int i = 0; i < ln; i++) {
 
 			view.move(path.get(i));
 		}
+
 
 
 		if (slowCountdown > 0)

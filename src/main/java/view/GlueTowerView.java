@@ -52,7 +52,6 @@ public GlueTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics
 
 
 			towerSpriteAnimation.setImages(idleSpriteImages);
-			towerSpriteAnimation.reset();
 			graphics.commitEntityState(1,towerSpriteAnimation);
 }
 
