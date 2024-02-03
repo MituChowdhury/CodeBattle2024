@@ -45,7 +45,6 @@ public class Tile {
 		this.obstacleTower = t;
 	}
 
-
 	public void unsetDestructibleObject(){
 		this.Dobstacle = false;
 		this.obstacleTower = null;

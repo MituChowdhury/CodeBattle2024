@@ -20,7 +20,7 @@ public class AttackerView {
     private static final int WALK_DURATION = 200;
     private static final int DEATH_DURATION = 800;
     private static final int HURT_DURATION = 250;
-    private static final int JUMP_DURATION = 200;
+    private static final int JUMP_DURATION = 250;
     private static final int STAB_DURATION = 500;
     private static final int CELEBRATE_DURATION = 150;
     private static final int SPAWN_DURATION =320;
@@ -184,6 +184,9 @@ public class AttackerView {
     public void animateAttackerHurt() {
         changeAnimation(attackerHurtSprites,HURT_DURATION);
     }
+    public void animateAttackerJump() {
+        changeAnimation(attackerJumpSprites,JUMP_DURATION);
+    }
     public void animateAttackerWalk(){
         if(attackerBody.getImages()!=attackerBodySprites)
             changeAnimation(attackerBodySprites,WALK_DURATION);
@@ -313,8 +316,9 @@ public class AttackerView {
     private void changeAnimation(String[] newImages, int duration, double t) {
         attackerBody.setImages(newImages);
         attackerBody.setDuration(duration);
-//        attackerBody.reset(); 
-        graphics.commitEntityState(1, attackerBody);
+        attackerBody.reset();
+        attackerBody.setZIndex(attacker.getCurrentTile().getY());
+        graphics.commitEntityState(t, attackerBody);
     }
 
 

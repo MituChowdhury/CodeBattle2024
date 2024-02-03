@@ -125,11 +125,16 @@ public class SpringTrap extends Tower {
 			if (!inRange(a))
 				continue;
 			SubTile xxx = this.getRelocateSubTile(a);
-			if( this.getRelocateSubTile(a).getTile().hasNonDestructibleObject() ) {
-				a.kill();
-			} else {
-				a.relocate( this.getRelocateSubTile(a) );
-			}
+			a.jump();
+            //a.relocate( this.getRelocateSubTile(a) );
+            attacked = true;
+
+			a.relocate( xxx );
+//			if( this.getRelocateSubTile(a).getTile().hasNonDestructibleObject() ) {
+//				a.relocate( this.getRelocateSubTile(a) );
+//			} else {
+//				a.relocate( this.getRelocateSubTile(a) );
+//			}
 			attacked = true;
 		}
 
