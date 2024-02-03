@@ -109,12 +109,14 @@ public abstract class TowerView {
 		}
 
 		graphics.commitEntityState(0, boardGroup, towerSpriteAnimation, tint);
-		graphics.commitEntityState(0,towerSpriteAnimation);
+
+//		towerSpriteAnimation.setVisible(false);
+//		graphics.commitEntityState(1,towerSpriteAnimation);
 
 		graphics.commitEntityState(0, destroyedSpriteAnimation);
 
 		if (towerFixedSpriteAnimation != null)
-			graphics.commitEntityState(0, towerFixedSpriteAnimation);
+			graphics.commitEntityState(1, towerFixedSpriteAnimation);
 	}
 
 	public void healthBarVisibility(boolean a){

@@ -107,7 +107,8 @@ public class BoardView {
 					 boardGroup.add(canyon);
 				}
 				if (board.getGrid()[x][y].hasNonDestructibleObject()) {  // if there is obstacle
-					Sprite NDobstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y); // for not destructable tiles
+					Sprite NDobstacle = Utils.createBoardSprite(graphics, "obstackle1.png", x, y); // for not destructable tiles
+					NDobstacle.setScale(.42);
 
 					tooltips.setTooltipText(NDobstacle, "x: " + x + "\ny: " + y);
 					innerGroup.add(NDobstacle);

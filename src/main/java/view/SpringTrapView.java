@@ -15,9 +15,11 @@ import java.util.ArrayList;
 
 public class SpringTrapView extends TowerView {
 	static String[] direction = {"North","East","South","West"};
+	static int[] widths = {70,65,70,65};
+	static int[] heights = {65,70,65,70};
 
 	public SpringTrapView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips, int dir) {
-		super(tower, boardGroup, graphics, tooltips, "spring"+direction[dir -1],70, 65, 4, 4);
+		super(tower, boardGroup, graphics, tooltips, "spring"+direction[dir -1],widths[dir-1], heights[dir-1], 4, 4);
 
 		towerSpriteAnimation.setScale(1.5);
 //		towerSpriteAnimation.setPlaying(false);
