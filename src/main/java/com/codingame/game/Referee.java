@@ -78,14 +78,14 @@ public class Referee extends AbstractReferee {
 	@Override
 	public void gameTurn(int turn) {
 		try {
-			if(turn == 6) {
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 7, "BOMB");
 
+			if(turn==10){
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 18, 10, "WALL");
 			}
 			if (turn == 4) {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 3, 8, "BOMB");
-//				board.cacheBuild(gameManager.getActivePlayers().get(0), 15, 11, "SPRING_NORTH");
-//				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_NORTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 3, 1, "STUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 15, 11, "SPRING_NORTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_EAST");
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_NORTH");
 				board.cacheBuild(gameManager.getActivePlayers().get(1), 8, 7, "GUN_TOWER");
 

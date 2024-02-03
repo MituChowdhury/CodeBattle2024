@@ -40,7 +40,6 @@ public class FireBomb extends Tower {
 				continue;
 			int d = (int) getProperty(TowerProperty.DAMAGE);
 			a.dealDamage((int) getProperty(TowerProperty.DAMAGE));
-			getView().attack(a);
 			attacked = true;
 		}
 		for (Tower t : towers) {
@@ -51,6 +50,9 @@ public class FireBomb extends Tower {
 //			getView().attack(a);
 			attacked = true;
 		}
+
+		getView().attack(null);
+
 		return attacked;
 	}
 

@@ -44,7 +44,7 @@ public class Constants {
 	public static final double[] SPRINGTRAP_HITPOINT = { 5, 10, 15, 20 };
 
 	// DEBUG: spring lifetime 100
-	public static final double[] SPRINGTRAP_FUSETIME = { 100, 3, 3, 3 }; // FUSETIME IS LIFETIME FOR SPRINGTRAP
+	public static final double[] SPRINGTRAP_FUSETIME = { 10, 3, 3, 3 }; // FUSETIME IS LIFETIME FOR SPRINGTRAP
 	public static final int SPRINGTRAP_COST = 10;
 	public static final int SPRINGTRAP_BOUNTY = 0;
 
