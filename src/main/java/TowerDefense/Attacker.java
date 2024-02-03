@@ -240,30 +240,16 @@ public class Attacker {
 		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);
 		steps = path;
 
+
+
 		int ln = Math.min(path.size(),getSpeed());
 
-//
-//		for (Attacker a: Board.getAttackers()){
-//			if (this.enemy.getIndex() == a.owner.getIndex()) {
-//				if (a.getCurrentTile().getX() == this.getCurrentTile().getX()){
-//					if (a.currentTile.getY()+1 == this.currentTile.getY()) {
-//						view.animateAttackerStab();
-//					}
-//				}
-//				else if (a.getCurrentTile().getY() == this.getCurrentTile().getY()){
-//					if (a.currentTile.getX()+1 == this.currentTile.getX()) {
-//						view.animateAttackerStab();
-//					}
-//				}
-//			}
-//		}
 
-
-		view.animateAttackerWalk();
 		for (int i = 0; i < ln; i++) {
 //			if((i&1) == 1) attack();
 			view.move(path.get(i));
 		}
+
 
 
 		if (slowCountdown > 0)
