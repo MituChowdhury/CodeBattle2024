@@ -79,8 +79,10 @@ public class Referee extends AbstractReferee {
 	public void gameTurn(int turn) {
 		try {
 			if (turn == 4) {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_NORTH");
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_NORTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 11, "BOMB");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 15, 11, "SPRING_NORTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_EAST");
+//				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_NORTH");
 
 
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 2, 8, "WALL");
@@ -106,7 +108,7 @@ public class Referee extends AbstractReferee {
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 9, "STUN_TOWER");
 //
 //				// Team blue -_- ....
-//				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 6, "STUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 7, "STUN_TOWER");
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 9, "STUN_TOWER");
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 5, "GUN_TOWER");
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 7, "GUN_TOWER");
@@ -135,12 +137,11 @@ public class Referee extends AbstractReferee {
 			player.execute();
 		}
 
+
+
+		board.spawnAttackers(turn); //spawn those that were killed in previous turn
 		board.updateTowers();
 		board.fireTowers();
-		board.spawnAttackers(turn); //spawn those that were killed in previous turn
-		board.checkDeadAttacker(); //add those that are killed in this turn
-		board.updateView();
-
 
 
 		for (Player player : gameManager.getActivePlayers()) {
@@ -207,6 +208,9 @@ public class Referee extends AbstractReferee {
 		}
 
 
+
+		board.checkDeadAttacker(); //add those that are killed in this turn
+		board.updateView();
 
 
 		for (Player player : gameManager.getPlayers()) {

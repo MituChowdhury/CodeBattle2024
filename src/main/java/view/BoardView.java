@@ -88,30 +88,36 @@ public class BoardView {
 			innerGroup.add(Utils.createBoardSprite(graphics, "canyon.png", -1, y).setAlpha(0.7).setZIndex(-10000));
 			innerGroup.add(Utils.createBoardSprite(graphics, "canyon.png", board.getWidth(), y).setAlpha(0.7).setZIndex(-10000));
 			for (int x = 0; x < board.getWidth(); x++) {
-				 if (board.getGrid()[x][y].canEnter()) {
+
+				String[] idleSpriteImages = graphics.createSpriteSheetSplitter()
+						.setSourceImage("base.png")
+						.setHeight(100).setWidth(70).setImageCount(6)
+						.setImagesPerRow(6)
+						.setOrigCol(0).setOrigRow(0)
+						.setName("baseSprite")
+						.split();
+
+
+
+				if (board.getGrid()[x][y].canEnter()) {
 					Sprite canyon = Utils.createBoardSprite(graphics, "canyon.png", x, y).setZIndex(-10000);
 
 					if (x == 0 && y == board.getHeight()/2) {
-						SpriteAnimation playerBase = Utils.createBoardSpriteAnimation(graphics, "base.png",x,y-.5,70,100,6,6);
 
+						SpriteAnimation playerBase = Utils.createBoardSpriteAnimation(graphics, "baseSpawn.png",x,y-.5,70,100,16,16);
 						playerBase.setScale(1.5).setZIndex(y);
-
-						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png",x,y-.5);
-						headquarter.setTint(board.getPlayer(0).getColor());
 						canyon.setTint(board.getPlayer(0).getColor()).setAlpha(.3);
-//						innerGroup.add(headquarter);
+						graphics.commitEntityState(1,playerBase);
+						playerBase.setImages(idleSpriteImages);
 
 						innerGroup.add(playerBase);
 					}
 					if (x == board.getWidth() - 1 && y == board.getHeight()/2) {
-						SpriteAnimation playerBase = Utils.createBoardSpriteAnimation(graphics, "base.png",x,y-.5,70,100,6,6);
-
+						SpriteAnimation playerBase = Utils.createBoardSpriteAnimation(graphics, "baseSpawn.png",x,y-.5,70,100,16,16);
 						playerBase.setScale(1.5).setZIndex(y);
-
-						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png", x,y-.5);
-						headquarter.setTint(board.getPlayer(1).getColor());
 						canyon.setTint(board.getPlayer(1).getColor()).setAlpha(.3);
-//						innerGroup.add(headquarter);
+						graphics.commitEntityState(1,playerBase);
+						playerBase.setImages(idleSpriteImages);
 
 						innerGroup.add(playerBase);
 					}

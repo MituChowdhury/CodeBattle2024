@@ -31,6 +31,7 @@ public class SpringTrap extends Tower {
 		this.tile.unsetDestructibleObject();
 		this.bounty = Constants.SPRINGTRAP_BOUNTY;
 		this.tile.unsetDestructibleObject();
+		tile.setSpring(this);
 	}
 
 	public int getSpringDistance() {
@@ -43,7 +44,7 @@ public class SpringTrap extends Tower {
 		return this.getProperty(TowerProperty.FUSETIME) == this.getLifetime();
 	}
 
-	private SubTile getRelocateSubTile( Attacker target ) {
+public SubTile getRelocateSubTile( Attacker target ) {
 		int newSubX = target.getCurrentSubTile().subX;
 		int newSubY = target.getCurrentSubTile().subY;
 		int newTileX = target.getCurrentTile().getX();
@@ -116,29 +117,21 @@ public class SpringTrap extends Tower {
 	@Override
 	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
 		this.incrementLifeTime();
-		boolean attacked = false;
-		for (Attacker a : attackers) {
-			Player p1 = getOwner();
-			Tile t = a.getCurrentTile();
-			Player p2 = a.getOwner();
-			Tile t2 = this.getTile();
-			if (!inRange(a))
-				continue;
-			SubTile xxx = this.getRelocateSubTile(a);
-			a.jump();
-            //a.relocate( this.getRelocateSubTile(a) );
-            attacked = true;
 
-			a.relocate( xxx );
-//			if( this.getRelocateSubTile(a).getTile().hasNonDestructibleObject() ) {
-//				a.relocate( this.getRelocateSubTile(a) );
-//			} else {
-//				a.relocate( this.getRelocateSubTile(a) );
-//			}
-			attacked = true;
-		}
+//		for (Attacker a : attackers) {
+//
+//			if (!this.inRange(a))
+//				continue;
+//			SubTile xxx = this.getRelocateSubTile(a);
+//			a.jump();
+//            //a.relocate( this.getRelocateSubTile(a) );
+//
+//
+//			a.relocate( xxx );
+//
+//		}
 
-		return attacked;
+		return false;
 	}
 
 	@Override
