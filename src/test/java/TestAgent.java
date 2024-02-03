@@ -85,10 +85,10 @@ class TestAgent {
 
                     }
 
-                    else if((cnt&1)==1 && cnt>=10){
-                        System.err.println("sdfsdfsadf");
-                        System.out.println("attack "+ playerCharId+" "+directions[i]);
-                    }
+//                    else if((cnt&1)==1 && cnt>=10){
+//                        System.err.println("sdfsdfsadf");
+//                        System.out.println("attack "+ playerCharId+" "+directions[i]);
+//                    }
                     else {
                         System.out.println("go " + playerCharId);// + " " + side + " " + i);
                     }

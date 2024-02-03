@@ -247,6 +247,8 @@ public class AttackerView {
 
     }
 
+
+
     public void dealDamage(int hp, int maxHp) {
         System.err.println("Bar length: " + (int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
         this.healthBarGreen.setWidth((int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
@@ -270,11 +272,8 @@ public class AttackerView {
 
     public void kill() {
         if (attacker.hasReachedTarget()) {
-
            changeAnimation(attackerJumpSprites,CELEBRATE_DURATION);
-
         } else {
-            //dead animation
             changeAnimation(attackerDeadSprites,DEATH_DURATION);
         }
     }
@@ -286,7 +285,7 @@ public class AttackerView {
     private void changeAnimation(String[] newImages, int duration) {
         attackerBody.setImages(newImages);
         attackerBody.setDuration(duration);
-//        attackerBody.reset();
+
         graphics.commitEntityState(0, attackerBody);
     }
 

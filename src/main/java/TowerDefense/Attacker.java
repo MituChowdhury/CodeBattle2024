@@ -75,10 +75,11 @@ public class Attacker {
 	}
 
 	public void relocate(SubTile newSubTile) {
-		view.move(newSubTile);
 		this.currentTile = newSubTile.getTile();
 		this.currentSubtile = newSubTile;
-
+		view.move(currentSubtile);
+		view.move(currentSubtile);
+		view.move(currentSubtile);
 	}
 	public void spawn() {
 		this.maxSpeed = Constants.SPEED;
@@ -170,8 +171,9 @@ public class Attacker {
 		//...
 		this.view.dealDamage(hitPoints, maxHealth);
 		//...
-		if (isDead())
-			view.kill();
+		//bord.checkDeadAttacker() will collect the dead and kill them
+//		if (isDead())
+//			view.kill();
 	}
 
 	public void slowDown(int countdown) {
@@ -179,7 +181,7 @@ public class Attacker {
 	}
 
 	public boolean isDead() {
-		return hitPoints <= 0;
+		return hitPoints <= 0 || currentTile.hasAnyObject();
 	}
 
 
