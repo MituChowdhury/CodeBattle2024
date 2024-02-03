@@ -79,22 +79,31 @@ public class Referee extends AbstractReferee {
 	public void gameTurn(int turn) {
 		try {
 			if (turn == 4) {
-//				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 7, "WALL");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_SOUTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_SOUTH");
 				board.cacheBuild(gameManager.getActivePlayers().get(0), 6, 7, "WALL");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 5, 6, "WALL");
 
-//				board.cacheBuild(gameManager.getActivePlayers().get(0), 6, 7, "SPRINGTRAP_U");
-//				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 7, "SPRINGTRAP_U");
+
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 12, 8, "SPRING_SOUTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 2, "GUN_TOWER");
 				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 7, "GUN_TOWER");
 
-//				board.cacheBuild(gameManager.getActivePlayers().get(0), 6, 8, "SPRINGTRAP_U");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 2, "STUN_TOWER");
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 8, "SPRINGTRAP_U");
 				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 8, "GUN_TOWER");
 
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 6, 9, "SPRINGTRAP_U");
-//				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 9, "SPRINGTRAP_U");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 9, "GUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 9, "STUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 16, 9, "BOMB");
 
-
+				// Team blue -_- ....
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 6, "STUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 9, "STUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 5, "GUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 7, "GUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 7, "GUN_TOWER");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 4, 7, "BOMB");
 			}
 		} catch ( InvalidActionException e ) {
 			System.out.println(e.getMessage());

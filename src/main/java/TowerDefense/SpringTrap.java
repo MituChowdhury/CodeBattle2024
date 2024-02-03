@@ -56,28 +56,28 @@ public class SpringTrap extends Tower {
 
 		if( this.dir == 3 || this.dir == 1 ) {
 			newTileY += (dir == 1 ? -1 : 1) * distance;
-			newSubX += ( targetDir == 2 ? -1 : ( targetDir == 4 ? 1 : 0 )) * target.getSpeed()/2;
+//			newSubX += ( targetDir == 2 ? -1 : ( targetDir == 4 ? 1 : 0 )) * target.getSpeed()/2;
 		} else if( this.dir == 4 || this.dir == 2 ) {
 			newTileX += (dir == 4 ? -1 : 1) * distance;
-			newSubY += ( targetDir == 3 ? -1 : ( targetDir == 1 ? 1 : 0 )) * target.getSpeed()/2;
+//			newSubY += ( targetDir == 3 ? -1 : ( targetDir == 1 ? 1 : 0 )) * target.getSpeed()/2;
 		}
 
 
-		if( newSubX > Constants.SUBTILE_SIZE -1 ) {
-			newTileX += newSubX / Constants.SUBTILE_SIZE;
-			newSubX = newSubX % Constants.SUBTILE_SIZE;
-		} else if( newSubX < 0 ) {
-			newTileX -= newSubX / Constants.SUBTILE_SIZE + 1;
-			newSubX = Constants.SUBTILE_SIZE - (-newSubX) % Constants.SUBTILE_SIZE;  // why didnt we do -1 here?
-		}
-
-		if( newSubY > Constants.SUBTILE_SIZE-1 ) {
-			newTileY += newSubY / Constants.SUBTILE_SIZE;
-			newSubY = newSubY % Constants.SUBTILE_SIZE;
-		} else if( newSubY < 0 ) {
-			newTileY -= newSubY / Constants.SUBTILE_SIZE + 1;
-			newSubY = Constants.SUBTILE_SIZE - (-newSubY) % Constants.SUBTILE_SIZE;
-		}
+//		if( newSubX > Constants.SUBTILE_SIZE -1 ) {
+//			newTileX += newSubX / Constants.SUBTILE_SIZE;
+//			newSubX = newSubX % Constants.SUBTILE_SIZE;
+//		} else if( newSubX < 0 ) {
+//			newTileX -= newSubX / Constants.SUBTILE_SIZE + 1;
+//			newSubX = Constants.SUBTILE_SIZE - (-newSubX) % Constants.SUBTILE_SIZE;  // why didnt we do -1 here?
+//		}
+//
+//		if( newSubY > Constants.SUBTILE_SIZE-1 ) {
+//			newTileY += newSubY / Constants.SUBTILE_SIZE;
+//			newSubY = newSubY % Constants.SUBTILE_SIZE;
+//		} else if( newSubY < 0 ) {
+//			newTileY -= newSubY / Constants.SUBTILE_SIZE + 1;
+//			newSubY = Constants.SUBTILE_SIZE - (-newSubY) % Constants.SUBTILE_SIZE;
+//		}
 
 		newTileX = Math.min(Constants.MAP_WIDTH-1, newTileX);
 		newTileX = Math.max(0, newTileX);
@@ -104,9 +104,10 @@ public class SpringTrap extends Tower {
 		if( a.getCurrentTile() == this.tile ) {
 
 			// This piece of code defies any logic but it works
-			if( a.getOwner().getIndex() == 0 ) return true;
+//			if( a.getOwner().getIndex() == 0 ) return true;
 //			else toRelocate.add(a);
-			else return true;
+//			else return true;
+			return true;
 		}
 
 		return false;
@@ -115,7 +116,7 @@ public class SpringTrap extends Tower {
 	@Override
 	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
 		this.incrementLifeTime();
-		Attacker target = null;
+		boolean attacked = false;
 		for (Attacker a : attackers) {
 			Player p1 = getOwner();
 			Tile t = a.getCurrentTile();
@@ -123,18 +124,20 @@ public class SpringTrap extends Tower {
 			Tile t2 = this.getTile();
 			if (!inRange(a))
 				continue;
-			if (target == null)  // lagte pare
-				target = a;
-			target.relocate( this.getRelocateSubTile(target) );
+			SubTile xxx = this.getRelocateSubTile(a);
+			if( this.getRelocateSubTile(a).getTile().hasNonDestructibleObject() ) {
+				a.kill();
+			} else {
+				a.relocate( this.getRelocateSubTile(a) );
+			}
+			attacked = true;
 		}
-		if (target == null)
-			return false;
 
-		return true;
+		return attacked;
 	}
 
 	@Override
 	public TowerView createView(Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltipModule) {
-		return new SpringTrapView(this, boardGroup, graphics, tooltipModule);
+		return new SpringTrapView(this, boardGroup, graphics, tooltipModule, this.dir);
 	}
 }

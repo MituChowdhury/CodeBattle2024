@@ -17,20 +17,22 @@ public class GlueTowerView extends TowerView {
 
 	public GlueTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
 		super(tower, boardGroup, graphics, tooltips, "stunTower",  48, 48, 10, 10);
-		towerSpriteAnimation
-				.setScale(2);
-//				.setAnchorX(.5)
-//				.setAnchorY(1);
+		towerSpriteAnimation.setScale(2);
+
 
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
 
-		stuntSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower, "ground_effect.png", 64,64,8,8);
+//		stuntSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower, "ground_effect.png", 64,64,8,8);
+		stuntSpriteAnimation = Utils.createEffectSpriteAnimation(graphics,tower,"stunEffect.png",320,320,12,12);
 		stuntSpriteAnimation
-				.setScaleX(5)
-				.setScaleY(12)
-				.setDuration(500)
+//				.setScaleX(5)
+//				.setScaleY(12)
+				.setScale(1.2)
+				.setDuration(600)
 				.setAnchor(.5)
+				.setAnchorX(.45)
 				.setVisible(false);
+
 
 		commitSprites();
 		updateTooltip();

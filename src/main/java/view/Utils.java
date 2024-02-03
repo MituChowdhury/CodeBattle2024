@@ -27,6 +27,23 @@ public class Utils {
 		return graphics.createSprite().setImage(image).setX((int)(BoardView.CELL_SIZE * x)).setY((int)(BoardView.CELL_SIZE * y));
 	}
 
+	public static SpriteAnimation createBoardSpriteAnimation(GraphicEntityModule graphics, String image, double x, double y, int w, int h,int img_c,int img_pr) {
+		String[] spriteImages = graphics.createSpriteSheetSplitter()
+				.setSourceImage(image)
+				.setHeight(h).setWidth(w).setImageCount(img_c)
+				.setImagesPerRow(img_pr)
+				.setOrigCol(0).setOrigRow(0)
+				.setName(image + "Sprite")
+				.split();
+
+		return graphics.createSpriteAnimation()
+				.setImages(spriteImages)
+				.setX((int)(BoardView.CELL_SIZE * x)).setY((int)(BoardView.CELL_SIZE * y))
+				.setDuration(1000)
+				.setZIndex(-1)
+				.setLoop(true).setPlaying(true);
+	}
+
 	public static SpriteAnimation createAnimation(GraphicEntityModule graphics, String[] images) {
 		return graphics.createSpriteAnimation().setImages(images).setDuration(Referee.FRAME_DURATION).setLoop(true).play();
 	}
@@ -48,7 +65,6 @@ public class Utils {
 				.setOrigCol(0).setOrigRow(0)
 				.setName(image + "Sprite")
 				.split();
-
 
 		return graphics.createSpriteAnimation()
 				.setImages(spriteImages)
