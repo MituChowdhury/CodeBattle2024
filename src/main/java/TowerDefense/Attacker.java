@@ -78,7 +78,7 @@ public class Attacker {
 	public void relocate(SubTile newSubTile, double t) {
 		this.currentTile = newSubTile.getTile();
 		this.currentSubtile = newSubTile;
-		view.animateAttackerJump(t);
+		view.animateAttackerJump();
 //		view.move(currentSubtile,t);
 //		relocated=true;
 		if( currentTile.hasDestructibleObject() ) {
