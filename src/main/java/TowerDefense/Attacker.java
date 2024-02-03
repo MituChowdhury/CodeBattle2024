@@ -78,7 +78,8 @@ public class Attacker {
 	public void relocate(SubTile newSubTile) {
 		this.currentTile = newSubTile.getTile();
 		this.currentSubtile = newSubTile;
-		view.move(currentSubtile,.3);
+		view.animateAttackerJump();
+		view.move(currentSubtile,0);
 		relocated=true;
 	}
 	public void spawn() {
@@ -219,7 +220,6 @@ public class Attacker {
 		if(relocated)
 		{
 			relocated=false;
-			view.animateAttackerJump();
 			return;
 		}
 		boolean[][] optimalTiles = PathFinder.getOptimalPathTiles(currentTile,grid);
@@ -234,8 +234,10 @@ public class Attacker {
 		for (int i = 0; i < ln; i++) {
 
 			view.move(path.get(i),i/(double)ln );
-			if(currentTile.hasSpring())
+			if(currentTile.getSpring()!=null) {
+				relocate(currentTile.getSpring().getRelocateSubTile(this));
 				break;
+			}
 		}
 
 

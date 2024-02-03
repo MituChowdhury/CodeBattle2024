@@ -138,7 +138,7 @@ public class Referee extends AbstractReferee {
 
 
 
-
+		board.spawnAttackers(turn); //spawn those that were killed in previous turn
 		board.updateTowers();
 		board.fireTowers();
 
@@ -208,7 +208,6 @@ public class Referee extends AbstractReferee {
 
 
 
-		board.spawnAttackers(turn); //spawn those that were killed in previous turn
 		board.checkDeadAttacker(); //add those that are killed in this turn
 		board.updateView();
 
