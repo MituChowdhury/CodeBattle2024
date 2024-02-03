@@ -115,23 +115,3 @@ public class Constants {
 //	});
 
 }
-
-
-class SpriteInfo{
-	public String imageFileName;
-	public int width;
-	public int height;
-	public int imageCount;
-	public int imagePerRow;
-	public double scale;
-
-	SpriteInfo(String imgFileName, int w, int h, int img_c, int img_pr, double sc){
-		imageFileName = imgFileName;
-		width = w;
-		height = h;
-		imageCount = img_c;
-		imagePerRow = img_pr;
-		scale = sc;
-	}
-
-}
