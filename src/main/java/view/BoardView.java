@@ -18,6 +18,7 @@ public class BoardView {
 	private Sprite sponsor;
 	private Sprite logo;
 
+
 	public BoardView(Board board, GraphicEntityModule graphics, TooltipModule tooltips) {
 		int width = 1920;
 		int height = 1080;
@@ -130,15 +131,6 @@ public class BoardView {
 		TowerView view = tower.createView(boardGroup, graphics, tooltips);
 	}
 
-//	public void updateView() {
-////		String text = board.getWaveInfo();
-//		String text = "HELLOOO";
-//		// Debug....
-////		String text = "" + graphics.getWorld().getWidth() + ", " + graphics.getWorld().getHeight();
-//		// end Debug....
-//		if (!text.equals(wave.getText()))
-//			wave.setText(text);
-//	}
 
 	public void updateView() {
 		// It's here, because it doesn't break the code...
