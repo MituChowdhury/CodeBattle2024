@@ -23,7 +23,7 @@ public class Constants {
 	public static final int FIREBOMB_COST = 100;
 
 	public static final double[] GUNTOWER_DAMAGE = { 5, 8, 15, 30 };
-	public static final double[] GUNTOWER_RANGE = { 3, 4, 5, 6 };
+	public static final double[] GUNTOWER_RANGE = { 5, 4, 5, 6 };
 	public static final double[] GUNTOWER_RELOAD = { 2, 4, 3, 2 };
 	public static final double[] GUNTOWER_HITPOINT = { 5, 10, 15, 20 };
 	public static final double[] GUNTOWER_FUSETIME = { 2, 1, 0, 0 };
