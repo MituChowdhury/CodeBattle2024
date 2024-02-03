@@ -125,7 +125,7 @@ public class SpringTrap extends Tower {
 			SubTile xxx = this.getRelocateSubTile(a);
 			a.jump();
             //a.relocate( this.getRelocateSubTile(a) );
-            attacked = true;
+
 
 			a.relocate( xxx );
 

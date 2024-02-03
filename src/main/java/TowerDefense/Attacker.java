@@ -219,6 +219,7 @@ public class Attacker {
 		if(relocated)
 		{
 			relocated=false;
+			view.animateAttackerJump();
 			return;
 		}
 		boolean[][] optimalTiles = PathFinder.getOptimalPathTiles(currentTile,grid);
@@ -229,7 +230,7 @@ public class Attacker {
 
 		int ln = Math.min(path.size(),getSpeed());
 
-
+		view.animateAttackerWalk();
 		for (int i = 0; i < ln; i++) {
 
 			view.move(path.get(i),i/(double)ln );
