@@ -242,7 +242,7 @@ public class Attacker {
 
 		int ln = Math.min(path.size(),getSpeed());
 
-//		view.animateAttackerWalk();
+//
 //		for (Attacker a: Board.getAttackers()){
 //			if (this.enemy.getIndex() == a.owner.getIndex()) {
 //				if (a.getCurrentTile().getX() == this.getCurrentTile().getX()){
@@ -257,8 +257,11 @@ public class Attacker {
 //				}
 //			}
 //		}
+
+
+		view.animateAttackerWalk();
 		for (int i = 0; i < ln; i++) {
-			if((i&1) == 1) attack();
+//			if((i&1) == 1) attack();
 			view.move(path.get(i));
 		}
 
@@ -271,11 +274,28 @@ public class Attacker {
 
 	}
 
-	public void attack(Tile target) {
-		if( target.obstacleTower != null ) {
-			target.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE, getOwner());
+	public void attack(Tile t) {
+		if( t.obstacleTower != null ) {
+			t.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE, getOwner());
 		}
+
+
 		// TODO: Add attacker attack animation here
+		Tile src = this.currentTile;
+
+			if (t.getY() == src.getY()+1) {
+				view.animateAttackerStab("DOWN");
+			}
+			else if(t.getY() == src.getY()-1) {
+				view.animateAttackerStab("UP");
+			}
+			else if(t.getX() == src.getX()+1) {
+				view.animateAttackerStab("RIGHT");
+			}
+			else {
+				view.animateAttackerStab("LEFT");
+			}
+
 	}
 
 	public Player getOwner() {

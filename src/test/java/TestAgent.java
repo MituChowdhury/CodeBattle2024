@@ -8,7 +8,7 @@ import java.math.*;
  **/
 class TestAgent {
 
-
+    static String[] directions= {"EAST","EAST","EAST","EAST","EAST"};
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
 //        int playerId = in.nextInt();
@@ -83,7 +83,13 @@ class TestAgent {
                             System.out.println("go " + playerCharId);
                         }
 
-                    } else {
+                    }
+
+                    else if((cnt&1)==1 && cnt>=10){
+                        System.err.println("sdfsdfsadf");
+                        System.out.println("attack "+ playerCharId+" "+directions[i]);
+                    }
+                    else {
                         System.out.println("go " + playerCharId);// + " " + side + " " + i);
                     }
 

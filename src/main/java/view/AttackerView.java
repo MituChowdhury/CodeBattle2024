@@ -12,6 +12,7 @@ import TowerDefense.Attacker;
 import TowerDefense.SubTile;
 
 import static TowerDefense.Constants.BOARD_DASH_WIDTH;
+import static TowerDefense.Constants.SUBTILE_SIZE;
 import static view.BoardView.CELL_SIZE;
 
 public class AttackerView {
@@ -25,7 +26,7 @@ public class AttackerView {
 
     private static ArrayList<ArrayList<Group>> spriteCache = new ArrayList<>();
     private final String[] attackerBodySprites,  attackerHurtSprites, attackerDeadSprites,
-            attackerSpawnSprites, attackerJumpSprites, attackerUpStabSprites, attackerRightStabSprites,
+            attackerSpawnSprites, attackerJumpSprites, attackerUpStabSprites,
             attackerLeftStabSprites, attackerDownStabSprites;;
 
 
@@ -131,11 +132,11 @@ public class AttackerView {
                 setName("jump" + attacker.getOwner().getIndex() ).split();
 
         // attacker stabbing
-        attackerRightStabSprites =graphics.createSpriteSheetSplitter()
-                .setSourceImage(getResourcePath("stab"))
-                .setHeight(64).setWidth(64).setImageCount(4)
-                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
-                setName("stab" + attacker.getOwner().getIndex() ).split();
+//        attackerRightStabSprites =graphics.createSpriteSheetSplitter()
+//                .setSourceImage(getResourcePath("stab"))
+//                .setHeight(64).setWidth(64).setImageCount(4)
+//                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
+//                setName("stab" + attacker.getOwner().getIndex() ).split();
 
         attackerLeftStabSprites = graphics.createSpriteSheetSplitter()
                 .setSourceImage(getResourcePath("stab"))
@@ -168,18 +169,30 @@ public class AttackerView {
     }
 
     public void animateAttackerStab(String dir) {
+        Tile c = attacker.getCurrentTile();
+        SubTile cs= attacker.getCurrentSubTile();
+        SubTile ts = null;
         switch (dir) {
             case "UP":
+                ts=c.getSubTile(cs.getSubX(),0);
+                move(ts);
                 changeAnimation(attackerUpStabSprites,STAB_DURATION);
+                //move the attacker closer to attacking tile
                 break;
             case "DOWN":
+                ts=c.getSubTile(cs.getSubX(),SUBTILE_SIZE-1);
+                move(ts);
                 changeAnimation(attackerDownStabSprites,STAB_DURATION);
                 break;
             case "LEFT":
+                ts=c.getSubTile(0,cs.getSubY());
+                move(ts);
                 changeAnimation(attackerLeftStabSprites,STAB_DURATION);
                 break;
             case "RIGHT":
-                changeAnimation(attackerRightStabSprites,STAB_DURATION);
+                ts=c.getSubTile(SUBTILE_SIZE-1,cs.getSubY());
+                move(ts);
+                changeAnimation(attackerLeftStabSprites,STAB_DURATION);
                 break;
         }
     }
@@ -224,7 +237,6 @@ public class AttackerView {
             group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER0_X_OFFSET)));
             group.setY((int) (BoardView.CELL_SIZE * (nextSubTile.getY() + Constants.PLAYER0_Y_OFFSET)));
         } else {
-
             group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER1_X_OFFSET)));
             group.setY((int) (BoardView.CELL_SIZE * (nextSubTile.getY() + Constants.PLAYER1_Y_OFFSET)));
         }
@@ -274,7 +286,7 @@ public class AttackerView {
     private void changeAnimation(String[] newImages, int duration) {
         attackerBody.setImages(newImages);
         attackerBody.setDuration(duration);
-        attackerBody.reset();
+//        attackerBody.reset();
         graphics.commitEntityState(0, attackerBody);
     }
 
