@@ -315,4 +315,7 @@ public class Attacker {
 	}
 
 
+	public void updateToolTip() {
+		view.updateTooltip();
+	}
 }

@@ -1,5 +1,6 @@
 package view;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -55,6 +56,15 @@ public class AttackerView {
             return "hero_red_" + type + ".png";
         }
         return "hero_blue_" + type + ".png";
+    }
+
+    public void updateTooltip() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Attacker\n");
+        sb.append("x: ").append(attacker.getCurrentTile().getX()).append("\ny: ").append(attacker.getCurrentTile().getY());
+        sb.append("\nid: ").append(attacker.getId());
+        sb.append("\nowner: ").append(attacker.getOwner().getIndex());
+        tooltips.setTooltipText(attackerBody, sb.toString());
     }
 
 
@@ -290,20 +300,22 @@ public class AttackerView {
         if (attacker.hasReachedTarget()) {
            changeAnimation(attackerJumpSprites,CELEBRATE_DURATION);
         } else {
-            changeAnimation(attackerDeadSprites,DEATH_DURATION);
+            changeAnimation(attackerDeadSprites,DEATH_DURATION,.8);
         }
     }
 
     public void disappear() {
         group.setVisible(false);
     }
-
-    private void changeAnimation(String[] newImages, int duration) {
+    private void changeAnimation(String[] newImages, int duration){
+        changeAnimation(newImages,duration,0);
+    }
+    private void changeAnimation(String[] newImages, int duration, double t) {
         attackerBody.setImages(newImages);
         attackerBody.setDuration(duration);
-//        attackerBody.reset();
+        attackerBody.reset();
         attackerBody.setZIndex(attacker.getCurrentTile().getY());
-        graphics.commitEntityState(0, attackerBody);
+        graphics.commitEntityState(t, attackerBody);
     }
 
 
