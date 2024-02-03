@@ -54,11 +54,17 @@ public class GunTowerView extends TowerView {
 		graphics.commitEntityState(0,destroyedSpriteAnimation);
 		graphics.commitEntityState(.45, shootSpriteAnimation);
 
+
+		double d = Math.toDegrees( Math.toRadians(90) + Math.tan( ( a.getCurrentSubTile().getY() - tower.getTile().getY() ) / ( a.getCurrentSubTile().getX() - tower.getTile().getX() ) ) );
+		double t = Math.toRadians( Math.tan( ( a.getCurrentSubTile().getY() - tower.getTile().getY() ) / ( a.getCurrentSubTile().getX() - tower.getTile().getX() ) ) );
+
 		//TODO: make concrete calculation
 		shootSpriteAnimation
 				.setAlpha(0, Curve.IMMEDIATE)
 				.setX((int) (BoardView.CELL_SIZE * (tower.getTile().getX() + 1 + 0.5) * gg) + Constants.BOARD_DASH_WIDTH)
-				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg));
+				.setY((int) (BoardView.CELL_SIZE * (tower.getTile().getY() + 0.5) * gg))
+				.setScale(3)
+				.setRotation( Math.toRadians(90) + Math.tan( ( a.getCurrentSubTile().getY() - tower.getTile().getY() ) / ( a.getCurrentSubTile().getX() - tower.getTile().getX() ) ));
 
 	}
 }
