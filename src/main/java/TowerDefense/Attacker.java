@@ -193,28 +193,32 @@ public class Attacker {
 		return steps;
 	}
 
-	public void attack() {
-
-		Tile src = this.currentTile;
-		Tile[] neighbors = src.getNeighbors();
-		for (Tile t : neighbors) {
-			if(t == null) continue;
-			if (t.hasAnyObject()) {
-				if (t.getY() == src.getY()+1) {
-					view.animateAttackerStab("DOWN");
-				}
-				else if(t.getY() == src.getY()-1) {
-					view.animateAttackerStab("UP");
-				}
-				else if(t.getX() == src.getX()+1) {
-					view.animateAttackerStab("RIGHT");
-				}
-				else {
-					view.animateAttackerStab("LEFT");
-				}
-			}
-		}
-	}
+//	public void attack() {
+//
+//		Tile src = this.currentTile;
+//		Tile[] neighbors = src.getNeighbors();
+//		for (Tile t : neighbors) {
+//			if(t == null) continue;
+//			if (t.hasAnyObject()) {
+//				if (t.getY() == src.getY()+1) {
+//					view.animateAttackerStab("DOWN");
+//				}
+//				else if(t.getY() == src.getY()-1) {
+//					view.animateAttackerStab("UP");
+//				}
+//				else if(t.getX() == src.getX()+1) {
+////					if(this.getOwner().getIndex()==1){
+////						//view.
+////					}
+//					view.animateAttackerStab("RIGHT");
+//				}
+//				else {
+//					view.animateAttackerStab("LEFT");
+//				}
+//			}
+//		}
+//
+//	}
 
 	public void setCurrentSubtile(SubTile t){
 
@@ -248,7 +252,7 @@ public class Attacker {
 
 
 		for (int i = 0; i < ln; i++) {
-//			if((i&1) == 1) attack();
+
 			view.move(path.get(i));
 		}
 
@@ -266,24 +270,31 @@ public class Attacker {
 		if( t.obstacleTower != null ) {
 			t.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE, getOwner());
 		}
-
-
-		// TODO: Add attacker attack animation here
 		Tile src = this.currentTile;
 
-			if (t.getY() == src.getY()+1) {
-				view.animateAttackerStab("DOWN");
-			}
-			else if(t.getY() == src.getY()-1) {
-				view.animateAttackerStab("UP");
-			}
-			else if(t.getX() == src.getX()+1) {
-				view.animateAttackerStab("RIGHT");
-			}
-			else {
+		if (t.getY() == src.getY()+1) {
+			view.animateAttackerStab("DOWN");
+		}
+		else if(t.getY() == src.getY()-1) {
+			view.animateAttackerStab("UP");
+		}
+		else if(t.getX() == src.getX()+1) {
+			if(this.owner.getIndex() == 1){
 				view.animateAttackerStab("LEFT");
 			}
-
+			else{
+				view.animateAttackerStab("RIGHT");
+			}
+		}
+		else {
+			if(this.owner.getIndex() == 1){
+				view.animateAttackerStab("RIGHT");
+			}
+			else{
+				view.animateAttackerStab("LEFT");
+			}
+		}
+		// TODO: Add attacker attack animation here
 	}
 
 	public Player getOwner() {

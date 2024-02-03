@@ -20,7 +20,7 @@ public class AttackerView {
     private static final int DEATH_DURATION = 800;
     private static final int HURT_DURATION = 250;
     private static final int JUMP_DURATION = 200;
-    private static final int STAB_DURATION = 200;
+    private static final int STAB_DURATION = 500;
     private static final int CELEBRATE_DURATION = 150;
     private static final int SPAWN_DURATION =320;
 
@@ -65,8 +65,15 @@ public class AttackerView {
         this.tooltips = tooltips;
         attacker.setView(this);
 
-        healthBarRed = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-60).setY(70).setFillColor(0xff0000);
-        healthBarGreen = graphics.createRectangle().setWidth(HEALTH_BAR_LEN).setHeight(8).setX(-60).setY(70).setFillColor(0x00ff00);
+        healthBarRed = graphics.createRectangle().setWidth(HEALTH_BAR_LEN)
+                .setHeight(8).setX(-60).setY(70)
+                .setFillColor(0xff0000)
+                .setZIndex(attacker.getCurrentTile().getY());
+
+        healthBarGreen = graphics.createRectangle().setWidth(HEALTH_BAR_LEN)
+                .setHeight(8).setX(-60).setY(70)
+                .setFillColor(0x00ff00)
+                .setZIndex(attacker.getCurrentTile().getY());
 
         attackerBodySprites = graphics.createSpriteSheetSplitter()
                 .setSourceImage(getResourcePath("walk"))
@@ -78,12 +85,15 @@ public class AttackerView {
         attackerBody = graphics.createSpriteAnimation().
                 setImages(attackerBodySprites).
                 setScale(3).
-                setDuration(WALK_DURATION).setLoop(true).setPlaying(true);
+                setDuration(WALK_DURATION).setLoop(true).setPlaying(true).
+                setZIndex(attacker.getCurrentTile().getY());
 
 
         group = graphics.createGroup(healthBarRed, healthBarGreen, attackerBody)
                 .setX((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getX()))
-                .setY((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getY()));
+                .setY((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getY()))
+                .setZIndex(0);
+
         attackerBody.setX(-BoardView.CELL_SIZE);
 
 
@@ -104,6 +114,8 @@ public class AttackerView {
 
         //tooltips.setTooltipText(sprite, getTooltipString());
 
+        attackerBody.setZIndex(attacker.getCurrentTile().getY());
+//        System.err.println("AttackerBody initial Z index : " + attacker.getCurrentTile().getY());
         graphics.commitEntityState(1,attackerBody);
 
         // Creating the animation of attacker getting attacked...
@@ -139,11 +151,10 @@ public class AttackerView {
 //                setName("stab" + attacker.getOwner().getIndex() ).split();
 
         attackerLeftStabSprites = graphics.createSpriteSheetSplitter()
-                .setSourceImage(getResourcePath("stab"))
+                .setSourceImage(getResourcePath("leftstab"))
                 .setHeight(64).setWidth(64).setImageCount(4)
                 .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
-                setName("stab" + attacker.getOwner().getIndex() ).split();
-        //not flipped still;
+                setName("leftstab" + attacker.getOwner().getIndex() ).split();
 
         attackerUpStabSprites =graphics.createSpriteSheetSplitter()
                 .setSourceImage(getResourcePath("upstab"))
@@ -206,21 +217,25 @@ public class AttackerView {
             group.setX((int) (BoardView.CELL_SIZE * (t.getX() + Constants.PLAYER1_X_OFFSET)));
             group.setY((int) (BoardView.CELL_SIZE * (t.getY() + Constants.PLAYER1_Y_OFFSET)));
         }
-        group.setAlpha(0);
+
+        attackerBody.setZIndex(attacker.getCurrentTile().getY());
+        group.setAlpha(0).setZIndex(attacker.getCurrentTile().getY());
         graphics.commitEntityState(0,group);
-        group.setAlpha(1);
+
+        attackerBody.setZIndex(attacker.getCurrentTile().getY());
+        group.setAlpha(1).setZIndex(attacker.getCurrentTile().getY());
         graphics.commitEntityState(0,group);
 
         attackerBody.setImages(attackerSpawnSprites);
         attackerBody.setDuration(SPAWN_DURATION);
         attackerBody.reset();
 
-        attackerBody.setLoop(false);
+        attackerBody.setLoop(false).setZIndex(attacker.getCurrentTile().getY());
         graphics.commitEntityState(0, attackerBody);
 
 
         attackerBody.setImages(attackerBodySprites);
-        attackerBody.setLoop(true);
+        attackerBody.setLoop(true).setZIndex(attacker.getCurrentTile().getY());
         graphics.commitEntityState(.5, attackerBody);
 
         this.healthBarGreen.setWidth(HEALTH_BAR_LEN);
@@ -229,7 +244,8 @@ public class AttackerView {
 
     public void move(SubTile nextSubTile) {
 
-
+        attackerBody.setZIndex(attacker.getCurrentTile().getY());
+        group.setZIndex(attacker.getCurrentTile().getY());
         graphics.commitEntityState(0, attackerBody);
 
 
@@ -285,7 +301,8 @@ public class AttackerView {
     private void changeAnimation(String[] newImages, int duration) {
         attackerBody.setImages(newImages);
         attackerBody.setDuration(duration);
-
+//        attackerBody.reset();
+        attackerBody.setZIndex(attacker.getCurrentTile().getY());
         graphics.commitEntityState(0, attackerBody);
     }
 
