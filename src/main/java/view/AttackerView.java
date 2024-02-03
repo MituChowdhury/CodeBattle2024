@@ -19,7 +19,7 @@ public class AttackerView {
     private static final int DEATH_DURATION = 800;
     private static final int HURT_DURATION = 250;
     private static final int JUMP_DURATION = 200;
-    private static final int STAB_DURATION = 200;
+    private static final int STAB_DURATION = 500;
     private static final int CELEBRATE_DURATION = 150;
     private static final int SPAWN_DURATION =320;
 
@@ -138,11 +138,10 @@ public class AttackerView {
                 setName("stab" + attacker.getOwner().getIndex() ).split();
 
         attackerLeftStabSprites = graphics.createSpriteSheetSplitter()
-                .setSourceImage(getResourcePath("stab"))
+                .setSourceImage(getResourcePath("leftstab"))
                 .setHeight(64).setWidth(64).setImageCount(4)
                 .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
-                setName("stab" + attacker.getOwner().getIndex() ).split();
-        //not flipped still;
+                setName("leftstab" + attacker.getOwner().getIndex() ).split();
 
         attackerUpStabSprites =graphics.createSpriteSheetSplitter()
                 .setSourceImage(getResourcePath("upstab"))
