@@ -29,6 +29,7 @@ public class AttackerView {
     private final String[] attackerBodySprites,  attackerHurtSprites, attackerDeadSprites,
             attackerSpawnSprites, attackerJumpSprites, attackerUpStabSprites,
             attackerLeftStabSprites, attackerDownStabSprites;;
+    private final String[] attackerRightStabSprites;
 
 
     private Attacker attacker;
@@ -216,7 +217,7 @@ public class AttackerView {
             case "RIGHT":
                 ts=c.getSubTile(SUBTILE_SIZE-1,cs.getSubY());
                 move(ts,.5);
-                changeAnimation(attackerLeftStabSprites,STAB_DURATION);
+                changeAnimation(attackerRightStabSprites,STAB_DURATION);
                 break;
         }
     }
