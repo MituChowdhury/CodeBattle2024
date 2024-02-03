@@ -22,11 +22,16 @@ public class GunTowerView extends TowerView {
 		double gg = (double) graphics.getWorld().getHeight() / (Constants.MAP_HEIGHT * 100);
 
 
-		shootSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower,"fireball_sprite.png", 48,48,8, 4);
-		shootSpriteAnimation
-				.setScale(.5)
-				.setAlpha(0)
-				.setAnchor(.5);
+//		shootSpriteAnimation = Utils.createEffectSpriteAnimation(graphics, tower,"fireball_sprite.png", 48,48,8, 4);
+//		shootSpriteAnimation
+//				.setScale(.5)
+//				.setAlpha(0)
+//				.setAnchor(.5);
+
+
+		//experiment
+		shootSpriteAnimation = Utils.createEffectSpriteAnimation(graphics,tower,"bullet.png", 32,32,8,8);
+		shootSpriteAnimation.setScale(2).setAnchor(.5);
 
 		commitSprites();
 		updateTooltip();
