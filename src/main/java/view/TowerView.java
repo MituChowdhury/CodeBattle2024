@@ -108,11 +108,21 @@ public abstract class TowerView {
 			boardGroup.add(towerFixedSpriteAnimation);
 		}
 
+		// Z index...
+		boardGroup.setZIndex(this.tower.getTile().getY());
+		towerSpriteAnimation.setZIndex(this.tower.getTile().getY());
+		tint.setZIndex(-1);
+		//
 		graphics.commitEntityState(0, boardGroup, towerSpriteAnimation, tint);
 
 //		towerSpriteAnimation.setVisible(false);
 //		graphics.commitEntityState(1,towerSpriteAnimation);
 
+		// Z index...
+		boardGroup.setZIndex(this.tower.getTile().getY());
+		towerSpriteAnimation.setZIndex(this.tower.getTile().getY());
+		tint.setZIndex(-1);
+		//
 		graphics.commitEntityState(0, destroyedSpriteAnimation);
 
 		if (towerFixedSpriteAnimation != null)
@@ -121,11 +131,11 @@ public abstract class TowerView {
 
 	public void healthBarVisibility(boolean a){
 		if(a){
-			group.setAlpha(1);
+			group.setAlpha(1).setZIndex(tower.getTile().getY());
 			graphics.commitEntityState(0, group);
 		}
 		else {
-			group.setAlpha(0);
+			group.setAlpha(0).setZIndex(tower.getTile().getY());
 			graphics.commitEntityState(1, group);
 		}
 	}
@@ -168,8 +178,8 @@ public abstract class TowerView {
 
 	// TODO: Add animation here
 	public void destroy() {
-		towerSpriteAnimation.setVisible(false);
-		destroyedSpriteAnimation.setAlpha(.8);
+		towerSpriteAnimation.setVisible(false).setZIndex(tower.getTile().getY());
+		destroyedSpriteAnimation.setAlpha(.8).setZIndex(tower.getTile().getY());
 		graphics.commitEntityState(1, destroyedSpriteAnimation);
 		destroyedSpriteAnimation.setAlpha(0);
 		healthBarVisibility(false);

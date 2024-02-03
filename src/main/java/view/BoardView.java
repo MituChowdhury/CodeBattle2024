@@ -27,14 +27,18 @@ public class BoardView {
 		int dashboardBackgroundColor = 0x1f0342;
 //		int dashboardBackgroundColor = 0x3e0684;
 
+		// The dashboard....
 		graphics.createRectangle().setFillColor(dashboardBackgroundColor)
 				.setWidth(width)
-				.setHeight(height);
+				.setHeight(height)
+				.setZIndex(-4);
 
+		// The background of the board...
 		graphics.createRectangle().setFillColor(boardBackgroundColor)
 				.setWidth(width)
 				.setHeight(height)
-				.setX(Constants.BOARD_DASH_WIDTH * 4/3);
+				.setX(Constants.BOARD_DASH_WIDTH * 4/3)
+				.setZIndex(-3);
 
 		this.board = board;
 		board.setView(this);
@@ -76,30 +80,40 @@ public class BoardView {
 		Group innerGroup = graphics.createGroup();
 		gridGroup.add(innerGroup);
 
+		innerGroup.setZIndex(-1);
+		boardGroup.setZIndex(-1);
+		gridGroup.setZIndex(-1);
+
 		for (int y = 0; y < board.getHeight(); y++) {
-			innerGroup.add(Utils.createBoardSprite(graphics, "canyon.png", -1, y).setAlpha(0.7));
-			innerGroup.add(Utils.createBoardSprite(graphics, "canyon.png", board.getWidth(), y).setAlpha(0.7));
+			innerGroup.add(Utils.createBoardSprite(graphics, "canyon.png", -1, y).setAlpha(0.7).setZIndex(-10000));
+			innerGroup.add(Utils.createBoardSprite(graphics, "canyon.png", board.getWidth(), y).setAlpha(0.7).setZIndex(-10000));
 			for (int x = 0; x < board.getWidth(); x++) {
 				 if (board.getGrid()[x][y].canEnter()) {
-					Sprite canyon = Utils.createBoardSprite(graphics, "canyon.png", x, y).setZIndex(-1);
+					Sprite canyon = Utils.createBoardSprite(graphics, "canyon.png", x, y).setZIndex(-10000);
 
 					if (x == 0 && y == board.getHeight()/2) {
 						SpriteAnimation playerBase = Utils.createBoardSpriteAnimation(graphics, "base.png",x,y-.5,70,100,6,6);
-						playerBase.setScale(1.5);
+
+						playerBase.setScale(1.5).setZIndex(y);
+
 						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png",x,y-.5);
 						headquarter.setTint(board.getPlayer(0).getColor());
 						canyon.setTint(board.getPlayer(0).getColor()).setAlpha(.3);
 //						innerGroup.add(headquarter);
+
 						innerGroup.add(playerBase);
 						graphics.commitEntityState(0,playerBase);
 					}
 					if (x == board.getWidth() - 1 && y == board.getHeight()/2) {
 						SpriteAnimation playerBase = Utils.createBoardSpriteAnimation(graphics, "base.png",x,y-.5,70,100,6,6);
-						playerBase.setScale(1.5);
+
+						playerBase.setScale(1.5).setZIndex(y);
+
 						Sprite headquarter = Utils.createBoardSprite(graphics, "headquarter.png", x,y-.5);
 						headquarter.setTint(board.getPlayer(1).getColor());
 						canyon.setTint(board.getPlayer(1).getColor()).setAlpha(.3);
 //						innerGroup.add(headquarter);
+
 						innerGroup.add(playerBase);
 						graphics.commitEntityState(0,playerBase);
 
@@ -108,14 +122,14 @@ public class BoardView {
 					 boardGroup.add(canyon);
 				}
 				if (board.getGrid()[x][y].hasNonDestructibleObject()) {  // if there is obstacle
-					Sprite NDobstacle = Utils.createBoardSprite(graphics, "obstackle1.png", x, y); // for not destructable tiles
+					Sprite NDobstacle = Utils.createBoardSprite(graphics, "obstackle1.png", x, y).setZIndex(-10000); // for not destructable tiles
 					NDobstacle.setScale(.42);
 
 					tooltips.setTooltipText(NDobstacle, "x: " + x + "\ny: " + y);
 					innerGroup.add(NDobstacle);
 				}
 				else if (board.getGrid()[x][y].hasDestructibleObject()) {  // if there is obstacle
-					Sprite Dobstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y).setAlpha(0.4);
+					Sprite Dobstacle = Utils.createBoardSprite(graphics, "plateau.png", x, y).setAlpha(0.4).setZIndex(-10000);
 					tooltips.setTooltipText(Dobstacle, "x: " + x + "\ny: " + y);
 					innerGroup.add(Dobstacle);
 				}
