@@ -64,7 +64,8 @@ public class AttackerView {
         sb.append("Attacker\n");
         sb.append("x: ").append(attacker.getCurrentTile().getX()).append("\ny: ").append(attacker.getCurrentTile().getY());
         sb.append("\nid: ").append(attacker.getId());
-        sb.append("\nowner: ").append(attacker.getOwner().getIndex());
+        sb.append("\nhealth: ").append(attacker.getHitPoints());
+        sb.append("\nspeed: ").append(attacker.getSpeed());
         tooltips.setTooltipText(attackerBody, sb.toString());
     }
 

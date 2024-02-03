@@ -263,6 +263,7 @@ public class Attacker {
 	}
 
 	public void attack(Tile t) {
+		Tower obstacle = t.obstacleTower;
 		if( t.obstacleTower != null ) {
 			t.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE, getOwner());
 		}
@@ -289,6 +290,11 @@ public class Attacker {
 			else{
 				view.animateAttackerStab("LEFT");
 			}
+		}
+
+		if(obstacle!=null){
+			if(obstacle.isDestroyed())
+				owner.setCoins(owner.getCoins()+obstacle.getBounty());
 		}
 		// TODO: Add attacker attack animation here
 	}

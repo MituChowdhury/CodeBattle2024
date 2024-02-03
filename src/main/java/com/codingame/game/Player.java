@@ -35,7 +35,7 @@ public class Player extends AbstractMultiplayerPlayer {
 
 	public void kill(Attacker a) {
 		this.coins += a.getBounty();
-		this.score++;
+//		this.score++;
 		a.getOwner().incrementDeathCount();
 	}
 
@@ -95,6 +95,7 @@ public class Player extends AbstractMultiplayerPlayer {
 
 	public void addTargetReachScore() {
 		this.score ++;
+		this.coins += Constants.CHECKPOINT_REWARD;
 	}
 
 	public boolean isDead() {

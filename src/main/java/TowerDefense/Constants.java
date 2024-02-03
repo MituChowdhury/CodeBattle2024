@@ -26,34 +26,34 @@ public class Constants {
 	public static final double[] GUNTOWER_RANGE = { 5, 4, 5, 6 };
 	public static final double[] GUNTOWER_RELOAD = { 2, 4, 3, 2 };
 	public static final double[] GUNTOWER_HITPOINT = { 555, 10, 15, 20 };
-	public static final double[] GUNTOWER_FUSETIME = { 2, 1, 0, 0 };
+	public static final double[] GUNTOWER_FUSETIME = { -1, 1, 0, 0 };
 	public static final int GUNTOWER_BOUNTY = 10;
 
 
 	public static final double[] FIREBOMB_DAMAGE = { 5, 8, 15, 30 };
 	public static final double[] FIREBOMB_RANGE = { 2, 4, 5, 6 };
-	public static final double[] FIREBOMB_RELOAD = { 0, 0, 0, 0 };
-	public static final double[] FIREBOMB_HITPOINTS = { 5, 10, 15, 20 };
+	public static final double[] FIREBOMB_RELOAD = { -1, 0, 0, 0 };
+	public static final double[] FIREBOMB_HITPOINTS = { -1, 10, 15, 20 };
 	public static final double[] FIREBOMB_FUSETIME = { 2, 1, 0, 0 };
 
 	public static final int FIREBOMB_BOUNTY = 0;
 
-	public static final double[] SPRINGTRAP_DAMAGE = { 2, 3, 4, 5 };
-	public static final double[] SPRINGTRAP_RANGE = { 1, 0, 0, 0 };
-	public static final double[] SPRINGTRAP_RELOAD = { 0, 4, 3, 2 };
-	public static final double[] SPRINGTRAP_HITPOINT = { 5, 10, 15, 20 };
+	public static final double[] SPRINGTRAP_DAMAGE = { -1, 3, 4, 5 };
+	public static final double[] SPRINGTRAP_RANGE = { 2, 0, 0, 0 };
+	public static final double[] SPRINGTRAP_RELOAD = { -1, 4, 3, 2 };
+	public static final double[] SPRINGTRAP_HITPOINT = { -1, 10, 15, 20 };
 
 	// DEBUG: spring lifetime 100
 	public static final double[] SPRINGTRAP_FUSETIME = { 10, 3, 3, 3 }; // FUSETIME IS LIFETIME FOR SPRINGTRAP
 	public static final int SPRINGTRAP_COST = 10;
-	public static final int SPRINGTRAP_BOUNTY = 0;
+	public static final int SPRINGTRAP_BOUNTY = -1;
 
 
-	public static final double[] WALL_DAMAGE = { 0, 0, 0, 0 };
-	public static final double[] WALL_RANGE = { 0, 0, 0, 0 };
-	public static final double[] WALL_RELOAD = { 0, 0, 0, 0 };
+	public static final double[] WALL_DAMAGE = { -1, 0, 0, 0 };
+	public static final double[] WALL_RANGE = { -1, 0, 0, 0 };
+	public static final double[] WALL_RELOAD = { -1, 0, 0, 0 };
 	public static final double[] WALL_HITPOINT = { 5, 10, 15, 20 };
-	public static final double[] WALL_FUSETIME = { 0, 0, 0, 0 };
+	public static final double[] WALL_FUSETIME = { -1, 0, 0, 0 };
 	public static final int WALL_COST = 10;
 	public static final int WALL_BOUNTY = 10;
 
@@ -68,9 +68,12 @@ public class Constants {
 	public static final double[] GLUETOWER_RANGE = { 3, 4, 5, 6 };
 	public static final double[] GLUETOWER_RELOAD = { 5, 3, 2, 1 };
 	public static final double[] GLUETOWER_HITPOINT = { 5, 10, 15, 20 };
-	public static final double[] GLUETOWER_FUSETIME = { 0, 0, 0, 0 };
+	public static final double[] GLUETOWER_FUSETIME = { -1, 0, 0, 0 };
 	public static final int GLUE_SLOWDOWN = 4;
 	public static final int GLUETOWER_BOUNTY = 15;
+
+
+	//naii
 	public static final int HEALTOWER_COST = 100;
 	public static final double[] HEALTOWER_DAMAGE = { 5, 8, 15, 30 };
 	public static final double[] HEALTOWER_RANGE = { 3, 4, 5, 6 };
@@ -96,6 +99,8 @@ public class Constants {
 	public static final int SPEED = 10;
 	public static final int BOUNTY = 25;
 	public static final int NUM_UPGRADE_SPRITES = 3;
+
+	public  static  final int CHECKPOINT_REWARD = 100;
 //    public static int CHARACTER_COUNT =1;  // For de
 	public static int CHARACTER_COUNT = 5;
 
