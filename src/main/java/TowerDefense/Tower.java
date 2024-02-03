@@ -39,6 +39,7 @@ public abstract class Tower {
 		this.upgradeStates = new int[TowerProperty.values().length];
 		this.properties = new double[TowerProperty.values().length][];
 		tile.setDestructibleObject(this);
+		bounty=0;
 	}
 
 	public int getBounty() {
@@ -65,11 +66,12 @@ public abstract class Tower {
 	}
 
 	public boolean isDestroyed() {
-		return this.hitPoints == 0;
+		return this.hitPoints <= 0;
 	}
 
 	// TODO: add disappear animation here in view.destroy()
 	public void disappear() {
+		hitPoints = 0;
 		this.tile.unsetDestructibleObject();
 		view.destroy();
 	}

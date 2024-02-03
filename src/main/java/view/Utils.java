@@ -102,7 +102,7 @@ public class Utils {
 				.setDuration(500)
 //				.setScale(1.5)
 //				.setAnchor(.5)
-//				.setZIndex(-1)
+				.setZIndex(100)
 				.setLoop(true).setPlaying(true);
 
 	}

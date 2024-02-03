@@ -80,11 +80,16 @@ public class Referee extends AbstractReferee {
 	@Override
 	public void gameTurn(int turn) {
 		try {
+
+			if(turn==10){
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 18, 10, "WALL");
+			}
 			if (turn == 4) {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 11, "BOMB");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 3, 1, "STUN_TOWER");
 				board.cacheBuild(gameManager.getActivePlayers().get(0), 15, 11, "SPRING_NORTH");
 				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_EAST");
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_NORTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 8, 7, "GUN_TOWER");
 
 
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 2, 8, "WALL");
@@ -98,9 +103,9 @@ public class Referee extends AbstractReferee {
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 5, 6, "WALL");
 
 
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 12, 8, "SPRING_NORTH");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 2, "GUN_TOWER");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 7, "GUN_TOWER");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 12, 8, "SPRING_NORTH");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 2, "GUN_TOWER");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 7, "GUN_TOWER");
 //
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 2, "STUN_TOWER");
 ////				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 8, "SPRINGTRAP_U");
@@ -110,7 +115,7 @@ public class Referee extends AbstractReferee {
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 9, "STUN_TOWER");
 //
 //				// Team blue -_- ....
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 7, "STUN_TOWER");
+//				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 7, "STUN_TOWER");
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 9, "STUN_TOWER");
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 5, "GUN_TOWER");
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 10, 7, "GUN_TOWER");

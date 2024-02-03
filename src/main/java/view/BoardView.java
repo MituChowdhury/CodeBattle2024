@@ -80,8 +80,6 @@ public class BoardView {
 		Group innerGroup = graphics.createGroup();
 		gridGroup.add(innerGroup);
 
-
-
 		innerGroup.setZIndex(-1);
 		boardGroup.setZIndex(-1);
 		gridGroup.setZIndex(-1);

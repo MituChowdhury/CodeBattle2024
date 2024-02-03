@@ -35,7 +35,7 @@ public class SpringTrap extends Tower {
 	}
 
 	public int getSpringDistance() {
-		int rangeIndex = TowerProperty.DAMAGE.ordinal();
+		int rangeIndex = TowerProperty.RANGE.ordinal();
 		double range = properties[rangeIndex][this.upgradeStates[rangeIndex]];
 		return (int) range;
 	}

@@ -267,6 +267,7 @@ public class AttackerView {
             group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER0_X_OFFSET)));
             group.setY((int) (BoardView.CELL_SIZE * (nextSubTile.getY() + Constants.PLAYER0_Y_OFFSET)));
         } else {
+
             group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER1_X_OFFSET)));
             group.setY((int) (BoardView.CELL_SIZE * (nextSubTile.getY() + Constants.PLAYER1_Y_OFFSET)));
         }
@@ -300,9 +301,12 @@ public class AttackerView {
 
     public void kill() {
         if (attacker.hasReachedTarget()) {
+
            changeAnimation(attackerJumpSprites,CELEBRATE_DURATION);
+
         } else {
-            changeAnimation(attackerDeadSprites,DEATH_DURATION,.8);
+            //dead animation
+            changeAnimation(attackerDeadSprites,DEATH_DURATION);
         }
     }
 
@@ -316,8 +320,7 @@ public class AttackerView {
         attackerBody.setImages(newImages);
         attackerBody.setDuration(duration);
         attackerBody.reset();
-        attackerBody.setZIndex(attacker.getCurrentTile().getY());
-        graphics.commitEntityState(t, attackerBody);
+        graphics.commitEntityState(0, attackerBody);
     }
 
 

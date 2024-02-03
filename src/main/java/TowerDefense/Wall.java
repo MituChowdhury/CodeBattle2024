@@ -18,6 +18,7 @@ public class Wall extends Tower {
 		properties[TowerProperty.HITPOINT.ordinal()] = Constants.WALL_HITPOINT;
 		properties[TowerProperty.FUSETIME.ordinal()] = Constants.WALL_FUSETIME;
 		cost = Constants.WALL_COST;
+		bounty = Constants.WALL_BOUNTY;
 		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
 	}
 

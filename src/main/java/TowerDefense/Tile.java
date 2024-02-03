@@ -55,7 +55,7 @@ public class Tile {
 	}
 
 	public boolean canBuild() {
-		return !hasAnyObject();
+		return !hasAnyObject() && sTrap == null;
 	}
 
 	public char getMapChar() {

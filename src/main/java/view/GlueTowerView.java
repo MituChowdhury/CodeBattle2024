@@ -21,9 +21,6 @@ public GlueTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics
 			towerSpriteAnimation.setScale(2);
 
 
-		SpriteAnimation idleTower = Utils.createTowerSpriteAnimation(graphics,"stunTower",tower.getTile().getX(),tower.getTile().getX(),48,48,10,10);
-			idleTower.setScale(2);
-
 		String[] idleSpriteImages = graphics.createSpriteSheetSplitter()
 				.setSourceImage("stunTower.png")
 				.setHeight(48).setWidth(48).setImageCount(10)
@@ -49,10 +46,10 @@ public GlueTowerView(Tower tower, Group boardGroup, GraphicEntityModule graphics
 			commitSprites();
 			updateTooltip();
 
+	towerSpriteAnimation.setImages(idleSpriteImages);
+	graphics.commitEntityState(1,towerSpriteAnimation);
 
 
-			towerSpriteAnimation.setImages(idleSpriteImages);
-			graphics.commitEntityState(1,towerSpriteAnimation);
 }
 
 	@Override

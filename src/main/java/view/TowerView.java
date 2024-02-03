@@ -104,9 +104,9 @@ public abstract class TowerView {
 //		boardGroup.add(tileTint);
 		boardGroup.add(tint);
 
-		if (towerFixedSpriteAnimation != null) {
-			boardGroup.add(towerFixedSpriteAnimation);
-		}
+//		if (towerFixedSpriteAnimation != null) {
+//			boardGroup.add(towerFixedSpriteAnimation);
+//		}
 
 		// Z index...
 		boardGroup.setZIndex(this.tower.getTile().getY());
@@ -125,13 +125,15 @@ public abstract class TowerView {
 		//
 		graphics.commitEntityState(0, destroyedSpriteAnimation);
 
-		if (towerFixedSpriteAnimation != null)
-			graphics.commitEntityState(1, towerFixedSpriteAnimation);
+//		if (towerFixedSpriteAnimation != null)
+//			graphics.commitEntityState(1, towerFixedSpriteAnimation);
+
+
 	}
 
 	public void healthBarVisibility(boolean a){
 		if(a){
-			group.setAlpha(1).setZIndex(tower.getTile().getY());
+			group.setAlpha(1,Curve.IMMEDIATE).setZIndex(tower.getTile().getY());
 			graphics.commitEntityState(0, group);
 		}
 		else {
