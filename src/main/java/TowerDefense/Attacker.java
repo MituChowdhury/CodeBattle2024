@@ -193,32 +193,6 @@ public class Attacker {
 		return steps;
 	}
 
-//	public void attack() {
-//
-//		Tile src = this.currentTile;
-//		Tile[] neighbors = src.getNeighbors();
-//		for (Tile t : neighbors) {
-//			if(t == null) continue;
-//			if (t.hasAnyObject()) {
-//				if (t.getY() == src.getY()+1) {
-//					view.animateAttackerStab("DOWN");
-//				}
-//				else if(t.getY() == src.getY()-1) {
-//					view.animateAttackerStab("UP");
-//				}
-//				else if(t.getX() == src.getX()+1) {
-////					if(this.getOwner().getIndex()==1){
-////						//view.
-////					}
-//					view.animateAttackerStab("RIGHT");
-//				}
-//				else {
-//					view.animateAttackerStab("LEFT");
-//				}
-//			}
-//		}
-//
-//	}
 
 	public void setCurrentSubtile(SubTile t){
 
@@ -302,6 +276,10 @@ public class Attacker {
 			}
 		}
 		// TODO: Add attacker attack animation here
+	}
+
+	public void jump() {
+		view.animateAttackerJump();
 	}
 
 	public Player getOwner() {
