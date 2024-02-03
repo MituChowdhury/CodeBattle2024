@@ -212,6 +212,7 @@ public class Attacker {
 				}
 			}
 		}
+
 	}
 
 	public void setCurrentSubtile(SubTile t){
@@ -240,25 +241,16 @@ public class Attacker {
 		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);
 		steps = path;
 
+		if( currentTile.hasNonDestructibleObject() ) {
+			kill();
+			return;
+		}
+
 		int ln = Math.min(path.size(),getSpeed());
 
-//		view.animateAttackerWalk();
-//		for (Attacker a: Board.getAttackers()){
-//			if (this.enemy.getIndex() == a.owner.getIndex()) {
-//				if (a.getCurrentTile().getX() == this.getCurrentTile().getX()){
-//					if (a.currentTile.getY()+1 == this.currentTile.getY()) {
-//						view.animateAttackerStab();
-//					}
-//				}
-//				else if (a.getCurrentTile().getY() == this.getCurrentTile().getY()){
-//					if (a.currentTile.getX()+1 == this.currentTile.getX()) {
-//						view.animateAttackerStab();
-//					}
-//				}
-//			}
-//		}
+
 		for (int i = 0; i < ln; i++) {
-			if((i&1) == 1) attack();
+//			if((i&1) == 1) attack();
 			view.move(path.get(i));
 		}
 
@@ -271,9 +263,23 @@ public class Attacker {
 
 	}
 
-	public void attack(Tile target) {
-		if( target.obstacleTower != null ) {
-			target.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE, getOwner());
+	public void attack(Tile t) {
+		if( t.obstacleTower != null ) {
+			t.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE, getOwner());
+		}
+		Tile src = this.currentTile;
+
+		if (t.getY() == src.getY()+1) {
+			view.animateAttackerStab("DOWN");
+		}
+		else if(t.getY() == src.getY()-1) {
+			view.animateAttackerStab("UP");
+		}
+		else if(t.getX() == src.getX()+1) {
+			view.animateAttackerStab("RIGHT");
+		}
+		else {
+			view.animateAttackerStab("LEFT");
 		}
 		// TODO: Add attacker attack animation here
 	}
