@@ -274,8 +274,8 @@ public class AttackerView {
     private void changeAnimation(String[] newImages, int duration) {
         attackerBody.setImages(newImages);
         attackerBody.setDuration(duration);
-//        attackerBody.reset(); 
-        graphics.commitEntityState(1, attackerBody);
+        attackerBody.reset();
+        graphics.commitEntityState(0, attackerBody);
     }
 
 
