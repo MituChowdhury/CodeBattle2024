@@ -101,8 +101,7 @@ public class AttackerView {
 
         group = graphics.createGroup(healthBarRed, healthBarGreen, attackerBody)
                 .setX((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getX()))
-                .setY((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getY()))
-                .setZIndex(0);
+                .setY((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getY()));
 
         attackerBody.setX(-BoardView.CELL_SIZE);
 

@@ -1,21 +1,19 @@
 package com.codingame.game;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import TowerDefense.*;
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
 import com.codingame.gameengine.core.AbstractReferee;
 import com.codingame.gameengine.core.MultiplayerGameManager;
 import com.codingame.gameengine.module.endscreen.EndScreenModule;
-import com.codingame.gameengine.module.entities.Circle;
-import com.codingame.gameengine.module.entities.Curve;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
 import com.google.inject.Inject;
 
 
 import command.Command;
-import org.apache.commons.lang3.ObjectUtils;
 
 import command.AttackCommand;
 import command.BuildCommand;
@@ -23,9 +21,6 @@ import command.GoCommand;
 import exception.BadCommandException;
 
 import view.BoardView;
-
-import static TowerDefense.Constants.BOARD_DASH_WIDTH;
-import static view.BoardView.CELL_SIZE;
 
 public class Referee extends AbstractReferee {
 	public static final int FRAME_DURATION = 500; // THIS THING IS NEVER USED SO CHANGING IT HAS NO EFFECT
@@ -44,6 +39,10 @@ public class Referee extends AbstractReferee {
 
 	public static final ArrayList<String> VALID_OBJECT_NAMES = new ArrayList<>();
 	public static final ArrayList<String> VALID_DIRECTIONS = new ArrayList<>();
+	private ArrayList<String>[] playerErrorMessages = new ArrayList[2];
+	// The following variables are for ranking and displaying scores at the end of the game...
+	int[] scores = {0, 0};
+	String[] texts = new String[2];
 
 	@Override
 	public void init() {
@@ -73,6 +72,9 @@ public class Referee extends AbstractReferee {
 		VALID_DIRECTIONS.add("SOUTH");
 		VALID_DIRECTIONS.add("EAST");
 		VALID_DIRECTIONS.add("WEST");
+
+		playerErrorMessages[0] = new ArrayList<>();
+		playerErrorMessages[1] = new ArrayList<>();
 	}
 
 	@Override
@@ -144,7 +146,7 @@ public class Referee extends AbstractReferee {
 			try {
 
 				List<String> actions = player.getOutputs();
-				System.out.println("*************** No timeout ****************");
+//				System.out.println("*************** No timeout ****************");
 
 				// For debugging purpose...
 				// During the 1st turn, the player have to output the y coordinates for their attackers...
@@ -159,7 +161,7 @@ public class Referee extends AbstractReferee {
 						}
 					}
 					catch (Exception e){
-						System.err.println("############# Invalid initial output");
+//						System.err.println("############# Invalid initial output");
 					}
 
 
@@ -168,12 +170,25 @@ public class Referee extends AbstractReferee {
 
 
 					TreeSet<Integer> usedAttackers = new TreeSet<>();
+					AtomicInteger i = new AtomicInteger();
 
 					actions.forEach(action -> {
 						try {
+							i.incrementAndGet();
 							executeCommand(parseCommand(player, usedAttackers, action.split(" ")));
 						} catch (BadCommandException ex) {
-							System.err.println("\t[Exception] " + ex.getMessage());
+//							System.err.println("\t[Exception] " + ex.getMessage());
+							System.out.println("Invalid input detected by player no. " + player.getIndex());
+							this.addErrorMessage(player.getIndex(), "Invalid input.");
+							System.err.println("*** Error by player "
+									+ player.getIndex()
+									+ " at command no. "
+									+ i.get()
+							);
+							System.err.println(ex.getMessage());
+							System.err.println();
+//							gameManager.endGame();
+							gameManager.endGame();
 						}
 					});
 				}
@@ -279,11 +294,11 @@ public class Referee extends AbstractReferee {
 	public Command parseCommand(Player commander, TreeSet<Integer> usedAttackers, String[] commandArgs) throws BadCommandException {
 		if (commandArgs.length == 1 && commandArgs[0].equals("")) {
 			// Gotta throw an exception for bad input....
-			System.err.println("[X] Wrong: (Empty)");
+//			System.err.println("[X] Wrong: (Empty)");
 			throw new BadCommandException("No command has been sent by the player");
 		}
 
-		System.err.println("[-] " + String.join(" ", commandArgs));
+//		System.err.println("[-] " + String.join(" ", commandArgs));
 
 		Command cmd;
 
@@ -336,16 +351,83 @@ public class Referee extends AbstractReferee {
 
 	@Override
 	public void onEnd() {
-		int[] scores = gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray();
-		String[] texts = new String[2];
-		for (int i = 0; i < scores.length; i++) {
-			texts[i] = gameManager.getPlayers().get(i).getKillCount() + " deaths, " + gameManager.getPlayers().get(i).getCoins() + " gold";
+//		int[] scores = gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray();
+		if (scores[0] < 0 || scores[1] < 0) {
+			onErrorneousEnd();
 		}
+
 		endScreenModule.setScores(scores, texts);
+
 		//String endSprite = "tie";
 		//if (scores[0] > scores[1]) endSprite = "win0";
 		//if (scores[0] < scores[1]) endSprite = "win1";
 		//endScreenModule.setTitleRankingsSprite(endSprite + ".png");
+	}
+
+	private void onSuccessfulEnd() {
+		setScores();  // Sets the values of scores in the array of "scores" in this class.
+
+		for (int i = 0; i < this.scores.length; i++) {
+//			texts[i] = gameManager.getPlayers().get(i).getKillCount() + " deaths, " + gameManager.getPlayers().get(i).getCoins() + " gold";
+			Player player = gameManager.getPlayer(i);
+
+			texts[i] = "Scores : " + player.getScores() +
+					"      Coins : " + player.getCoins() +
+					"      Death count : " + player.getKillCount();
+		}
+	}
+
+	private void setScores() {
+//		int[] scores = {0, 0};
+
+		Player playerOne = gameManager.getPlayer(0);
+		Player playerTwo = gameManager.getPlayer(1);
+
+		if (playerOne.getScores() == playerTwo.getScores()) {
+			if (playerOne.getCoins() == playerTwo.getCoins()) {
+				if (playerOne.getKillCount() < playerTwo.getKillCount()) {
+					scores[0] = 1;
+				}
+				else if (playerOne.getKillCount() > playerTwo.getKillCount()) {
+					scores[1] = 1;
+				}
+			}
+			else {
+				int i = playerOne.getCoins() > playerTwo.getCoins() ? 0: 1;
+				scores[i] = 1;
+			}
+		}
+		else {
+			int i = playerOne.getScores() > playerTwo.getScores() ? 0: 1;
+			scores[i] = 1;
+		}
+	}
+
+	private void addErrorMessage(int playerId, String message) {
+		this.playerErrorMessages[playerId].add(message);
+		this.scores[playerId] -= 1;
+	}
+
+	private void onErrorneousEnd() {
+		for (int i = 0; i < scores.length; ++i) {
+			if (scores[i] < 0) {
+				StringBuilder sb = new StringBuilder();
+				int temp = i;
+
+				playerErrorMessages[i].forEach(err -> {
+					sb.append(err);
+				});
+
+				texts[i] = sb.toString();
+			}
+			else {
+				Player player = gameManager.getPlayer(i);
+
+				texts[i] = "Scores : " + player.getScores() +
+						"      Coins : " + player.getCoins() +
+						"      Death count : " + player.getKillCount();
+			}
+		}
 	}
 }
 //}

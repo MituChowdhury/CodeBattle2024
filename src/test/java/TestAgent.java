@@ -71,7 +71,7 @@ class TestAgent {
 
                     if( i == 4 ) {
                         if( cnt >= offset ) {
-                            System.out.println("attack " + playerCharId + " NORTH");
+                            System.out.println("attack " + (playerCharId) + " NORTH");
 //                            System.out.println("attack " + playerCharId + " NORTH");
                         } else if( cnt == offset+6) {
                             System.out.println("build " + playerCharId + " GUN_TOWER " + playerPosX + " " + (playerPosY));

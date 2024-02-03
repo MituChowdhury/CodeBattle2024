@@ -336,7 +336,7 @@ public class Board {
 		if (x < 0 || x >= width || y < 0 || y >= height) throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
 
 
-		if (!grid[x][y].canBuild()) {
+		if (!grid[x][y].hasAnyObject()) {
 			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
 		}
 
