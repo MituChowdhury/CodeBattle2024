@@ -66,7 +66,6 @@ public class Utils {
 				.setName(image + "Sprite")
 				.split();
 
-
 		return graphics.createSpriteAnimation()
 				.setImages(spriteImages)
 				.setX(BoardView.CELL_SIZE * x).setY(BoardView.CELL_SIZE * y)

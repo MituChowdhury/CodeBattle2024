@@ -138,6 +138,6 @@ public class SpringTrap extends Tower {
 
 	@Override
 	public TowerView createView(Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltipModule) {
-		return new SpringTrapView(this, boardGroup, graphics, tooltipModule);
+		return new SpringTrapView(this, boardGroup, graphics, tooltipModule, this.dir);
 	}
 }
