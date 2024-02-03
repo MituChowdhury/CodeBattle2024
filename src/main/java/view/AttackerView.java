@@ -102,7 +102,7 @@ public class AttackerView {
         group = graphics.createGroup(healthBarRed, healthBarGreen, attackerBody)
                 .setX((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getX()))
                 .setY((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getY()))
-                .setZIndex(0);
+                ;
 
         attackerBody.setX(-BoardView.CELL_SIZE);
 
@@ -154,11 +154,11 @@ public class AttackerView {
                 setName("jump" + attacker.getOwner().getIndex() ).split();
 
         // attacker stabbing
-//        attackerRightStabSprites =graphics.createSpriteSheetSplitter()
-//                .setSourceImage(getResourcePath("stab"))
-//                .setHeight(64).setWidth(64).setImageCount(4)
-//                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
-//                setName("stab" + attacker.getOwner().getIndex() ).split();
+        attackerRightStabSprites =graphics.createSpriteSheetSplitter()
+                .setSourceImage(getResourcePath("stab"))
+                .setHeight(64).setWidth(64).setImageCount(4)
+                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
+                setName("stab" + attacker.getOwner().getIndex() ).split();
 
         attackerLeftStabSprites = graphics.createSpriteSheetSplitter()
                 .setSourceImage(getResourcePath("leftstab"))
@@ -266,6 +266,7 @@ public class AttackerView {
             group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER0_X_OFFSET)));
             group.setY((int) (BoardView.CELL_SIZE * (nextSubTile.getY() + Constants.PLAYER0_Y_OFFSET)));
         } else {
+
             group.setX((int) (BoardView.CELL_SIZE * (nextSubTile.getX() + Constants.PLAYER1_X_OFFSET)));
             group.setY((int) (BoardView.CELL_SIZE * (nextSubTile.getY() + Constants.PLAYER1_Y_OFFSET)));
         }
@@ -275,8 +276,6 @@ public class AttackerView {
         attacker.setCurrentSubtile(nextSubTile);
 
     }
-
-
 
     public void dealDamage(int hp, int maxHp) {
         System.err.println("Bar length: " + (int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
@@ -301,9 +300,12 @@ public class AttackerView {
 
     public void kill() {
         if (attacker.hasReachedTarget()) {
+
            changeAnimation(attackerJumpSprites,CELEBRATE_DURATION);
+
         } else {
-            changeAnimation(attackerDeadSprites,DEATH_DURATION,.8);
+            //dead animation
+            changeAnimation(attackerDeadSprites,DEATH_DURATION);
         }
     }
 
@@ -316,14 +318,8 @@ public class AttackerView {
     private void changeAnimation(String[] newImages, int duration, double t) {
         attackerBody.setImages(newImages);
         attackerBody.setDuration(duration);
-//<<<<<<< HEAD
         attackerBody.reset();
-        attackerBody.setZIndex(attacker.getCurrentTile().getY());
-        graphics.commitEntityState(t, attackerBody);
-//=======
-////        attackerBody.reset();
-//        graphics.commitEntityState(1, attackerBody);
-//>>>>>>> parent of 02488b0 (gun tower view updated)
+        graphics.commitEntityState(0, attackerBody);
     }
 
 
