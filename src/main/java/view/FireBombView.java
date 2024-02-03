@@ -15,7 +15,7 @@ public class FireBombView extends TowerView {
 	public FireBombView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
 
 		super(tower, boardGroup, graphics, tooltips, "bomb",32, 32, 5, 5);
-		towerSpriteAnimation.setScale(3).setZIndex(100);
+		towerSpriteAnimation.setScale(3).setZIndex(1000);
 
 //		System.out.println("bomb called");
 

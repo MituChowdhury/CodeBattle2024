@@ -336,7 +336,7 @@ public class Board {
 		if (x < 0 || x >= width || y < 0 || y >= height) throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
 
 
-		if (!grid[x][y].canBuild()) {
+		if (!grid[x][y].canBuild() && !type.equals("BOMB")) {
 			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
 		}
 
@@ -381,7 +381,7 @@ public class Board {
 //			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
 //		}
 		for (Tower t : towers) {
-			if (t.getTile() == tower.getTile()) {
+			if (t.getTile() == tower.getTile() && !type.equals("BOMB") ) {
 				tower.undoBuild();
 				throw new InvalidActionException("Tile (" + x + "/" + y + ") is occupied by another tower already", false, player);
 			}
