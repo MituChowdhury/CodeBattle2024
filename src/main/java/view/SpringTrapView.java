@@ -19,13 +19,24 @@ public class SpringTrapView extends TowerView {
 	static int[] heights = {65,70,65,70};
 
 	public SpringTrapView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips, int dir) {
-		super(tower, boardGroup, graphics, tooltips, "spring"+direction[dir -1],widths[dir-1], heights[dir-1], 4, 4);
+		super(tower, boardGroup, graphics, tooltips, "springSp"+direction[dir -1], widths[dir-1], heights[dir-1], 8, 8);
+//		super(tower, boardGroup, graphics, tooltips, "spring"+direction[dir -1],widths[dir-1], heights[dir-1], 4, 4);
 
 		towerSpriteAnimation.setScale(1.5);
-//		towerSpriteAnimation.setPlaying(false);
+
+		String[] idleSpriteImages = graphics.createSpriteSheetSplitter()
+				.setSourceImage("spring"+direction[dir-1]+".png")
+				.setHeight(heights[dir-1]).setWidth(widths[dir-1]).setImageCount(4)
+				.setImagesPerRow(4)
+				.setOrigCol(0).setOrigRow(0)
+				.setName( "spring"+direction[dir-1]+"Sprite")
+				.split();
 
 		commitSprites();
 		updateTooltip();
+
+		towerSpriteAnimation.setImages(idleSpriteImages);
+		graphics.commitEntityState(1,towerSpriteAnimation);
 	}
 
 	@Override
