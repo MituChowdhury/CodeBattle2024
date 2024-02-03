@@ -75,12 +75,16 @@ public class Attacker {
 		this.currentSubtile = this.spawnSubtile;
 	}
 
-	public void relocate(SubTile newSubTile) {
+	public void relocate(SubTile newSubTile, double t) {
 		this.currentTile = newSubTile.getTile();
 		this.currentSubtile = newSubTile;
-		view.animateAttackerJump();
-		view.move(currentSubtile,0);
-		relocated=true;
+		view.animateAttackerJump(t);
+//		view.move(currentSubtile,t);
+//		relocated=true;
+		if( currentTile.hasDestructibleObject() ) {
+			currentTile.obstacleTower.disappear();
+			this.kill();
+		}
 	}
 	public void spawn() {
 		this.maxSpeed = Constants.SPEED;
@@ -173,8 +177,8 @@ public class Attacker {
 		this.view.dealDamage(hitPoints, maxHealth);
 		//...
 		//bord.checkDeadAttacker() will collect the dead and kill them
-//		if (isDead())
-//			view.kill();
+		if (isDead())
+			view.kill();
 	}
 
 	public void slowDown(int countdown) {
@@ -217,11 +221,17 @@ public class Attacker {
 
 	public void move() {
 
-		if(relocated)
-		{
-			relocated=false;
-			return;
-		}
+//		if(relocated)
+//		{
+//			relocated=false;
+//			return;
+//		} else {
+//			if( currentTile.hasDestructibleObject() ) {
+//				currentTile.obstacleTower.disappear();
+//				this.kill();
+//			}
+//		}
+
 		boolean[][] optimalTiles = PathFinder.getOptimalPathTiles(currentTile,grid);
 		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);
 		steps = path;
@@ -234,12 +244,13 @@ public class Attacker {
 		for (int i = 0; i < ln; i++) {
 			Tile prevTile = currentTile;
 			view.move(path.get(i),i/(double)ln );
-			if(prevTile.getSpring()!=null) {
-				view.move(path.get(i),0);
-				relocate(currentTile.getSpring().getRelocateSubTile(this));
+			if(currentTile.getSpring()!=null) {
+//				view.move(path.get(i),.2);
+				relocate(currentTile.getSpring().getRelocateSubTile(this), i/(double)ln);
 				break;
 			}
 		}
+
 
 
 
@@ -282,9 +293,6 @@ public class Attacker {
 		// TODO: Add attacker attack animation here
 	}
 
-	public void jump() {
-		view.animateAttackerJump();
-	}
 
 	public Player getOwner() {
 		return owner;

@@ -81,8 +81,9 @@ public class Referee extends AbstractReferee {
 			if (turn == 4) {
 				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 11, "BOMB");
 				board.cacheBuild(gameManager.getActivePlayers().get(0), 15, 11, "SPRING_NORTH");
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_EAST");
-//				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_NORTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_NORTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_NORTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 9, "GUN_TOWER");
 
 
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 2, 8, "WALL");

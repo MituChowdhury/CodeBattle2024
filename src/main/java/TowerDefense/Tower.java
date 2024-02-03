@@ -70,6 +70,7 @@ public abstract class Tower {
 
 	// TODO: add disappear animation here in view.destroy()
 	public void disappear() {
+		hitPoints = 0;
 		this.tile.unsetDestructibleObject();
 		view.destroy();
 	}
