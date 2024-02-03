@@ -313,14 +313,14 @@ public class AttackerView {
     private void changeAnimation(String[] newImages, int duration, double t) {
         attackerBody.setImages(newImages);
         attackerBody.setDuration(duration);
-<<<<<<< HEAD
+//<<<<<<< HEAD
         attackerBody.reset();
         attackerBody.setZIndex(attacker.getCurrentTile().getY());
         graphics.commitEntityState(t, attackerBody);
-=======
-//        attackerBody.reset(); 
-        graphics.commitEntityState(1, attackerBody);
->>>>>>> parent of 02488b0 (gun tower view updated)
+//=======
+////        attackerBody.reset();
+//        graphics.commitEntityState(1, attackerBody);
+//>>>>>>> parent of 02488b0 (gun tower view updated)
     }
 
 
