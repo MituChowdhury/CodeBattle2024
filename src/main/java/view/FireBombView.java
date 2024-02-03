@@ -14,18 +14,22 @@ public class FireBombView extends TowerView {
 
 	public FireBombView(Tower tower, Group boardGroup, GraphicEntityModule graphics, TooltipModule tooltips) {
 
-		super(tower, boardGroup, graphics, tooltips, "bomb.png",32, 32, 5, 5);
-		towerSpriteAnimation.setScale(3);
+		super(tower, boardGroup, graphics, tooltips, "bomb",32, 32, 5, 5);
+		towerSpriteAnimation.setScale(3).setZIndex(100);
+
+//		System.out.println("bomb called");
 
 
 		explosionAnimation = Utils.createEffectSpriteAnimation(graphics, tower, "circle-explosion_sprite.png",256, 256,10,10 );
 
 		explosionAnimation
 				.setScale(1)
+				.setZIndex(100)
 				.setDuration(1000)
 				.setAnchorX(.41)
 				.setAnchorY(.55)
-				.setVisible(false);
+//				.setVisible(false)
+		;
 
 
 		commitSprites();
@@ -40,7 +44,7 @@ public class FireBombView extends TowerView {
 				.setAlpha(1);
 
 //		destroyedSpriteAnimation.setAlpha(1);
-		graphics.commitEntityState(0, explosionAnimation);
+		graphics.commitEntityState(1, explosionAnimation);
 
 		explosionAnimation
 				.setVisible(false);

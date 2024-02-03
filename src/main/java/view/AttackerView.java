@@ -29,6 +29,7 @@ public class AttackerView {
     private final String[] attackerBodySprites,  attackerHurtSprites, attackerDeadSprites,
             attackerSpawnSprites, attackerJumpSprites, attackerUpStabSprites,
             attackerLeftStabSprites, attackerDownStabSprites;;
+    private final String[] attackerRightStabSprites;
 
 
     private Attacker attacker;
@@ -101,7 +102,8 @@ public class AttackerView {
 
         group = graphics.createGroup(healthBarRed, healthBarGreen, attackerBody)
                 .setX((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getX()))
-                .setY((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getY()));
+                .setY((int) (BoardView.CELL_SIZE * attacker.getCurrentSubTile().getY()))
+                ;
 
         attackerBody.setX(-BoardView.CELL_SIZE);
 
@@ -153,11 +155,11 @@ public class AttackerView {
                 setName("jump" + attacker.getOwner().getIndex() ).split();
 
         // attacker stabbing
-//        attackerRightStabSprites =graphics.createSpriteSheetSplitter()
-//                .setSourceImage(getResourcePath("stab"))
-//                .setHeight(64).setWidth(64).setImageCount(4)
-//                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
-//                setName("stab" + attacker.getOwner().getIndex() ).split();
+        attackerRightStabSprites =graphics.createSpriteSheetSplitter()
+                .setSourceImage(getResourcePath("stab"))
+                .setHeight(64).setWidth(64).setImageCount(4)
+                .setImagesPerRow(5).setOrigRow(0).setOrigCol(0).
+                setName("stab" + attacker.getOwner().getIndex() ).split();
 
         attackerLeftStabSprites = graphics.createSpriteSheetSplitter()
                 .setSourceImage(getResourcePath("leftstab"))
@@ -198,24 +200,24 @@ public class AttackerView {
         switch (dir) {
             case "UP":
                 ts=c.getSubTile(cs.getSubX(),0);
-                move(ts);
+                move(ts,.5);
                 changeAnimation(attackerUpStabSprites,STAB_DURATION);
                 //move the attacker closer to attacking tile
                 break;
             case "DOWN":
                 ts=c.getSubTile(cs.getSubX(),SUBTILE_SIZE-1);
-                move(ts);
+                move(ts,.5);
                 changeAnimation(attackerDownStabSprites,STAB_DURATION);
                 break;
             case "LEFT":
                 ts=c.getSubTile(0,cs.getSubY());
-                move(ts);
+                move(ts,.5);
                 changeAnimation(attackerLeftStabSprites,STAB_DURATION);
                 break;
             case "RIGHT":
                 ts=c.getSubTile(SUBTILE_SIZE-1,cs.getSubY());
-                move(ts);
-                changeAnimation(attackerLeftStabSprites,STAB_DURATION);
+                move(ts,.5);
+                changeAnimation(attackerRightStabSprites,STAB_DURATION);
                 break;
         }
     }
@@ -254,11 +256,11 @@ public class AttackerView {
     }
 
 
-    public void move(SubTile nextSubTile) {
+    public void move(SubTile nextSubTile, double t) {
 
         attackerBody.setZIndex(attacker.getCurrentTile().getY());
         group.setZIndex(attacker.getCurrentTile().getY());
-        graphics.commitEntityState(0, attackerBody);
+        graphics.commitEntityState(t, attackerBody);
 
 
         if (attacker.getOwner().getIndex() == 0) {
@@ -274,8 +276,6 @@ public class AttackerView {
         attacker.setCurrentSubtile(nextSubTile);
 
     }
-
-
 
     public void dealDamage(int hp, int maxHp) {
         System.err.println("Bar length: " + (int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));

@@ -11,6 +11,7 @@ public class Tile {
 	private boolean NDobstacle;
 	private ArrayList<SubTile> subTiles = new ArrayList<>();
 	private Tile[] neighbors = new Tile[4];
+	private SpringTrap sTrap;
 
 	public Tile(int x, int y, boolean canyon, boolean Dobstacle, boolean NDobstacle) {
 		this.x = x;
@@ -135,5 +136,13 @@ public class Tile {
 		// 0,0  1,0  2,0  3,0
 		// 0,1  1,1  2,1  3,1
 		// 0,2  1,2  2,2  3,3
+	}
+
+	public SpringTrap getSpring() {
+		return sTrap;
+	}
+
+	public void setSpring(SpringTrap isSpring){
+		this.sTrap = isSpring;
 	}
 }

@@ -38,6 +38,7 @@ public class Attacker {
 
 	Tile spawnTile;
 	SubTile spawnSubtile;
+	private boolean relocated;
 
 	public Attacker(Tile[][] grid, Player owner, Player enemy, int spawn_position_y) {
 //		id = idCounter++;
@@ -77,9 +78,9 @@ public class Attacker {
 	public void relocate(SubTile newSubTile) {
 		this.currentTile = newSubTile.getTile();
 		this.currentSubtile = newSubTile;
-		view.move(currentSubtile);
-		view.move(currentSubtile);
-		view.move(currentSubtile);
+		view.animateAttackerJump();
+		view.move(currentSubtile,0);
+		relocated=true;
 	}
 	public void spawn() {
 		this.maxSpeed = Constants.SPEED;
@@ -216,6 +217,11 @@ public class Attacker {
 
 	public void move() {
 
+		if(relocated)
+		{
+			relocated=false;
+			return;
+		}
 		boolean[][] optimalTiles = PathFinder.getOptimalPathTiles(currentTile,grid);
 		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);
 		steps = path;
@@ -224,10 +230,15 @@ public class Attacker {
 
 		int ln = Math.min(path.size(),getSpeed());
 
-
+		view.animateAttackerWalk();
 		for (int i = 0; i < ln; i++) {
-
-			view.move(path.get(i));
+			Tile prevTile = currentTile;
+			view.move(path.get(i),i/(double)ln );
+			if(prevTile.getSpring()!=null) {
+				view.move(path.get(i),0);
+				relocate(currentTile.getSpring().getRelocateSubTile(this));
+				break;
+			}
 		}
 
 
