@@ -26,7 +26,7 @@ class TestAgentCodingame {
         }
 
         // Player's output for attacker coordinates...
-        System.out.println("1 3 5 8 10");
+//        System.out.println("1 3 5 8 10");
 
         int cnt =0;
         // game loop

@@ -283,11 +283,12 @@
                 </p>
             </div>
         </div>
+         <br>
 
-        <h1>
-            <span class="icon icon-protocol"></span>
-            <span>Game Output</span>
-        </h1>
+        <h3>
+            Game Output
+        </h1>         <br>
+
 
         <h4>
             <span class="icon icon-protocol">&nbsp;&nbsp;</span>
@@ -307,6 +308,7 @@
         </div>
 
         <!-- Protocol block -->
+<br>
         <h4>
             <span class="icon icon-protocol">&nbsp;&nbsp;</span>
             <span>Turn output</span>
@@ -330,6 +332,13 @@
                         <action>build</action>  <b>character_id object_name pos_x pos_y</b>
                         <p>
                             The character stops and builds the object at the specified position. The build takes one unit time.
+<br>
+<br>
+If both of the player tries to build an object at the same position at the same time , the player closer to his base will succeed. The other player's minion will just ignore the build command.
+(<b>pos_x</b>, <b>pos_y</b>) should be the coordinat of one of the 4neighbour or minion with id = <b>character_id</b>.
+<br>
+<br>
+In case of building a bomb the consdition <i>abs(pos_x-curr_x)<=2 and abs(pos_y-curr_y) <=2</i> must hold. where (curr_x,curr_y) is the current position of the minion with id = <b>character_id</b>
                         </p>
                     </li>
 <br>

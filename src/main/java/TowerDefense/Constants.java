@@ -31,7 +31,7 @@ public class Constants {
 
 
 	public static final double[] FIREBOMB_DAMAGE = { 70, 8, 15, 30 };
-	public static final double[] FIREBOMB_RANGE = { 5, 4, 5, 6 };
+	public static final double[] FIREBOMB_RANGE = { 2, 4, 5, 6 };
 	public static final double[] FIREBOMB_RELOAD = { -1, 0, 0, 0 };
 	public static final double[] FIREBOMB_HITPOINTS = { -1, 10, 15, 20 };
 	public static final double[] FIREBOMB_FUSETIME = { 2, 1, 0, 0 };

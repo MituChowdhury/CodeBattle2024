@@ -442,8 +442,8 @@ public class Board {
 		ArrayList<Attacker> playerAttacker = new ArrayList<>();
 		ArrayList<Attacker> opponentAttacker = new ArrayList<>();
 
-		System.err.println("" + playerAttacker.size());
-		System.err.println("" + opponentAttacker.size());
+//		System.err.println("" + playerAttacker.size());
+//		System.err.println("" + opponentAttacker.size());
 
 		attackers.forEach(attacker -> {
 			if (attacker.getOwner() == player) {

@@ -343,13 +343,16 @@ public class Referee extends AbstractReferee {
 
 	@Override
 	public void onEnd() {
-//		int[] scores = gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray();
-		if (scores[0] < 0 || scores[1] < 0) {
-			onErrorneousEnd();
-		}
 
-		endScreenModule.setScores(scores, texts);
+//     int[] scores = gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray();
+			if (scores[0] < 0 || scores[1] < 0) {
+				onErrorEnd();
+			}
+			else {
+				onSuccessfulEnd();
+			}
 
+			endScreenModule.setScores(scores, texts);
 		//String endSprite = "tie";
 		//if (scores[0] > scores[1]) endSprite = "win0";
 		//if (scores[0] < scores[1]) endSprite = "win1";
@@ -400,11 +403,11 @@ public class Referee extends AbstractReferee {
 		this.scores[playerId] -= 1;
 	}
 
-	private void onErrorneousEnd() {
+	private void onErrorEnd() {
 		for (int i = 0; i < scores.length; ++i) {
 			if (scores[i] < 0) {
 				StringBuilder sb = new StringBuilder();
-				int temp = i;
+
 
 				playerErrorMessages[i].forEach(err -> {
 					sb.append(err);

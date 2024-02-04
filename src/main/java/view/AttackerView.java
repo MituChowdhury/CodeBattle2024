@@ -287,7 +287,7 @@ public class AttackerView {
     }
 
     public void dealDamage(int hp, int maxHp) {
-        System.err.println("Bar length: " + (int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
+//        System.err.println("Bar length: " + (int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
         this.healthBarGreen.setWidth((int) (AttackerView.HEALTH_BAR_LEN * ((double) hp / maxHp)));
         animateAttackerHurt();
     }
