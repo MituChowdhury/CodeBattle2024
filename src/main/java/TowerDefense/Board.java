@@ -147,16 +147,7 @@ public class Board {
 		this.view = view;
 	}
 
-	public void moveAttackers(int turn) {
 
-		for (int i = 0; i <2 ; i++) {
-
-
-			for (Attacker a : attackers)
-				if(a.getOwner().getIndex()==i)
-					a.move();
-		}
-	}
 
 //	private boolean canCreateAttackers(int turn) {
 //		if (turn == Constants.WAVE_START[waveIndex])
@@ -556,6 +547,7 @@ public class Board {
 	public void checkDeadAttacker() {
 
 		for(Attacker a:attackers){
+			a.updateToolTip();
 			if( a.hasReachedTarget() ) {
 				a.getOwner().addTargetReachScore();
 			}

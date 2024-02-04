@@ -26,6 +26,8 @@ public abstract class Tower {
 
 	static int idCounter = 0;
 
+	private boolean isReceivingDamage;
+
 	static Player lastAttackedPlayer;
 	protected Attacker lastAttacked = null;
 	protected int bounty;
@@ -47,12 +49,11 @@ public abstract class Tower {
 	}
 
 	public void dealDamage(int damage, Player dealtBy) {
-		this.view.healthBarVisibility(true);
+		isReceivingDamage = true;
 		this.hitPoints = Math.max(0, hitPoints - damage);
 
 		this.view.dealDamage(hitPoints,  (int) this.getProperty(TowerProperty.HITPOINT));
 		lastAttackedPlayer = dealtBy;
-		this.view.healthBarVisibility(false);
 	}
 
 	public Player getDestroyer() {
@@ -129,6 +130,19 @@ public abstract class Tower {
 
 	public void attack(List<Attacker> attackers, List<Tower> towers) {
 		Tower t = this;
+
+		if( isReceivingDamage ) {
+			isReceivingDamage = false;
+			this.view.healthBarVisibility(true);
+		} else {
+			this.view.healthBarVisibility(false);
+		}
+
+		if( this.lifetime < 1 ) {
+			incrementLifeTime();
+			return;
+		}
+
 		if (cooldown > 0) {
 			cooldown--;
 			return;

@@ -75,10 +75,11 @@ public class Attacker {
 	}
 
 	public void relocate(SubTile newSubTile) {
-		view.move(newSubTile);
 		this.currentTile = newSubTile.getTile();
 		this.currentSubtile = newSubTile;
-
+		view.move(currentSubtile);
+		view.move(currentSubtile);
+		view.move(currentSubtile);
 	}
 	public void spawn() {
 		this.maxSpeed = Constants.SPEED;
@@ -170,8 +171,9 @@ public class Attacker {
 		//...
 		this.view.dealDamage(hitPoints, maxHealth);
 		//...
-		if (isDead())
-			view.kill();
+		//bord.checkDeadAttacker() will collect the dead and kill them
+//		if (isDead())
+//			view.kill();
 	}
 
 	public void slowDown(int countdown) {
@@ -179,7 +181,7 @@ public class Attacker {
 	}
 
 	public boolean isDead() {
-		return hitPoints <= 0;
+		return hitPoints <= 0 || currentTile.hasAnyObject();
 	}
 
 
@@ -191,28 +193,32 @@ public class Attacker {
 		return steps;
 	}
 
-	public void attack() {
-
-		Tile src = this.currentTile;
-		Tile[] neighbors = src.getNeighbors();
-		for (Tile t : neighbors) {
-			if(t == null) continue;
-			if (t.hasAnyObject()) {
-				if (t.getY() == src.getY()+1) {
-					view.animateAttackerStab("DOWN");
-				}
-				else if(t.getY() == src.getY()-1) {
-					view.animateAttackerStab("UP");
-				}
-				else if(t.getX() == src.getX()+1) {
-					view.animateAttackerStab("RIGHT");
-				}
-				else {
-					view.animateAttackerStab("LEFT");
-				}
-			}
-		}
-	}
+//	public void attack() {
+//
+//		Tile src = this.currentTile;
+//		Tile[] neighbors = src.getNeighbors();
+//		for (Tile t : neighbors) {
+//			if(t == null) continue;
+//			if (t.hasAnyObject()) {
+//				if (t.getY() == src.getY()+1) {
+//					view.animateAttackerStab("DOWN");
+//				}
+//				else if(t.getY() == src.getY()-1) {
+//					view.animateAttackerStab("UP");
+//				}
+//				else if(t.getX() == src.getX()+1) {
+////					if(this.getOwner().getIndex()==1){
+////						//view.
+////					}
+//					view.animateAttackerStab("RIGHT");
+//				}
+//				else {
+//					view.animateAttackerStab("LEFT");
+//				}
+//			}
+//		}
+//
+//	}
 
 	public void setCurrentSubtile(SubTile t){
 
@@ -240,27 +246,16 @@ public class Attacker {
 		ArrayList<SubTile> path = PathFinder.getOptimalPath(currentSubtile,optimalTiles);
 		steps = path;
 
+
+
 		int ln = Math.min(path.size(),getSpeed());
 
-//		view.animateAttackerWalk();
-//		for (Attacker a: Board.getAttackers()){
-//			if (this.enemy.getIndex() == a.owner.getIndex()) {
-//				if (a.getCurrentTile().getX() == this.getCurrentTile().getX()){
-//					if (a.currentTile.getY()+1 == this.currentTile.getY()) {
-//						view.animateAttackerStab();
-//					}
-//				}
-//				else if (a.getCurrentTile().getY() == this.getCurrentTile().getY()){
-//					if (a.currentTile.getX()+1 == this.currentTile.getX()) {
-//						view.animateAttackerStab();
-//					}
-//				}
-//			}
-//		}
+
 		for (int i = 0; i < ln; i++) {
-			if((i&1) == 1) attack();
+
 			view.move(path.get(i));
 		}
+
 
 
 		if (slowCountdown > 0)
@@ -271,9 +266,33 @@ public class Attacker {
 
 	}
 
-	public void attack(Tile target) {
-		if( target.obstacleTower != null ) {
-			target.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE, getOwner());
+	public void attack(Tile t) {
+		if( t.obstacleTower != null ) {
+			t.obstacleTower.dealDamage(Constants.ATTACKER_DAMAGE, getOwner());
+		}
+		Tile src = this.currentTile;
+
+		if (t.getY() == src.getY()+1) {
+			view.animateAttackerStab("DOWN");
+		}
+		else if(t.getY() == src.getY()-1) {
+			view.animateAttackerStab("UP");
+		}
+		else if(t.getX() == src.getX()+1) {
+			if(this.owner.getIndex() == 1){
+				view.animateAttackerStab("LEFT");
+			}
+			else{
+				view.animateAttackerStab("RIGHT");
+			}
+		}
+		else {
+			if(this.owner.getIndex() == 1){
+				view.animateAttackerStab("RIGHT");
+			}
+			else{
+				view.animateAttackerStab("LEFT");
+			}
 		}
 		// TODO: Add attacker attack animation here
 	}
@@ -296,4 +315,7 @@ public class Attacker {
 	}
 
 
+	public void updateToolTip() {
+		view.updateTooltip();
+	}
 }

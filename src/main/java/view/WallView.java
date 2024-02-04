@@ -15,8 +15,8 @@ public class WallView extends TowerView {
 //		super(tower, boardGroup, graphics, tooltips, "wall2",62, 62, 1, 1);
 //		towerSpriteAnimation.setScale(2.3).setAnchorY(.5);
 
-		super(tower, boardGroup, graphics, tooltips, "wall4",81, 81, 1, 1);
-		towerSpriteAnimation.setScale(1.3).setScaleY(2).setAnchorY(.5);
+		super(tower, boardGroup, graphics, tooltips, "wallBuilding",102, 102, 4, 4);
+		towerSpriteAnimation.setScale(1.2).setAnchorX(.09).setAnchorY(.27).setScaleY(1.4);
 
 //		super(tower, boardGroup, graphics, tooltips, "wall",58, 58, 1, 1);
 //		towerSpriteAnimation.setScale(2.5).setAnchorY(.2).setAnchorX(.14).setZIndex(1);
@@ -30,6 +30,8 @@ public class WallView extends TowerView {
 
 		commitSprites();
 		updateTooltip();
+		towerSpriteAnimation.setPlaying(false);
+		graphics.commitEntityState(.8,towerSpriteAnimation);
 	}
 
 	@Override

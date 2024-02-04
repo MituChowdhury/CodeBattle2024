@@ -79,13 +79,22 @@ public class Referee extends AbstractReferee {
 	public void gameTurn(int turn) {
 		try {
 			if (turn == 4) {
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_SOUTH");
-				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_SOUTH");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 6, 7, "WALL");
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 5, 6, "WALL");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_NORTH");
+				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_EAST");
 
 
-				board.cacheBuild(gameManager.getActivePlayers().get(0), 12, 8, "SPRING_SOUTH");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 2, 8, "WALL");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 2, 9, "WALL");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 2, 10, "WALL");
+//
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 1, 8, "WALL");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 1, 9, "WALL");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 1, 10, "WALL");
+//
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 5, 6, "WALL");
+
+
+				board.cacheBuild(gameManager.getActivePlayers().get(0), 12, 8, "SPRING_NORTH");
 				board.cacheBuild(gameManager.getActivePlayers().get(0), 7, 2, "GUN_TOWER");
 				board.cacheBuild(gameManager.getActivePlayers().get(0), 8, 7, "GUN_TOWER");
 
@@ -111,13 +120,13 @@ public class Referee extends AbstractReferee {
 
 
 
-		for( Attacker a:board.getAttackers() ) {
-			int x = a.getCurrentTile().getX();
-			int y = a.getCurrentTile().getY();
-			if( x == 8 && y == 7 && board.getGrid()[x+1][y].hasDestructibleObject() ) {
-				a.attack(board.getGrid()[x+1][y]);
-			}
-		}
+//		for( Attacker a:board.getAttackers() ) {
+//			int x = a.getCurrentTile().getX();
+//			int y = a.getCurrentTile().getY();
+//			if( x == 8 && y == 7 && board.getGrid()[x+1][y].hasDestructibleObject() ) {
+//				a.attack(board.getGrid()[x+1][y]);
+//			}
+//		}
 
 		for (Player player : gameManager.getActivePlayers()) {
 			for (String line : board.getPlayerInput(player, turn == 1)) {
@@ -197,9 +206,13 @@ public class Referee extends AbstractReferee {
 
 
 		board.updateTowers();
+
 		board.fireTowers();
 		board.spawnAttackers(turn); //spawn those that were killed in previous turn
 		board.checkDeadAttacker(); //add those that are killed in this turn
+
+
+
 		board.updateView();
 
 
