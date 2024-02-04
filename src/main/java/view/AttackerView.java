@@ -64,7 +64,7 @@ public class AttackerView {
         sb.append("Attacker\n");
         sb.append("x: ").append(attacker.getCurrentTile().getX()).append("\ny: ").append(attacker.getCurrentTile().getY());
         sb.append("\nid: ").append(attacker.getId());
-        sb.append("\nowner: ").append(attacker.getOwner().getIndex());
+        sb.append("\nhitpoints: ").append(attacker.getHitPoints());
         tooltips.setTooltipText(attackerBody, sb.toString());
     }
 
@@ -208,24 +208,24 @@ public class AttackerView {
         switch (dir) {
             case "UP":
                 ts=c.getSubTile(cs.getSubX(),0);
-                move(ts,.5);
-                changeAnimation(attackerUpStabSprites,STAB_DURATION);
+                move(ts,0);
+                changeAnimation(attackerUpStabSprites,STAB_DURATION,.3);
                 //move the attacker closer to attacking tile
                 break;
             case "DOWN":
                 ts=c.getSubTile(cs.getSubX(),SUBTILE_SIZE-1);
-                move(ts,.5);
-                changeAnimation(attackerDownStabSprites,STAB_DURATION);
+                move(ts,0);
+                changeAnimation(attackerDownStabSprites,STAB_DURATION,.3);
                 break;
             case "LEFT":
                 ts=c.getSubTile(0,cs.getSubY());
-                move(ts,.5);
-                changeAnimation(attackerLeftStabSprites,STAB_DURATION);
+                move(ts,0);
+                changeAnimation(attackerLeftStabSprites,STAB_DURATION,.3);
                 break;
             case "RIGHT":
                 ts=c.getSubTile(SUBTILE_SIZE-1,cs.getSubY());
-                move(ts,.5);
-                changeAnimation(attackerRightStabSprites,STAB_DURATION);
+                move(ts,0);
+                changeAnimation(attackerRightStabSprites,STAB_DURATION,.3);
                 break;
         }
     }
