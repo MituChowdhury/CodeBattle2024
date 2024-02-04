@@ -419,7 +419,7 @@ public class Board {
 		if (initialInput) {
 //			input.add(String.valueOf(player.getIndex()));
 
-			// width, height...
+			input.add(player.getIndex()+"");
 			input.add(width + " " + height);
 
 			// Grid...h lines of w characters...
@@ -512,21 +512,22 @@ public class Board {
 
 
 		// Object count...
-		input.add("" + this.objCount);
+		input.add("" + this.towers.size());
 
 		// Sending information of all the objects...
-		for (int i = 0; i < objCount; ++i) {
+		for (int i = 0; i < towers.size(); ++i) {
 			// ...
-			String type = objectStrMaps.get(i)[0];
-			String id = objectStrMaps.get(i)[1];
-			String owner = objectStrMaps.get(i)[2];
-			String posX = objectStrMaps.get(i)[3];
-			String posY = objectStrMaps.get(i)[4];
-			String health = objectStrMaps.get(i)[5];
-			String damage = objectStrMaps.get(i)[6];
-			String range = objectStrMaps.get(i)[7];
-			String cooldown = objectStrMaps.get(i)[8];
-			String bounty = objectStrMaps.get(i)[9];
+			Tower t = towers.get(i);
+			String type = t.getType();
+			int id = t.getId();
+			int owner = t.getOwner().getIndex();
+			int posX = t.getTile().getX();
+			int posY = t.getTile().getY();
+			int health = (int)t.getProperty(TowerProperty.HITPOINT);
+			int damage = (int)t.getProperty(TowerProperty.DAMAGE);
+			int range = (int)t.getProperty(TowerProperty.RANGE);
+			int cooldown = (int)t.getProperty(TowerProperty.RELOAD);
+			int bounty =(int) t.getBounty();
 
 			input.add(type + " " + id + " " + owner + " " + posX + " " + posY + " " + health + " " + damage + " " + range + " " + cooldown + " " + bounty);
 		}
