@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class Player{
+public class Boss{
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int playerID, w, h;
@@ -26,18 +26,13 @@ class Player{
         }
 
         // starting position of my pawns
-        int start = 0;
-        for (int i = 0; i < 5; i++) {
-            System.out.println(start);
-            start = start + (h / 5);
-        }
 
         int myMoney, oppMoney, scorePlayer, scoreOpp;
 
         int[][] myplayers = new int[5][5];
         int[][] oPlayers = new int[5][5];
 
-        int turn =0;
+        int turn = 0;
 
         // game turn
         while (true) {
@@ -50,14 +45,14 @@ class Player{
             scorePlayer = sc.nextInt();
             scoreOpp = sc.nextInt();
 
-            // player 0 positions
+            // your minions positions
             for (int k = 0; k < 5; k++) {
                 for (int l = 0; l < 5; l++) {
                     myplayers[k][l] = sc.nextInt();
                 }
             }
 
-            // player 1 positions
+            // opponent's player positions
             for (int k = 0; k < 5; k++) {
                 for (int l = 0; l < 5; l++) {
                     oPlayers[k][l] = sc.nextInt();
@@ -68,8 +63,6 @@ class Player{
             // obstacle numbers input
             int n_t = sc.nextInt();
 
-
-//            System.err.println("line 78");
 
             int[][] obs = new int[n_t][2];
 
@@ -96,8 +89,18 @@ class Player{
             }
 
 
+            //initially output the spawn positions
+            if (turn == 0) {
+                int start = 0;
+                for (int i = 0; i < 5; i++) {
+                    System.out.println(start);
+                    start = start + (h / 5);
+                }
+                System.out.flush();
+                turn++;
+                continue;
+            }
             // players logic to print outputs
-
 
             for (int p = 0; p < 5; p++) {
 
@@ -137,10 +140,6 @@ class Player{
 
 
             }
-//            for(int i=0;i<5;i++){
-//                System.out.println("go "+i);
-//            }
-
 
 
             System.out.flush();

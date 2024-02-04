@@ -59,9 +59,9 @@ public class Tile {
 	}
 
 	public char getMapChar() {
-		if (canyon)
-			return '.';
-		return '#';
+		if (hasNonDestructibleObject())
+			return '#';
+		return '.';
 	}
 
 	public Tile getTile(int x, int y) {

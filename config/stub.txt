@@ -1,15 +1,8 @@
 read playerID:int
 read width:int height:int
 loop height read line:string(width)
-write 0
 
-write 2
 
-write 4
-
-write 8
-
-write 9
 
 gameloop
 read myMoney:int opponentMoney:int
@@ -18,18 +11,20 @@ loop 5 read myCharacterId:int positionX:int positionY:int health:int speed:int
 loop 5 read opponentCharacterId:int positionX:int positionY:int health:int speed:int
 read objCount:int
 loop objCount read type:word(15) id:int owner:int positionX:int positionY:int health:int damage:int range:int cooldown:int bounty:int
-write go 0
 
-write go 1
 
-write go 2
 
-write go 3
-
-write go 4
 
 STATEMENT
-Intrude the opponent's base as much as you can.
+Output only after all the input has been proceessed.
+Input has been processed for you.
+On first turn (After taking the input) you must output 5 itegers on 5 line.
+Starting from second turn you must output one of thise 3 command for each of your 5 minions.
+    => go character_id
+    => build character_id object position_x position_y
+    => attack character_id direction
+**Debug using you the stderr.
+**You should flush the stdout in each turn
 
 OUTPUT
 go character_id | build character_id object position_x position_y | attack character_id direction

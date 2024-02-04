@@ -5,7 +5,7 @@ import java.math.*;
 /**
  * Survive the attack waves
  **/
-public class TestAgent {
+class Player {
 
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
@@ -130,7 +130,7 @@ public class TestAgent {
                 System.out.println("go 4");
             }
 
-            System.err.println("Turn: "+turn);
+            System.err.println("Boss Turn: "+turn);
             turn++;
             System.out.flush();
 
