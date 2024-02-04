@@ -29,7 +29,7 @@ write go 3
 write go 4
 
 STATEMENT
-Survive the attack waves
+Intrude the opponent's base as much as you can.
 
 OUTPUT
 go character_id | build character_id object position_x position_y | attack character_id direction

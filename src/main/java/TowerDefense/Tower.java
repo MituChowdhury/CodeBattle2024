@@ -49,6 +49,10 @@ public abstract class Tower {
 		return lifetime;
 	}
 
+	public int getHealth() {
+		return this.hitPoints;
+	}
+
 	public void dealDamage(int damage, Player dealtBy) {
 		isReceivingDamage = true;
 		this.hitPoints = Math.max(0, hitPoints - damage);

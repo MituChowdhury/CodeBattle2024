@@ -333,11 +333,11 @@ public class Board {
 	}
 
 	private void build(Player player, int x, int y, String type) throws InvalidActionException {
-		if (x < 0 || x >= width || y < 0 || y >= height) throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
+		if (x < 0 || x >= width || y < 0 || y >= height) throw new InvalidActionException("Tile (" + x + ", " + y + ") is outside of the map", true, player);
 
 
-		if (!grid[x][y].hasAnyObject()) {
-			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
+		if (!grid[x][y].canBuild()) {
+			throw new InvalidActionException("Cannot build " + type + "at tile (" + x + ", " + y + ").", true, player);
 		}
 
 		Tower tower = null;
@@ -374,7 +374,7 @@ public class Board {
 			tower = new Wall(grid[x][y]);
 			break;
 		default:
-			throw new InvalidActionException("tower type " + type + " unknown", true, player);
+			throw new InvalidActionException("Invalid tower type (Type : " + type + ").", true, player);
 		}
 //		if (!tower.getTile().canBuild()) {
 //			tower.undoBuild();
@@ -383,7 +383,7 @@ public class Board {
 		for (Tower t : towers) {
 			if (t.getTile() == tower.getTile()) {
 				tower.undoBuild();
-				throw new InvalidActionException("Tile (" + x + "/" + y + ") is occupied by another tower already", false, player);
+				throw new InvalidActionException("Tile (" + x + ", " + y + ") is occupied by another tower already", false, player);
 			}
 		}
 		if (player.buy(tower)) {
@@ -391,7 +391,7 @@ public class Board {
 			view.addTower(tower);
 		} else {
 			tower.undoBuild();
-			throw new InvalidActionException("not enough money to build a " + type, false, player);
+			throw new InvalidActionException("Not enough money to build a " + type, true, player);
 		}
 	}
 
@@ -518,23 +518,37 @@ public class Board {
 		}
 
 		// Total number of objects on the gameboard...
-		input.add("" + this.objCount);
+//		input.add("" + this.objCount);
+		input.add("" + this.towers.size());
 
 		// Sending information of all the objects...
 		// Format: Type  id  owner  posX  posY  health  damage  range  cooldown  bounty
-		for (int i = 0; i < objCount; ++i) {
+		for (int i = 0; i < towers.size(); ++i) {
 			// ...
-			String type = objectStrMaps.get(i)[0];
-			String id = objectStrMaps.get(i)[1];
-			String owner = objectStrMaps.get(i)[2];
-			String posX = objectStrMaps.get(i)[3];
-			String posY = objectStrMaps.get(i)[4];
+//			String type = objectStrMaps.get(i)[0];
+//			String id = objectStrMaps.get(i)[1];
+//			String owner = objectStrMaps.get(i)[2];
+//			String posX = objectStrMaps.get(i)[3];
+//			String posY = objectStrMaps.get(i)[4];
+//
+//			String health = objectStrMaps.get(i)[5];
+//			String damage = objectStrMaps.get(i)[6];
+//			String range = objectStrMaps.get(i)[7];
+//			String cooldown = objectStrMaps.get(i)[8];
+//			String bounty = objectStrMaps.get(i)[9];
+			Tower tower = towers.get(i);
 
-			String health = objectStrMaps.get(i)[5];
-			String damage = objectStrMaps.get(i)[6];
-			String range = objectStrMaps.get(i)[7];
-			String cooldown = objectStrMaps.get(i)[8];
-			String bounty = objectStrMaps.get(i)[9];
+			String type = tower.getType();
+			int id = tower.getId();
+			int owner = tower.getOwner().getIndex();
+			int posX = tower.getTile().getX();
+			int posY = tower.getTile().getY();
+
+			int health = tower.getHealth();
+			int damage = (int) tower.getProperty(TowerProperty.DAMAGE);
+			int range = (int) tower.getProperty(TowerProperty.RANGE);
+			int cooldown = tower.getCooldown();
+			int bounty = tower.getBounty();
 
 			input.add(type + " " + id + " " + owner + " " + posX + " " + posY + " " + health + " " + damage + " " + range + " " + cooldown + " " + bounty);
 		}
@@ -583,10 +597,7 @@ public class Board {
 // Trash...
 /*
 
-//		input.add(player.getPlayerInput());
-//		if (players.get(0) == player)
-//			input.add(players.get(1).getPlayerInput());
-//		else
+//		input.add(player.)
 //			input.add(players.get(0).getPlayerInput());
 
 		// towers, attackers
