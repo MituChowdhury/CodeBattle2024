@@ -417,7 +417,7 @@ public class Board {
 	public List<String> getPlayerInput(Player player, boolean initialInput) {
 		List<String> input = new ArrayList<>();
 		if (initialInput) {
-//			input.add(String.valueOf(player.getIndex()));
+			input.add(String.valueOf(player.getIndex()));
 
 			// width, height...
 			input.add(width + " " + height);
@@ -441,19 +441,19 @@ public class Board {
 		input.add(player.getPlayerScoresInput() + " " + opponent.getPlayerScoresInput());
 
 		// Collecting the attackers of both of the players...
-		ArrayList<Attacker> playerAttacker = new ArrayList<>();
-		ArrayList<Attacker> opponentAttacker = new ArrayList<>();
 
 //		System.err.println("" + playerAttacker.size());
 //		System.err.println("" + opponentAttacker.size());
 
 
 		// Categorizing attackers into player's and opponent's...
+		ArrayList<Attacker> playerAttacker = new ArrayList<>();
+		ArrayList<Attacker> opponentAttacker = new ArrayList<>();
+
 		attackers.forEach(attacker -> {
 			if (attacker.getOwner() == player) {
 				playerAttacker.add(attacker);
-			}
-			else {
+			} else {
 				opponentAttacker.add(attacker);
 			}
 		});
@@ -461,37 +461,61 @@ public class Board {
 		veterans.forEach(attacker -> {
 			if (attacker.getOwner() == player) {
 				playerAttacker.add(attacker);
-			}
-			else {
+			} else {
 				opponentAttacker.add(attacker);
 			}
 		});
 
-		// Status of the characters of the player...
-		// 5 lines...
-		// Format: char_id  posX  posY  health  speed
-		playerAttacker.forEach(attacker -> {
-			int id = attacker.getId();
-			int posX = attacker.getCurrentTile().getX();
-			int posY = attacker.getCurrentTile().getY();
-			int health = attacker.getHitPoints();
-			int speed = attacker.getSpeed();
+		if (initialInput) {
+			// Status of the players' characters before spawning...
+			for (int i = 0; i < Constants.CHARACTER_COUNT; ++i) {
+				int id = i;
+				int posX = -1;
+				int posY = -1;
+				int health = -1;
+				int speed = -1;
 
-			input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
-		});
+				input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
+			}
 
-		// Status of the characters of the opponent...
-		// 5 lines...
-		// Format: char_id  posX  posY  health  speed
-		opponentAttacker.forEach(attacker -> {
-			int id = attacker.getId();
-			int posX = attacker.getCurrentTile().getX();
-			int posY = attacker.getCurrentTile().getY();
-			int health = attacker.getHitPoints();
-			int speed = attacker.getSpeed();
+			// Status of the opponents' characters before spawning...
+			for (int i = 0; i < Constants.CHARACTER_COUNT; ++i) {
+				int id = i;
+				int posX = -1;
+				int posY = -1;
+				int health = -1;
+				int speed = -1;
 
-			input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
-		});
+				input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
+			}
+		}
+		else {
+			// Status of the characters of the player...
+			// 5 lines...
+			// Format: char_id  posX  posY  health  speed
+			playerAttacker.forEach(attacker -> {
+				int id = attacker.getId();
+				int posX = attacker.getCurrentTile().getX();
+				int posY = attacker.getCurrentTile().getY();
+				int health = attacker.getHitPoints();
+				int speed = attacker.getSpeed();
+
+				input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
+			});
+
+			// Status of the characters of the opponent...
+			// 5 lines...
+			// Format: char_id  posX  posY  health  speed
+			opponentAttacker.forEach(attacker -> {
+				int id = attacker.getId();
+				int posX = attacker.getCurrentTile().getX();
+				int posY = attacker.getCurrentTile().getY();
+				int health = attacker.getHitPoints();
+				int speed = attacker.getSpeed();
+
+				input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
+			});
+		}
 
 		// Total number of objects on the gameboard...
 		input.add("" + this.objCount);

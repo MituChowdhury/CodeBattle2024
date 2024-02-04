@@ -1,17 +1,35 @@
 read playerID:int
 read width:int height:int
-loop height read line:string(20)
+loop height read line:string(width)
+write 0
+
+write 2
+
+write 4
+
+write 8
+
+write 9
+
 gameloop
-read myMoney:int myLives:int
-read opponentMoney:int opponentLives:int
-read towerCount:int
-loop towerCount read towerType:word(10) towerId:int owner:int x:int y:int damage:int attackRange:float reload:int coolDown:int
-read attackerCount:int
-loop attackerCount read attackerId:int owner:int x:float y:float hitPoints:int maxHitPoints:int currentSpeed:float maxSpeed:float slowTime:int bounty:int
-write BUILD 5 5 GUNTOWER
+read myMoney:int opponentMoney:int
+read myScore:int opponentScore:int
+loop 5 read myCharacterId:int positionX:int positionY:int health:int speed:int
+loop 5 read opponentCharacterId:int positionX:int positionY:int health:int speed:int
+read objCount:int
+loop objCount read type:word(15) id:int owner:int positionX:int positionY:int health:int damage:int range:int cooldown:int bounty:int
+write go 0
+
+write go 1
+
+write go 2
+
+write go 3
+
+write go 4
 
 STATEMENT
 Survive the attack waves
 
 OUTPUT
-BUILD x y TOWER | UPGRADE id PROPERTY
+go character_id | build character_id object position_x position_y | attack character_id direction

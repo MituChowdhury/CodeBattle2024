@@ -77,8 +77,94 @@ public class Referee extends AbstractReferee {
 		playerErrorMessages[1] = new ArrayList<>();
 	}
 
+	private void sendInputLinesToPlayer(int turn) {
+		for (Player player : gameManager.getActivePlayers()) {
+			for (String line : board.getPlayerInput(player, turn == 1)) {
+				player.sendInputLine(line);
+			}
+
+			player.execute();
+		}
+	}
+
+	private void processOutputLinesFromPlayer(int turn) {
+		for (Player player : gameManager.getActivePlayers()) {
+			try {
+
+				List<String> actions = player.getOutputs();
+//				System.out.println("*************** No timeout ****************");
+
+				// For debugging purpose...
+				// During the 1st turn, the player have to output the y coordinates for their attackers...
+				if (turn == 1) {
+
+					try {
+						for (int i = 0; i < Constants.CHARACTER_COUNT; i++) {
+							Player opponent = board.getPlayer(player.getIndex() ^ 1);
+							int yCord = Integer.parseInt(actions.get(i));
+							board.createAttackerAtPositions(player, opponent, yCord);
+
+						}
+					}
+					catch (Exception e){
+//						System.err.println("############# Invalid initial output");
+					}
+
+
+				} else {
+					PathFinder.init(player.getIndex()^1); //initialize path toward the enemy base.
+
+
+					TreeSet<Integer> usedAttackers = new TreeSet<>();
+					AtomicInteger i = new AtomicInteger();
+
+					actions.forEach(action -> {
+						try {
+							i.incrementAndGet();
+							executeCommand(parseCommand(player, usedAttackers, action.split(" ")));
+						} catch (BadCommandException ex) {
+//							System.err.println("\t[Exception] " + ex.getMessage());
+							System.out.println("Invalid input detected by player no. " + player.getIndex());
+							this.addErrorMessage(player.getIndex(), "Invalid input.");
+							System.err.println("*** Error by player "
+									+ player.getIndex()
+									+ " at command no. "
+									+ i.get()
+							);
+							System.err.println(ex.getMessage());
+							System.err.println();
+//							gameManager.endGame();
+							gameManager.endGame();
+						}
+					});
+				}
+
+			} catch (TimeoutException e) {
+				e.printStackTrace();
+				player.kill();
+				player.deactivate(String.format("$%d timeout!", player.getIndex()));
+				System.out.println("****** On timeout *******");
+				System.out.println(String.format("$%d timeout!", player.getIndex()));
+				System.out.println("" + player.getIndex() + " killed.");
+				System.out.println("****** On timeout *******");
+			}
+		}
+	}
+
 	@Override
 	public void gameTurn(int turn) {
+		for (Player player : gameManager.getActivePlayers()) {
+			for (String line : board.getPlayerInput(player, turn == 1)) {
+				player.sendInputLine(line);
+			}
+
+			player.execute();
+		}
+
+
+//		sendInputLinesToPlayer(turn);
+//		processOutputLinesFromPlayer(turn);
+
 		try {
 			if (turn == 4) {
 				board.cacheBuild(gameManager.getActivePlayers().get(1), 15, 11, "BOMB");
@@ -121,20 +207,9 @@ public class Referee extends AbstractReferee {
 			System.out.println(e.getMessage());
 		}
 
-
 		board.spawnAttackers(turn); //spawn those that were killed in previous turn
 		board.updateTowers();
 		board.fireTowers();
-
-		for (Player player : gameManager.getActivePlayers()) {
-			for (String line : board.getPlayerInput(player, turn == 1)) {
-				player.sendInputLine(line);
-			}
-
-			player.execute();
-		}
-
-
 
 		for (Player player : gameManager.getActivePlayers()) {
 			try {

@@ -102,7 +102,7 @@ public class Constants {
 
 	public  static  final int CHECKPOINT_REWARD = 100;
 //    public static int CHARACTER_COUNT =1;  // For de
-	public static int CHARACTER_COUNT = 5;
+	public static final int CHARACTER_COUNT = 5;
 
 	// Authored by: mdmab
 	public static int BOARD_DASH_WIDTH = 280;
