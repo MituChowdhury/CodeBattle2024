@@ -336,7 +336,7 @@ public class Board {
 		if (x < 0 || x >= width || y < 0 || y >= height) throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
 
 
-		if (!grid[x][y].canBuild()) {
+		if (!grid[x][y].hasAnyObject()) {
 			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
 		}
 
@@ -435,16 +435,20 @@ public class Board {
 		// player + opponent
 		Player opponent = players.get(0) == player ? players.get(1): player;
 
+		// Player's money + Opponent's money
 		input.add(player.getPlayerMoneyInput() + " " + opponent.getPlayerMoneyInput());
+		// Player's score + Opponent's score
 		input.add(player.getPlayerScoresInput() + " " + opponent.getPlayerScoresInput());
 
 		// Collecting the attackers of both of the players...
 		ArrayList<Attacker> playerAttacker = new ArrayList<>();
 		ArrayList<Attacker> opponentAttacker = new ArrayList<>();
 
-		System.err.println("" + playerAttacker.size());
-		System.err.println("" + opponentAttacker.size());
+//		System.err.println("" + playerAttacker.size());
+//		System.err.println("" + opponentAttacker.size());
 
+
+		// Categorizing attackers into player's and opponent's...
 		attackers.forEach(attacker -> {
 			if (attacker.getOwner() == player) {
 				playerAttacker.add(attacker);
@@ -464,6 +468,8 @@ public class Board {
 		});
 
 		// Status of the characters of the player...
+		// 5 lines...
+		// Format: char_id  posX  posY  health  speed
 		playerAttacker.forEach(attacker -> {
 			int id = attacker.getId();
 			int posX = attacker.getCurrentTile().getX();
@@ -475,6 +481,8 @@ public class Board {
 		});
 
 		// Status of the characters of the opponent...
+		// 5 lines...
+		// Format: char_id  posX  posY  health  speed
 		opponentAttacker.forEach(attacker -> {
 			int id = attacker.getId();
 			int posX = attacker.getCurrentTile().getX();
@@ -485,10 +493,11 @@ public class Board {
 			input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
 		});
 
-		// Object count...
+		// Total number of objects on the gameboard...
 		input.add("" + this.objCount);
 
 		// Sending information of all the objects...
+		// Format: Type  id  owner  posX  posY  health  damage  range  cooldown  bounty
 		for (int i = 0; i < objCount; ++i) {
 			// ...
 			String type = objectStrMaps.get(i)[0];
@@ -496,6 +505,7 @@ public class Board {
 			String owner = objectStrMaps.get(i)[2];
 			String posX = objectStrMaps.get(i)[3];
 			String posY = objectStrMaps.get(i)[4];
+
 			String health = objectStrMaps.get(i)[5];
 			String damage = objectStrMaps.get(i)[6];
 			String range = objectStrMaps.get(i)[7];
@@ -505,22 +515,6 @@ public class Board {
 			input.add(type + " " + id + " " + owner + " " + posX + " " + posY + " " + health + " " + damage + " " + range + " " + cooldown + " " + bounty);
 		}
 
-//		input.add(player.getPlayerInput());
-//		if (players.get(0) == player)
-//			input.add(players.get(1).getPlayerInput());
-//		else
-//			input.add(players.get(0).getPlayerInput());
-
-		// towers, attackers
-//		input.add(String.valueOf(towers.size()));
-//		Comparator<Tower> compareById = (Tower t1, Tower t2) -> t1.getId() - t2.getId();
-//		Collections.sort(towers, compareById);
-//		for (Tower t : towers)
-//			input.add(t.getPlayerInput());
-//
-//		input.add(String.valueOf(attackers.size()));
-//		for (Attacker a : attackers)
-//			input.add(a.getPlayerInput());
 		return input;
 	}
 
@@ -561,3 +555,24 @@ public class Board {
 			attackers.remove(d);
 	}
 }
+
+// Trash...
+/*
+
+//		input.add(player.getPlayerInput());
+//		if (players.get(0) == player)
+//			input.add(players.get(1).getPlayerInput());
+//		else
+//			input.add(players.get(0).getPlayerInput());
+
+		// towers, attackers
+//		input.add(String.valueOf(towers.size()));
+//		Comparator<Tower> compareById = (Tower t1, Tower t2) -> t1.getId() - t2.getId();
+//		Collections.sort(towers, compareById);
+//		for (Tower t : towers)
+//			input.add(t.getPlayerInput());
+//
+//		input.add(String.valueOf(attackers.size()));
+//		for (Attacker a : attackers)
+//			input.add(a.getPlayerInput());
+* */
