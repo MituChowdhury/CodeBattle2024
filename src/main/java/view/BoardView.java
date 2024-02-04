@@ -100,8 +100,8 @@ public class BoardView {
 
 
 				if (board.getGrid()[x][y].canEnter()) {
-					Sprite canyon = Utils.createBoardSprite(graphics, "canyon.png", x, y).setZIndex(-10000);
-
+					Sprite canyon = Utils.createBoardSprite(graphics, "plateau.png", x, y).setZIndex(-10000);
+//					canyon.setScale(3.2);
 					if (x == 0 && y == board.getHeight()/2) {
 
 						SpriteAnimation playerBase = Utils.createBoardSpriteAnimation(graphics, "baseSpawn.png",x,y-.5,70,100,16,16);
@@ -125,8 +125,12 @@ public class BoardView {
 					 boardGroup.add(canyon);
 				}
 				if (board.getGrid()[x][y].hasNonDestructibleObject()) {  // if there is obstacle
-					Sprite NDobstacle = Utils.createBoardSprite(graphics, "obstackle1.png", x, y).setZIndex(-10000); // for not destructable tiles
-					NDobstacle.setScale(.42);
+					Sprite NDobstacle = Utils.createBoardSprite(graphics, "ob3.png", x, y).setZIndex(-10000); // for not destructable tiles
+					NDobstacle.setX((int)(BoardView.CELL_SIZE * (x+.5))).setY((int)(BoardView.CELL_SIZE * (y+.5)));
+					NDobstacle.setAnchor(.5);
+					NDobstacle.setRotation(Math.toRadians(90*((int)(Math.random()*4))));
+//					NDobstacle.setAnchor(0);
+//					NDobstacle.setScale(5).setAnchorX(0);
 
 					tooltips.setTooltipText(NDobstacle, "x: " + x + "\ny: " + y);
 					innerGroup.add(NDobstacle);
