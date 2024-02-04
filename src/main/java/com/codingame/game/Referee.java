@@ -10,6 +10,7 @@ import com.codingame.gameengine.core.MultiplayerGameManager;
 import com.codingame.gameengine.module.endscreen.EndScreenModule;
 import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.codingame.gameengine.module.tooltip.TooltipModule;
+import com.google.common.base.StandardSystemProperty;
 import com.google.inject.Inject;
 
 
@@ -123,7 +124,11 @@ public class Referee extends AbstractReferee {
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 9, 11, "BOMB");
 			}
 		} catch ( InvalidActionException e ) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
+			this.addErrorMessage(0, "Internal Error");
+			this.addErrorMessage(1, "Internal Error");
+			System.err.println(e.getMessage());
+			gameManager.endGame();
 		}
 
 
@@ -155,12 +160,21 @@ public class Referee extends AbstractReferee {
 						for (int i = 0; i < Constants.CHARACTER_COUNT; i++) {
 							Player opponent = board.getPlayer(player.getIndex() ^ 1);
 							int yCord = Integer.parseInt(actions.get(i));
-							board.createAttackerAtPositions(player, opponent, yCord);
 
+							if (yCord < 0 || yCord >= Constants.MAP_HEIGHT) {
+								System.err.printf("Expected a valid integer for y coordinate between 0 and %d\n", Constants.MAP_HEIGHT);
+								this.addErrorMessage(player.getIndex(), "Y coordinate is not valid.");
+								gameManager.endGame();
+							}
+
+							board.createAttackerAtPositions(player, opponent, yCord);
 						}
 					}
 					catch (Exception e){
 //						System.err.println("############# Invalid initial output");
+						System.err.println("Expected integer for y coordinate, found something else.");
+						this.addErrorMessage(player.getIndex(), "Y coordinate is not an integer.");
+						gameManager.endGame();
 					}
 
 
@@ -200,6 +214,7 @@ public class Referee extends AbstractReferee {
 				System.out.println(String.format("$%d timeout!", player.getIndex()));
 				System.out.println("" + player.getIndex() + " killed.");
 				System.out.println("****** On timeout *******");
+				gameManager.endGame();
 			}
 		}
 
@@ -208,12 +223,16 @@ public class Referee extends AbstractReferee {
 				if (!board.executeBuilds())
 					break;
 			} catch (InvalidActionException ex) {
-				if (ex.isGameBreaking()) {
-					ex.getPlayer().kill();
-					ex.getPlayer().deactivate(ex.getPlayer().getNicknameToken() + ": " + ex.getMessage());
-				} else {
-					gameManager.addToGameSummary(ex.getPlayer().getNicknameToken() + ": " + ex.getMessage());
-				}
+//				if (ex.isGameBreaking()) {
+//					ex.getPlayer().kill();
+//					ex.getPlayer().deactivate(ex.getPlayer().getNicknameToken() + ": " + ex.getMessage());
+//				} else {
+//					gameManager.addToGameSummary(ex.getPlayer().getNicknameToken() + ": " + ex.getMessage());
+//				}
+				ex.getPlayer().kill();
+				ex.getPlayer().deactivate();
+				System.err.println(ex.getMessage());
+				gameManager.endGame();
 			}
 		}
 
@@ -278,8 +297,11 @@ public class Referee extends AbstractReferee {
 				a.attack(attackTile);
 			}
 		} catch (InvalidActionException e) {
-			System.out.println("ERROR: #################################################################################################################################");
-			System.out.println(e.getMessage());
+//			System.out.println("ERROR: #################################################################################################################################");
+//			System.out.println(e.getMessage());
+			this.addErrorMessage(e.getPlayer().getIndex(), "Invalid command detected.");
+			System.err.println("Invalid command detected.");
+			gameManager.endGame();
 		}
 	}
 

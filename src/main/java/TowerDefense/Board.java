@@ -316,7 +316,7 @@ public class Board {
 	}
 
 	public boolean executeBuilds() throws InvalidActionException {
-		if (buildActions.size() == 0)
+		if (buildActions.isEmpty())
 			return false;
 
 		BuildAction buildAction = null;
@@ -333,7 +333,8 @@ public class Board {
 	}
 
 	private void build(Player player, int x, int y, String type) throws InvalidActionException {
-		if (x < 0 || x >= width || y < 0 || y >= height) throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
+		if (x < 0 || x >= width || y < 0 || y >= height)
+			throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
 
 
 		if (!grid[x][y].canBuild()) {
