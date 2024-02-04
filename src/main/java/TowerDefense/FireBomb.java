@@ -28,6 +28,12 @@ public class FireBomb extends Tower {
 		return this.getProperty(TowerProperty.FUSETIME) == this.getLifetime();
 	}
 
+	boolean inRange(Tile t){
+		double property = getProperty(TowerProperty.RANGE);
+		return  Math.abs(t.getX()-getTile().getX())<=property
+				&&Math.abs(t.getY()-getTile().getY()) <=property;
+	}
+
 	@Override
 	boolean doAttack(List<Attacker> attackers, List<Tower> towers) {
 		this.incrementLifeTime();
@@ -36,17 +42,22 @@ public class FireBomb extends Tower {
 		}
 		boolean attacked = false;
 		for (Attacker a : attackers) {
-			if (getOwner() == a.getOwner() || !inRange(a) || a.isSlow())
+			if (getOwner() == a.getOwner() || !inRange(a.getCurrentTile()))
 				continue;
 			int d = (int) getProperty(TowerProperty.DAMAGE);
 			a.dealDamage((int) getProperty(TowerProperty.DAMAGE));
 			attacked = true;
 		}
 		for (Tower t : towers) {
-			if (getOwner() == t.getOwner() || !inRange(t))
+			if (getOwner() == t.getOwner() || !inRange(t.getTile()))
 				continue;
 			int d = (int) getProperty(TowerProperty.DAMAGE);
 			t.dealDamage((int) getProperty(TowerProperty.DAMAGE), getOwner());
+
+			//add bounty
+			if(t.isDestroyed()){
+				getOwner().setCoins(getOwner().getCoins()+t.getBounty());
+			}
 //			getView().attack(a);
 			attacked = true;
 		}

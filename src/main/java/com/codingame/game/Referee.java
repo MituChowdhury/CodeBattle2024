@@ -127,14 +127,9 @@ public class Referee extends AbstractReferee {
 		}
 
 
-
-//		for( Attacker a:board.getAttackers() ) {
-//			int x = a.getCurrentTile().getX();
-//			int y = a.getCurrentTile().getY();
-//			if( x == 8 && y == 7 && board.getGrid()[x+1][y].hasDestructibleObject() ) {
-//				a.attack(board.getGrid()[x+1][y]);
-//			}
-//		}
+		board.spawnAttackers(turn); //spawn those that were killed in previous turn
+		board.updateTowers();
+		board.fireTowers();
 
 		for (Player player : gameManager.getActivePlayers()) {
 			for (String line : board.getPlayerInput(player, turn == 1)) {
@@ -144,11 +139,6 @@ public class Referee extends AbstractReferee {
 			player.execute();
 		}
 
-
-
-		board.spawnAttackers(turn); //spawn those that were killed in previous turn
-		board.updateTowers();
-		board.fireTowers();
 
 
 		for (Player player : gameManager.getActivePlayers()) {
