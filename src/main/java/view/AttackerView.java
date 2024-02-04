@@ -185,8 +185,16 @@ public class AttackerView {
     public void animateAttackerHurt() {
         changeAnimation(attackerHurtSprites,HURT_DURATION);
     }
-    public void animateAttackerJump() {
-        changeAnimation(attackerJumpSprites,JUMP_DURATION);
+    public void animateAttackerJump(double tt) {
+        SubTile t = attacker.getCurrentSubTile();
+        if (attacker.getOwner().getIndex() == 0) {
+            group.setX((int) (BoardView.CELL_SIZE * (t.getX() + Constants.PLAYER0_X_OFFSET)));
+            group.setY((int) (BoardView.CELL_SIZE * (t.getY() + Constants.PLAYER0_Y_OFFSET)));
+        } else {
+            group.setX((int) (BoardView.CELL_SIZE * (t.getX() + Constants.PLAYER1_X_OFFSET)));
+            group.setY((int) (BoardView.CELL_SIZE * (t.getY() + Constants.PLAYER1_Y_OFFSET)));
+        }
+        changeAnimation(attackerJumpSprites,JUMP_DURATION,tt);
     }
     public void animateAttackerWalk(){
         if(attackerBody.getImages()!=attackerBodySprites)
@@ -260,7 +268,7 @@ public class AttackerView {
 
         attackerBody.setZIndex(attacker.getCurrentTile().getY());
         group.setZIndex(attacker.getCurrentTile().getY());
-        graphics.commitEntityState(t, attackerBody);
+        graphics.commitEntityState(t, group, attackerBody);
 
 
         if (attacker.getOwner().getIndex() == 0) {
@@ -320,7 +328,7 @@ public class AttackerView {
         attackerBody.setImages(newImages);
         attackerBody.setDuration(duration);
         attackerBody.reset();
-        graphics.commitEntityState(0, attackerBody);
+        graphics.commitEntityState(t, group,attackerBody);
     }
 
 
