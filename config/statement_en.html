@@ -61,14 +61,13 @@
         <div>
             <br class="statement-rules-content">
             The game is played on a map of size <const>20</const>x<const>15</const>,
-            the origin being in the top left corner. <br />The map itself is a grid
-            of 20 x 15. Each block is called a 'Tile'. <br />
-            Every tile is divided into a 10 x 10 grid where every unit is called
+            the origin being in the top left corner. You can hover on the game play to observe the coordinates and attributes of minions and objects in a frame. <br />The map itself is a grid
+            of 20 x 15. Each block is called a 'Tile'.
+            Every tile is divided into a <const>10</const> x <const>10</const> grid where every unit is called
             'Subtile'. <br />
 
-            <div>
-                <img src="Tile_image.png" alt="Italian Trulli" />
-            </div>
+<br />
+
 
             <h3>Minions</h3>
 
@@ -76,6 +75,8 @@
             respawn if it is killed or if it reaches the opponent base. If it is killed then your
             each minion of a player has an unique id associated with it. The id will remain unchanged throughout the whole game.
 
+<br />
+<br />
 
             <h3>Spawn place</h3>
 
@@ -85,6 +86,7 @@
             killed it will respawn at his initial spawn position.
 
             <br />
+<br />
 
 
             <h3>Speed</h3>
@@ -93,11 +95,15 @@
             Initially the speed is 10 which means a minion can walk through at most
             10 subtiles.
             <br />
+<br />
 
             <h3>Hitpoints</h3>
             Unit of measurement representing an object's health or life. Hitpoints
             indicate how much damage a character or entity can withstand before
             being destroyed or killed.
+           <br />
+<br />
+
 
             <h3>Towers</h3>
             Towers will automatically attack the <b>opponent's minions</b> if it is in
@@ -120,6 +126,9 @@
             </ul>
             Towers can not be built where there is already an object other than
             <b>a minion or a bomb </b>. Once a tower is built on a tile , that tile is marked as <b>blocked.</b>
+<br />
+<br />
+
 
             <h3>Spring Trap</h3>
             Players can build spring trap that will relocate a minion instantly. The trap will affect <b>any </b>
@@ -140,16 +149,23 @@
             If it lands on a tile that has built in obstacle, the minion will just die :(. <br> <br>
             Spring trap can not be attacked by any means.
             But they have a short life span and will disappear after a certain number of turns. Spring <b> does not block </b>a tile.
+<br />
+<br />
 
             <h3>Bomb</h3>
             Players can build bombs that will explode and kill all the minions in the 5x5 area.
             other than that, it will <b>only</b> deal damage to  opponent the minions or object in the 5x5 area. <br/>
             The bomb will explode after a certain number of turns. Bombs can not be attacked by any means.
             Bombs <b> does not block </b>a tile. It is allowed to build on any tile. Players can build any other object on the same tile where the bomb is placed.
+<br />
+<br />
 
 
             <h3>Wall</h3>
             Players can build walls that will block the path of the minions. A wall will block the path of the minions.
+<br />
+<br />
+
             <div>
                 <h3>Turn</h3>
                 The game is played in turns. In each turn following events happen in sequence:
@@ -180,14 +196,16 @@
                     either <const>0</const> (you defend the left side) or
                     <const>1</const> (you defend the right side)
                 </p>
+<br>
                 <p>
             <span class="statement-lineno">Line 2: </span
-            ><var>width <b>w</b></var> & <var>height <b>h</b></var
+            >width <var><b>w</b></var> &height <var> <b>h</b></var
                 >, the width and height of the map
                 </p>
+<br>
                 <p>
                     Next, h lines will be printed each line containing w characters of
-                    either ‘.’ or ‘#’. Where ‘.’ denotes no obstacle and ‘#’ denotes an
+                    either <const>.</const> or <const>#</const>. Where ‘.’ denotes no obstacle and ‘#’ denotes an
                     indestructible obstacle.
                 </p>
             </div>
@@ -203,59 +221,64 @@
                     opponent
                 </p>
                 <p>
-                    <span class="statement-lineno"></span>Next line has two integer sc_p
-                    and sc_o denoting the score of the player and the score of the
+                    <span class="statement-lineno"></span>Next line has two integer <var>sc_p</var>
+                    and <var>sc_o </var> denoting the score of the player and the score of the
                     opponent
+<br/>
+<br/>
                 </p>
                 <p>
                     <span class="statement-lineno"></span>The next five lines contains 5
-                    space separated integers {id, x, y, health, speed} describing the Id
+                    space separated integers <var>id</var> <var>x</var> <var>y</var> <var>health</var> <var>speed</var> describing the Id
                     of the character, x and y coordinates of the player, health and
                     status of the your characters.
                     <br>
                     <i>** The above values will be -1 in case the has not been spawned yet. </i>
+<br/>
+<br/>
 
                 </p>
                 <p>
                     <span class="statement-lineno"></span>The next five lines contains 5
-                    space separated integers {id, x, y, health, speed} describing the Id
+                    space separated integers <var>id</var> <var>x</var> <var>y</var> <var>health</var> <var>speed</var> describing the Id
                     of the character, x and y coordinates of the player, health and
                     status of the characters of your opponent.
                     <br>
                     <i>** The above values will be -1 in case the character has not been spawned yet. </i>
-
+<br/>
+<br/>
                 </p>
 
                 <p>
                     <span class="statement-lineno"></span>
-                    Next line will contain an integer n_t denoting the total number of objects on the gameboard.
+                    Next line will contain an integer <var>n_t</var> denoting the total number of objects on the gameboard.
 
                     Following n_t lines will contain the status of each object onn the map. Each line containing 10 space separated values in the following order-
                     <br>
 
-                    Type = string containing any of the values
+                    <var>type</var> = string containing any of the values
                     <br>
                 <ul>
-                    <li>GUN_TOWER</li>
-                    <li>STUN_TOWER</li>
-                    <li>SPRING_NORTH / SPRING_SOUTH / SPRING_EAST / SPRING_WEST</li>
-                    <li>BOMB</li>
-                    <li>WALL</li>
+                    <li><const>GUN_TOWER</const></li>
+                    <li><const>STUN_TOWER</li>
+                    <li><const>SPRING_NORTH</const> / <const>SPRING_SOUTH </const>/ <const>SPRING_EAST</const> / <const>SPRING_WEST</const></li>
+                    <li><const>BOMB</const></li>
+                    <li><const>WALL</const></li>
                 </ul>
 
-                Id = Integer uniquely identifying the tower<br>
-                Owner = 0 / 1 (The player id)<br>
-                Position_x = x coordinate of the object<br>
-                Position_y = y coordinate of the object<br>
+                <var>id</var> = Integer uniquely identifying the tower<br>  <br>
+                <var>owner</var> = 0 / 1 (The player id)<br>  <br>
+                <var>position_x</var> = x coordinate of the object<br>  <br>
+                <var>position_y</var> = y coordinate of the object<br>
                 <br>
                 **any of the following values will be -1 in case it does not apply
                 <br>
                 <br>
-                Hitpoint = integer denoting health of the object<br>
-                Damage = integer denoting damage points of the object<br>
-                Range = integer denoting damage range of the object <br>
-                Cooldown = integer denoting number of frames between attacks performed by an object <br>
-                Bounty = how much coins a player will get for destroying this object<br>
+                <var>hitpoint</var> = integer denoting health of the object<br>  <br>
+                <var>damage</var> = integer denoting damage points of the object<br>  <br>
+                <var>range</var> = integer denoting damage range of the object <br>  <br>
+                <var>cooldown</var> = integer denoting number of frames between attacks performed by an object <br>  <br>
+                <var>bounty</var> = how much coins a player will get for destroying this object<br>  <br>
 
                 </p>
             </div>
@@ -296,45 +319,48 @@
           </span>
 
                 <ul>
-                    <li><action>go character_id</action>
+                    <li><action>go</action> <b>character_id</b>
                         <p>
                             The character advances towards the opposition base. The character chooses a destination tile that is reachable from his current position and closest to the opponent base. If there are more than one such tile , one is chosen at random. Then the character chooses one shortest path to the destination tile.
 
                         </p>
                     </li>
+<br>
                     <li>
-                        <action>build  character_id object_name pos_x pos_y</action>
+                        <action>build</action>  <b>character_id object_name pos_x pos_y</b>
                         <p>
                             The character stops and builds the object at the specified position. The build takes one unit time.
                         </p>
                     </li>
+<br>
                     <li>
-                        <action>attack character_id direction </action>
+                        <action>attack</action> <b>character_id direction</b>
                         <p>
                             The character stops and attacks at the specified direction from its current location. If there is an object at the target direction,
                             it will deal damage. You can also attack any empty cell for fun.
                         </p>
                     </li>
-
+  <br>  <br>
                     <p>
                     <h4>Allowed namespace
                     </h4>
-
+  <br>
                     <b><i>object_name</i></b>
-                    <ul>
-                        <li>GUN_TOWER</li>
-                        <li>STUN_TOWER</li>
-                        <li>SPRING_NORTH / SPRING_SOUTH / SPRING_EAST / SPRING_WEST</li>
-                        <li>BOMB</li>
-                        <li>WALL</li>
-                    </ul>
+                  <ul>
+                    <li><const>GUN_TOWER</const></li>
+                    <li><const>STUN_TOWER</li>
+                    <li><const>SPRING_NORTH</const> / <const>SPRING_SOUTH </const>/ <const>SPRING_EAST</const> / <const>SPRING_WEST</const></li>
+                    <li><const>BOMB</const></li>
+                    <li><const>WALL</const></li>
+                </ul>
+
 
                     <b><i>direction</i></b>
                     <ul>
-                        <li>NORTH</li>
-                        <li>SOUTH</li>
-                        <li>EAST</li>
-                        <li>WEST</li>
+                        <li><const>NORTH</const></li>
+                        <li><const>SOUTH</const></li>
+                        <li><const>EAST</const></li>
+                        <li><const>WEST</const></li>
                     </ul>
 
                     <b><i>character_id</i></b>
@@ -376,10 +402,23 @@
             </ul>
             </div>
         </div>
+<style>
+ table{
+ border:1px solid black;
+ border-collapse: collapse;
+}
 
+td,th{
+ border:1px solid black;
+padding: 2px 5px
+ 
+}
 
-        <div>
+</style>
+
+        <div class="blk">
             <h3>Minion Description</h3>
+<br>
             <table>
                 <tr>
                     <th>Hitpoint</th>
@@ -394,7 +433,13 @@
                     <td>25</td>
                 </tr>
             </table>
+<br>
+
+<br>
+
             <h3>Object Description:</h3>
+<br>
+
             <table>
                 <tr>
                     <th>object_name</th>
@@ -451,6 +496,8 @@
                     <td>300</td>
                 </tr>
             </table>
+<br>
+
 
             <h4>** Spring trap have FUSETIME of 20 frames. It will be destroyed after 20 turn from its build time </h4>
             <h4>** Bombs will explode after 2 frame from its building time</h4>

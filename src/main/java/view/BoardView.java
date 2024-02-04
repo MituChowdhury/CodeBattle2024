@@ -100,7 +100,7 @@ public class BoardView {
 
 
 				if (board.getGrid()[x][y].canEnter()) {
-					Sprite canyon = Utils.createBoardSprite(graphics, "canyon.png", x, y).setZIndex(-10000);
+					Sprite canyon = Utils.createBoardSprite(graphics, "plateau.png", x, y).setZIndex(-10000);
 
 					if (x == 0 && y == board.getHeight()/2) {
 
