@@ -463,27 +463,53 @@ public class Board {
 			}
 		});
 
-		// Status of the characters of the player...
-		playerAttacker.forEach(attacker -> {
-			int id = attacker.getId();
-			int posX = attacker.getCurrentTile().getX();
-			int posY = attacker.getCurrentTile().getY();
-			int health = attacker.getHitPoints();
-			int speed = attacker.getSpeed();
+		if (initialInput) {
+			// Status of the players' characters before spawning...
+			for (int i = 0; i < Constants.CHARACTER_COUNT; ++i) {
+				int id = i;
+				int posX = -1;
+				int posY = -1;
+				int health = -1;
+				int speed = -1;
 
-			input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
-		});
+				input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
+			}
 
-		// Status of the characters of the opponent...
-		opponentAttacker.forEach(attacker -> {
-			int id = attacker.getId();
-			int posX = attacker.getCurrentTile().getX();
-			int posY = attacker.getCurrentTile().getY();
-			int health = attacker.getHitPoints();
-			int speed = attacker.getSpeed();
+			// Status of the opponents' characters before spawning...
+			for (int i = 0; i < Constants.CHARACTER_COUNT; ++i) {
+				int id = i;
+				int posX = -1;
+				int posY = -1;
+				int health = -1;
+				int speed = -1;
 
-			input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
-		});
+				input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
+			}
+		}else {
+
+			// Status of the characters of the player...
+			playerAttacker.forEach(attacker -> {
+				int id = attacker.getId();
+				int posX = attacker.getCurrentTile().getX();
+				int posY = attacker.getCurrentTile().getY();
+				int health = attacker.getHitPoints();
+				int speed = attacker.getSpeed();
+
+				input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
+			});
+
+			// Status of the characters of the opponent...
+			opponentAttacker.forEach(attacker -> {
+				int id = attacker.getId();
+				int posX = attacker.getCurrentTile().getX();
+				int posY = attacker.getCurrentTile().getY();
+				int health = attacker.getHitPoints();
+				int speed = attacker.getSpeed();
+
+				input.add(String.format("%d %d %d %d %d", id, posX, posY, health, speed));
+			});
+		}
+
 
 		// Object count...
 		input.add("" + this.objCount);

@@ -1,5 +1,6 @@
-<div id="statement_back" class="statement_back" style="display:none"></div>
+<div id="statement_back" class="statement_back" style="display: none"></div>
 <div class="statement-body">
+
     <!-- GOAL -->
     <div class="statement-section statement-goal">
         <h1>
@@ -7,175 +8,468 @@
             <span>The Goal</span>
         </h1>
         <div class="statement-goal-content">
-            Reach oppenents Base as many times as possible.
+            You will start with 1000 coins. Spend the the coins wisefully to defend your base.
+            Reach oppenents Base as many times as possible. You have 3 attributes to look out.
+            <ul>
+                <li>
+                    <b>Score</b>: Number of times your minions have reached the opponent's base.
+                </li>
+
+                <li>
+                    <b>Coins</b>: Coins you have left for spending. Your coins will be updated on following scenerios-
+                    <ul>
+                        <li><b>Building an object </b>: Coins will be deducted equal to the <i>COST</i> of the associated object.</li>
+                        <li><b>Reaching opponent base </b> : <i>100</i> coins will be <b> rewarded</b> </li>
+                        <li><b>Destroying object</b>: Associated object <i>BOUNTY</i> will be given to you.
+                        <li><b>Killing minion</b>: For each of minion killed you will receive <i>25</i> coins</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <b>Death Count</b>: Number of times your minions have died by oppenent's attack.
+                </li>
+            </ul>
+
+            <h2>Winning coiditon
+            </h2>
+            <ul>
+                <li>Player with maximum <b>Score</b> wins. In case of a tie
+                    <ul>
+                        <li>
+                            Player with maximum <b>Coins</b> left wins. In case of a tie
+                            <ul>
+                                <li>
+                                    Player with minimum <b>Death Count</b> wins. In case of a tie
+                                    <ul>
+                                        <li>Its a tie :)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
     <!-- RULES -->
     <div class="statement-section statement-rules">
         <h1>
             <span class="icon icon-rules">&nbsp;</span>
-            <span>Rules</span>
+            <span>Game Description</span>
         </h1>
+        <h4>The game will run for 200 turns</h4>
         <div>
-            <div class="statement-rules-content">The game is played on a map of size <const>22</const>x<const>17</const>, the origin being in the top left corner.
-                <br>The map itself is a grid of 17 x 22. Each block is called a 'Tile'.
-                <br> Every tile is divided into a 10 x 10 grid where every unit is called 'Subtile'. <br>
+            <br class="statement-rules-content">
+            The game is played on a map of size <const>20</const>x<const>15</const>,
+            the origin being in the top left corner. <br />The map itself is a grid
+            of 20 x 15. Each block is called a 'Tile'. <br />
+            Every tile is divided into a 10 x 10 grid where every unit is called
+            'Subtile'. <br />
 
-                <div>
-                    <img src="Tile_image.png" alt="Italian Trulli">
-                </div>
-                <h3> Spawn place:</h3>
-
-                Attackers will spawn both ends(ex: The flags in the previous image.), approaching towards the other side. <br>
-                Your task is to stop the opponent attackers from reaching your side and to support your own attackers. <br>
-                Each player starts with <const>350</const> money and has <const>20</const> lives, losing one for each attacker reaching the own base.
-
-
-                <br>
-
-                <h3>Minions</h3>
-                Minions have a player owning them, a location on the map, movement speed, hitpoints. <br>
-                There will be at most 5 minions at a time on the map. A new minion will spawn everytime one is killed.
-                They will spawn at both ends of the map symmetrically, those attacking player 1 on the left, player 2 on the right. Each turn they move towards the base of their opponent by their movement speed in the shortest possible path. <br>
-                When their opponent kills them opponent gets points.
-
-                <h3>Location: </h3>
-                The Tile where the minion is standing currently consist of x and y.<br>
-                x,y represents the possition in respect to width and height.
-
-                <h3>Speed: </h3>
-                The maximum number of subtiles a minion can cross in a single turn of the game.<br>
-                Initially the speed is 10 which means a minion can walk through at most 10 subtiles.
-                <br>
-
-                <h3>Hitpoints</h3>
-                unit of measurement representing a character's or creature's health or life. Hitpoints indicate how much damage a character or entity can withstand before being defeated or killed.
-
-                <h3>Towers</h3>
-                A tower has an owner, a location, damage, range, reload and cooldown time.
-                When a tower has an attacker in range and a cooldown time of 0, the tower will shoot at the attacker and be inactive for the next few turns, depending on the reload time. <br>
-                An attacker is in range of a tower, when the pythagorean distance between them is less than or equal to the tower range. <br>
-                <br><h3>Build tower:</h3>
-                Towers can be built on any tile of the map. It is not possible to build a tower at the same cell as another tower.
-
-                <br><h3>Cool-down time</h3>
-                denotes the minimum number of time a tower needs to reload and attack again.
-
-                <br><h4>Types of Towers</h4>
-                A player can build different types of towers as follows:
-
-                <br><h5>Gun tower</h5>
-                The gun tower attacks one minion at a time, reducing the hit point by its damage value. In case of multiple possible targets, it will always take the one closest to the own base.
-                <br><h5>Fire tower</h5>
-                The fire tower damages all opponent attackers in its range. The attack will last <const>2</const> turns, damaging the units that are in range during the turn of the attack happening or one turn after.
-                <br><h5>Stun tower</h5>
-                The stun tower does not cause any damage to the attackers. Instead, it will slow them down for some turns. It targets all attackers in range, ignoring those which are already slowed down.
-                <br><h4>Tower strengths</h4>
-                The tower strengths are as follows:
-                <table>
-                    <tr><th width="100"></th><th colspan="3">Gun tower (cost: <const>100</const>)</th><th colspan="3">Fire tower (cost: <const>100</const>)</th><th colspan="3">Glue tower (cost: <const>70</const>)</th><th colspan="3">Heal tower (cost: <const>100</const>)</th></tr>
-                    <tr><th></th><th>damage</th><th>range</th><th>reload</th><th>damage</th><th>range</th><th>reload</th><th>damage</th><th>range</th><th>reload</th><th>damage</th><th>range</th><th>reload</th></tr>
-                    <tr><td>Initial</td><td><const>5</const></td><td><const>3</const></td><td><const>5</const></td><td><const>2</const></td><td><const>1.5</const></td><td><const>8</const></td><td><const>8</const></td><td><const>3</const></td><td><const>4</const></td><td><const>5</const></td><td><const>3</const></td><td><const>5</const></td></tr>
-                </table>
-
-                <div>
-                    <h3>Turn:</h3>
-                    the game is played in turns. In each turn the outputs of the players code is used to instruct the minions.
-                    <br>Initially the number of turns is set to 20.
-
-                    <br>The turn order is the following:
-                    <ul>
-                        <li>Build commands are handled</li>
-                        <li>Towers shoot and kill attackers</li>
-                        <li>Alive attackers move</li>
-                        <li>Attackers, which reached the opponent base, disappear and reduce the player lives</li>
-                        <li>The player reaching the opponent’s base maximum number of times wins </li>
-                        <li>The player reaching the opponent’s base maximum number of times wins </li>
-
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- PROTOCOL -->
-        <div class="statement-section statement-protocol">
-            <h1>
-                <span class="icon icon-protocol"></span>
-                <span>Game Input</span>
-            </h1>
-            <!-- Protocol block -->
-            <div class="blk">
-                <div class="title">Initial Input</div>
-                <div class="text">
-                    <p><span class="statement-lineno">Line 1: </span><var>playerId</var>, either <const>0</const> (you defend the left side) or <const>1</const> (you defend the right side)</p>
-                    <p><span class="statement-lineno">Line 2: </span><var>width <b>w</b></var> & <var>height <b>h</b></var>, the width and height of the map</p>
-                    <p>Next, h lines will be printed each line containing w characters of either ‘.’ or ‘#’. Where ‘.’ denotes no obstacle and ‘#’ denotes an indestructible obstacle.
-                    </p>
-                </div>
-            </div>
-            <!-- Protocol block -->
-            <div class="blk">
-                <div class="title">Input in Each turn</div>
-                <div class="text">
-                    <p><span class="statement-lineno"/>First line will contain two integers, <var>player_money</var> and <var> opponent_money </var>, denoting remaining money of the player and remaining money of the opponent</p>
-                    <p><span class="statement-lineno"/>Next line has two integer sc_p and sc_o denoting the score of the player and the score of the opponent</p>
-                    <p><span class="statement-lineno"/>The next five lines contains 5 space separated integers {id, x, y, health, speed} describing the Id of the character, x and y coordinates of the player, health and  status of the characters of the player.</p>
-
-                </div>
+            <div>
+                <img src="Tile_image.png" alt="Italian Trulli" />
             </div>
 
+            <h3>Minions</h3>
 
-            <h2>
-                <span class="icon icon-protocol">&nbsp;</span>
-                <span>Expected Output</span>
-            </h2>
+            Each player will have 5 minions they can't control. Each of them will
+            respawn if it is killed or if it reaches the opponent base. If it is killed then your
+            each minion of a player has an unique id associated with it. The id will remain unchanged throughout the whole game.
 
-            <h4>
-                <span class="icon icon-protocol">&nbsp;&nbsp;</span>
-                <span>Initial output:</span>
-            </h4>
-            <div class="blk">
 
-                <div class="text">
-        <span class="statement-lineno"/>The player needs to print 5 integers, separated by spaces. These integers will be the y coordinates (row position) of the spawn positions.
-          The characters will always spawn at these y-coordinates in case it gets killed or reaches the opponent base.
-          The spawn x-coordinate is 0 for player 1 and Width-1 for player 2.
-        <br>
-                </div>
+            <h3>Spawn place</h3>
+
+            The players can choose the 5 y-coordinates for the spawn place on their
+            minions. For red player the spawn x-coordinate is always 0, blue
+            player's spawn x-coordinates is always 19. Everytime the minion is
+            killed it will respawn at his initial spawn position.
+
+            <br />
+
+
+            <h3>Speed</h3>
+            The maximum number of subtiles a minion can cross in a single turn of
+            the game.<br />
+            Initially the speed is 10 which means a minion can walk through at most
+            10 subtiles.
+            <br />
+
+            <h3>Hitpoints</h3>
+            Unit of measurement representing an object's health or life. Hitpoints
+            indicate how much damage a character or entity can withstand before
+            being destroyed or killed.
+
+            <h3>Towers</h3>
+            Towers will automatically attack the <b>opponent's minions</b> if it is in
+            range. Towers can be destroyed if attacked. A player can build two types
+            of towers as follows:
+
+            <ul>
+                <li>
+                    <h5>Gun tower</h5>
+                    The gun tower attacks one minion at a time, reducing the hit point
+                    by its damage value. In case of multiple possible targets, it will
+                    always take the one closest to the own base.
+                </li>
+                <li>
+                    <h5>Stun tower</h5>
+                    The stun tower does not cause any damage to the attackers. Instead,
+                    it will slow them down for the current turn. It targets all
+                    attackers in range, ignoring those which are already slowed down.
+                </li>
+            </ul>
+            Towers can not be built where there is already an object other than
+            <b>a minion or a bomb </b>. Once a tower is built on a tile , that tile is marked as <b>blocked.</b>
+
+            <h3>Spring Trap</h3>
+            Players can build spring trap that will relocate a minion instantly. The trap will affect <b>any </b>
+            minion that steps into it. Spring's can not be attacked. Spring traps
+            comes in with four variants -
+            <ul>
+                <li>North</li>
+
+                <li>South</li>
+
+                <li>East</li>
+
+                <li>West</li>
+            </ul>
+
+            They displace the minion <b>RANGE</b> amount tile in the respective directions. <br><br>
+            If the tile where the minion lands contains a wall or a tower , the minion will die and the wall/tower will be destroyed. (Super minion!)
+            If it lands on a tile that has built in obstacle, the minion will just die :(. <br> <br>
+            Spring trap can not be attacked by any means.
+            But they have a short life span and will disappear after a certain number of turns. Spring <b> does not block </b>a tile.
+
+            <h3>Bomb</h3>
+            Players can build bombs that will explode and kill all the minions in the 5x5 area.
+            other than that, it will <b>only</b> deal damage to  opponent the minions or object in the 5x5 area. <br/>
+            The bomb will explode after a certain number of turns. Bombs can not be attacked by any means.
+            Bombs <b> does not block </b>a tile. It is allowed to build on any tile. Players can build any other object on the same tile where the bomb is placed.
+
+
+            <h3>Wall</h3>
+            Players can build walls that will block the path of the minions. A wall will block the path of the minions.
+            <div>
+                <h3>Turn</h3>
+                The game is played in turns. In each turn following events happen in sequence:
+
+
+                <ol>
+                    <li>Towers' / traps' / bombs' actions are carried out </li>
+                    <li>We send all the status of the game board to both of the player as input</li>
+                    <li>Players send their commands to the game </li>
+                    <li>Both of the player's commands are executed</li>
+                </ol>
             </div>
-
-            <!-- Protocol block -->
-            <div class="blk">
-                <div class="title">Turn Output :</div>
-                <div class="text">
-                    <span class="statement-lineno"/>In each turn the player must print 5 lines  for each of their 5 characters. Each line must contain one of the following 3 commands </span> containing your actions, separated by a <const>;</const> <br>
-                    an action can be:
-                    <ul>
-                        <li><action>GO Player_Id</action> to move forward </li>
-                        <li><action>BUIlD Tower_type Player_Id</action> to build a tower at current tile<action>type</action> can be <const>GUNTOWER</const>, <const>FIRETOWER</const> or <const>GLUETOWER</const> </li>
-                        <li><action>ATTACK Player_Id</action> to attack the nearest tower/wall</li>
-                    </ul>
-                    <br>
-                </div>
-            </div>
-
-            <!-- Protocol block -->
-            <div class="blk">
-                <div class="title">Constraints</div>
-                <div class="text"><var>...</var> contains between 1 and 500 characters.<br>
-                    <br>Allotted response time for per turn
-                    is &le; <const>50</const> ms (<const>1000</const> ms for the first turn).</div>
-            </div>
-        </div>
-
-        <br>
-        <div>Graphics assets:<br>
-            <a href="https://craftpix.net/freebies/free-stone-tower-game-assets/">https://craftpix.net/freebies/free-stone-tower-game-assets/</a> <br>
-            <a href="https://craftpix.net/freebies/free-2d-monster-sprites/">https://craftpix.net/freebies/free-2d-monster-sprites/</a> <br>
-            Special thanks to <a href="https://www.codingame.com/profile/a44c2c75eb5da8d5e52184eaa92342813628822">dbdr</a>,
-            <a href="https://www.codingame.com/profile/433c83b2f60d89f64e138f0fce10b30f8598731">Illedan</a> and
-            <a href="https://www.codingame.com/profile/d0202a2b347a4fd473f840ede3e470427494112">Nixerrr</a>, who helped coding the game and create an apealing UI.
         </div>
     </div>
+
+    <!-- PROTOCOL -->
+    <div class="statement-section statement-protocol">
+        <h1>
+            <span class="icon icon-protocol"></span>
+            <span>Game Input</span>
+        </h1>
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Initial Input</div>
+            <div class="text">
+                <p>
+                    <span class="statement-lineno">Line 1: </span><var>playerId</var>,
+                    either <const>0</const> (you defend the left side) or
+                    <const>1</const> (you defend the right side)
+                </p>
+                <p>
+            <span class="statement-lineno">Line 2: </span
+            ><var>width <b>w</b></var> & <var>height <b>h</b></var
+                >, the width and height of the map
+                </p>
+                <p>
+                    Next, h lines will be printed each line containing w characters of
+                    either ‘.’ or ‘#’. Where ‘.’ denotes no obstacle and ‘#’ denotes an
+                    indestructible obstacle.
+                </p>
+            </div>
+        </div>
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Input in Each turn</div>
+            <div class="text">
+                <p>
+                    <span class="statement-lineno"></span>First line will contain two
+                    integers, <var>player_money</var> and <var> opponent_money </var>,
+                    denoting remaining money of the player and remaining money of the
+                    opponent
+                </p>
+                <p>
+                    <span class="statement-lineno"></span>Next line has two integer sc_p
+                    and sc_o denoting the score of the player and the score of the
+                    opponent
+                </p>
+                <p>
+                    <span class="statement-lineno"></span>The next five lines contains 5
+                    space separated integers {id, x, y, health, speed} describing the Id
+                    of the character, x and y coordinates of the player, health and
+                    status of the your characters.
+                    <br>
+                    <i>** The above values will be -1 in case the has not been spawned yet. </i>
+
+                </p>
+                <p>
+                    <span class="statement-lineno"></span>The next five lines contains 5
+                    space separated integers {id, x, y, health, speed} describing the Id
+                    of the character, x and y coordinates of the player, health and
+                    status of the characters of your opponent.
+                    <br>
+                    <i>** The above values will be -1 in case the character has not been spawned yet. </i>
+
+                </p>
+
+                <p>
+                    <span class="statement-lineno"></span>
+                    Next line will contain an integer n_t denoting the total number of objects on the gameboard.
+
+                    Following n_t lines will contain the status of each object onn the map. Each line containing 10 space separated values in the following order-
+                    <br>
+
+                    Type = string containing any of the values
+                    <br>
+                <ul>
+                    <li>GUN_TOWER</li>
+                    <li>STUN_TOWER</li>
+                    <li>SPRING_NORTH / SPRING_SOUTH / SPRING_EAST / SPRING_WEST</li>
+                    <li>BOMB</li>
+                    <li>WALL</li>
+                </ul>
+
+                Id = Integer uniquely identifying the tower<br>
+                Owner = 0 / 1 (The player id)<br>
+                Position_x = x coordinate of the object<br>
+                Position_y = y coordinate of the object<br>
+                <br>
+                **any of the following values will be -1 in case it does not apply
+                <br>
+                <br>
+                Hitpoint = integer denoting health of the object<br>
+                Damage = integer denoting damage points of the object<br>
+                Range = integer denoting damage range of the object <br>
+                Cooldown = integer denoting number of frames between attacks performed by an object <br>
+                Bounty = how much coins a player will get for destroying this object<br>
+
+                </p>
+            </div>
+        </div>
+
+        <h1>
+            <span class="icon icon-protocol"></span>
+            <span>Game Output</span>
+        </h1>
+
+        <h4>
+            <span class="icon icon-protocol">&nbsp;&nbsp;</span>
+            <span>Initial output</span>
+        </h4>
+        <div class="blk">
+            <div class="text">
+          <span class="statement-lineno"
+          >At the <b>1st</b> turn, the player needs to print 5 lines , one integer y in each line. These
+            integers will be the y coordinates (row position) of the spawn
+            positions. The characters will always spawn at these y-coordinates
+            in case it gets killed or reaches the opponent base. The spawn
+            x-coordinate is 0 for player 1 and 19 for player 2.
+          </span>
+                <br />
+            </div>
+        </div>
+
+        <!-- Protocol block -->
+        <h4>
+            <span class="icon icon-protocol">&nbsp;&nbsp;</span>
+            <span>Turn output</span>
+        </h4>
+        <div class="blk">
+            <div class="text">
+          <span class="statement-lineno"
+          >Starting from the <b>2nd</b> turn the player must print 5 lines for each of their 5
+            characters. Each line must contain one of the following 3 commands-
+          </span>
+
+                <ul>
+                    <li><action>go character_id</action>
+                        <p>
+                            The character advances towards the opposition base. The character chooses a destination tile that is reachable from his current position and closest to the opponent base. If there are more than one such tile , one is chosen at random. Then the character chooses one shortest path to the destination tile.
+
+                        </p>
+                    </li>
+                    <li>
+                        <action>build  character_id object_name pos_x pos_y</action>
+                        <p>
+                            The character stops and builds the object at the specified position. The build takes one unit time.
+                        </p>
+                    </li>
+                    <li>
+                        <action>attack character_id direction </action>
+                        <p>
+                            The character stops and attacks at the specified direction from its current location. If there is an object at the target direction,
+                            it will deal damage. You can also attack any empty cell for fun.
+                        </p>
+                    </li>
+
+                    <p>
+                    <h4>Allowed namespace
+                    </h4>
+
+                    <b><i>object_name</i></b>
+                    <ul>
+                        <li>GUN_TOWER</li>
+                        <li>STUN_TOWER</li>
+                        <li>SPRING_NORTH / SPRING_SOUTH / SPRING_EAST / SPRING_WEST</li>
+                        <li>BOMB</li>
+                        <li>WALL</li>
+                    </ul>
+
+                    <b><i>direction</i></b>
+                    <ul>
+                        <li>NORTH</li>
+                        <li>SOUTH</li>
+                        <li>EAST</li>
+                        <li>WEST</li>
+                    </ul>
+
+                    <b><i>character_id</i></b>
+                    <ul>
+                        0,1,2,3 or 4
+                    </ul>
+                    </p>
+                </ul>
+
+                <br />
+
+
+                <h4>
+                    <span class="icon icon-protocol">&nbsp;&nbsp;</span>
+                    <span>Invalid Output condition</span>
+                </h4>
+                <ul>
+                    <li>
+                        The player does not maintain the structure of the 3 commands mentioned above.
+                    </li>
+                    <li>
+                        A character tries to build an object at a position where there is already an object.
+                        (Exception is while building a bomb)
+                    </li>
+                    <li>
+                        A character tries to build object except his 4 neighbour.
+                    <li>
+                        A character tries to build or attack an object outside the map.
+                    </li>
+
+                    <li>
+                        A character tries to build an object when the player does not have enough coins to build it.
+                    </li>
+                    <li>
+                        A character can only choose one of his 4 neighbour tiles to build or attack something.
+                        Exception is bomb. See the bomb section for details.
+                    </li>
+                    <h4> In Case of invalid outputs the player's code will be terminated immediatly and the player will lose.</h4>
+            </ul>
+            </div>
+        </div>
+
+
+        <div>
+            <h3>Minion Description</h3>
+            <table>
+                <tr>
+                    <th>Hitpoint</th>
+                    <th>Damage</th>
+                    <th>Attack Range</th>
+                    <th>Bounty</th>
+                </tr>
+                <tr>
+                    <td>70</td>
+                    <td>30</td>
+                    <td>4-neighbours</td>
+                    <td>25</td>
+                </tr>
+            </table>
+            <h3>Object Description:</h3>
+            <table>
+                <tr>
+                    <th>object_name</th>
+                    <th>Hitpoint</th>
+                    <th>Damage</th>
+                    <th>Range</th>
+                    <th>Cooldown</th>
+                    <th>Bounty</th>
+                    <th>Cost</th>
+                </tr>
+                <tr>
+                    <td>WALL</td>
+                    <td>150</td>
+                    <td>-1</td>
+                    <td>-1</td>
+                    <td>-1</td>
+                    <td>30</td>
+                    <td>40</td>
+                </tr>
+                <tr>
+                    <td>GUN_TOWER </td>
+                    <td>100</td>
+                    <td>20</td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>200</td>
+                    <td>350</td>
+                </tr>
+                <tr>
+                    <td>STUN_TOWER</td>
+                    <td>90</td>
+                    <td>-1</td>
+                    <td>3</td>
+                    <td>5</td>
+                    <td>200</td>
+                    <td>400</td>
+                </tr>
+                <tr>
+                    <td>BOMB</td>
+                    <td>-1</td>
+                    <td>70</td>
+                    <td>5x5</td>
+                    <td>-1</td>
+                    <td>-1</td>
+                    <td>70</td>
+                </tr>
+                <tr>
+                    <td>SPRING_NORTH <br> SPRING_SOUTH <br> SPRING_EAST <br> SPRING_WEST</td>
+                    <td>-1</td>
+                    <td>-1</td>
+                    <td>2</td>
+                    <td>-1</td>
+                    <td>-1</td>
+                    <td>300</td>
+                </tr>
+            </table>
+
+            <h4>** Spring trap have FUSETIME of 20 frames. It will be destroyed after 20 turn from its build time </h4>
+            <h4>** Bombs will explode after 2 frame from its building time</h4>
+
+        </div>
+
+        <br>
+        <br>
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Constraints</div>
+            <div class="text">
+
+                <br />Allotted response time for per turn is &le; <const>50</const> ms
+                (<const>1000</const> ms for the first turn).
+            </div>
+        </div>
+    </div>
+
+    <br />
 </div>
+
