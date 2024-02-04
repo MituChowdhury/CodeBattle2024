@@ -164,6 +164,7 @@ public class Referee extends AbstractReferee {
 							if (yCord < 0 || yCord >= Constants.MAP_HEIGHT) {
 								System.err.printf("Expected a valid integer for y coordinate between 0 and %d\n", Constants.MAP_HEIGHT);
 								this.addErrorMessage(player.getIndex(), "Y coordinate is not valid.");
+								gameManager.addToGameSummary("Expected a valid integer for y coordinate between 0 and "+ Constants.MAP_HEIGHT+"\n");
 								gameManager.endGame();
 							}
 
@@ -174,6 +175,7 @@ public class Referee extends AbstractReferee {
 //						System.err.println("############# Invalid initial output");
 						System.err.println("Expected integer for y coordinate, found something else.");
 						this.addErrorMessage(player.getIndex(), "Y coordinate is not an integer.");
+						gameManager.addToGameSummary("Expected integer for y coordinate, found something else.");
 						gameManager.endGame();
 					}
 
@@ -200,7 +202,7 @@ public class Referee extends AbstractReferee {
 							);
 							System.err.println(ex.getMessage());
 							System.err.println();
-//							gameManager.endGame();
+							gameManager.addToGameSummary(ex.getMessage());
 							gameManager.endGame();
 						}
 					});
@@ -214,6 +216,7 @@ public class Referee extends AbstractReferee {
 				System.out.println(String.format("$%d timeout!", player.getIndex()));
 				System.out.println("" + player.getIndex() + " killed.");
 				System.out.println("****** On timeout *******");
+				gameManager.addToGameSummary("Check Game statement for valid input/output");
 				gameManager.endGame();
 			}
 		}
@@ -232,6 +235,7 @@ public class Referee extends AbstractReferee {
 				ex.getPlayer().kill();
 				ex.getPlayer().deactivate();
 				System.err.println(ex.getMessage());
+				gameManager.addToGameSummary(ex.getMessage());
 				gameManager.endGame();
 			}
 		}
@@ -301,6 +305,7 @@ public class Referee extends AbstractReferee {
 //			System.out.println(e.getMessage());
 			this.addErrorMessage(e.getPlayer().getIndex(), "Invalid command detected.");
 			System.err.println("Invalid command detected.");
+			gameManager.addToGameSummary(e.getMessage());
 			gameManager.endGame();
 		}
 	}
