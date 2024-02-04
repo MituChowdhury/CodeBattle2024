@@ -33,28 +33,12 @@ public class BuildCommand extends Command {
         boolean isValid = false;
 
         if (!objectName.equals("BOMB")) {
-            int[] dx = {0, 0, 1, -1};
-            int[] dy = {1, -1, 0, 0};
-
-            for (int i = 0; i < 4; ++i) {
-                if (attackerX + dx[i] == posX && attackerY + dy[i] == posY) {
-                    isValid = true;
-                    break;
-                }
-            }
+            isValid =( Math.abs(posX-attackerX)+Math.abs(posY-attackerY))==1;
         }
         else {
-            int[] dx = {0, 0, 2, -2};
-            int[] dy = {2, -2, 0, 0};
 
-            for (int i = 0; i < 4; ++i) {
-                if ((attackerX + dx[i] == posX && attackerY + dy[i] > posY)
-                        ||
-                    (attackerX + dx[i] < posX && attackerY + dy[i] == posY)) {
-                    isValid = true;
-                    break;
-                }
-            }
+            isValid = Math.abs(posX-attackerX)<=Constants.FIREBOMB_RANGE[0] &&
+                    Math.abs(posY-attackerY) <= Constants.FIREBOMB_RANGE[0];
         }
 
         if (!isValid) {
