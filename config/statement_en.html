@@ -61,7 +61,8 @@
         <div>
             <br class="statement-rules-content">
             The game is played on a map of size <const>20</const>x<const>15</const>,
-            the origin being in the top left corner. You can hover on the game play to observe the coordinates and attributes of minions and objects in a frame. <br />The map itself is a grid
+            the origin being in the top left corner. All the positions given as input will follow this coordinate system. <b>You must adhere to this coordinate system while giving a build command.</b><br>
+You can hover on the game play to observe the coordinates and attributes of minions and objects in a frame. <br />The map itself is a grid
             of 20 x 15. Each block is called a 'Tile'.
             Every tile is divided into a <const>10</const> x <const>10</const> grid where every unit is called
             'Subtile'. <br />
@@ -72,8 +73,8 @@
             <h3>Minions</h3>
 
             Each player will have 5 minions they can't control. Each of them will
-            respawn if it is killed or if it reaches the opponent base. If it is killed then your
-            each minion of a player has an unique id associated with it. The id will remain unchanged throughout the whole game.
+            respawn at its initial spawn position if it is killed or  reaches the opponent base. 
+            Each minion of a player has an unique id associated with it. The id will remain unchanged throughout the whole game.
 
 <br />
 <br />
@@ -115,7 +116,7 @@
                     <h5>Gun tower</h5>
                     The gun tower attacks one minion at a time, reducing the hit point
                     by its damage value. In case of multiple possible targets, it will
-                    always take the one closest to the own base.
+                    always take the one closest to the player's own base.
                 </li>
                 <li>
                     <h5>Stun tower</h5>
@@ -124,7 +125,7 @@
                     attackers in range, ignoring those which are already slowed down.
                 </li>
             </ul>
-            Towers can not be built where there is already an object other than
+            Towers can not be built where there is any object other than
             <b>a minion or a bomb </b>. Once a tower is built on a tile , that tile is marked as <b>blocked.</b>
 <br />
 <br />
@@ -132,7 +133,7 @@
 
             <h3>Spring Trap</h3>
             Players can build spring trap that will relocate a minion instantly. The trap will affect <b>any </b>
-            minion that steps into it. Spring's can not be attacked. Spring traps
+            minion that steps onto it. Springs can not be attacked. Spring traps
             comes in with four variants -
             <ul>
                 <li>North</li>
@@ -153,10 +154,11 @@
 <br />
 
             <h3>Bomb</h3>
-            Players can build bombs that will explode and kill all the minions in the 5x5 area.
-            other than that, it will <b>only</b> deal damage to  opponent the minions or object in the 5x5 area. <br/>
+            Players can build bombs that will explode and deal damage to all the opponent's minions, towers and walls in its explosion ramge. if the bomb's position is (b_x, b_y), all the tiles (x, y) will deal damage that holds the condition <i> abs(x-b_x) <= 2 && abs(y-b_y)<=2</i> . Thus a bomb explosion will be effective on an area of 5x5 tiles.
+<br/>  
+             <br/>
             The bomb will explode after a certain number of turns. Bombs can not be attacked by any means.
-            Bombs <b> does not block </b>a tile. It is allowed to build on any tile. Players can build any other object on the same tile where the bomb is placed.
+            Bombs <b> does not block </b>a tile. It is allowed to build bomb on <b>any</b> tile. Players can build any other object on the same tile where the bomb is placed.
 <br />
 <br />
 
@@ -323,7 +325,7 @@
                 <ul>
                     <li><action>go</action> <b>character_id</b>
                         <p>
-                            The character advances towards the opposition base. The character chooses a destination tile that is reachable from his current position and closest to the opponent base. If there are more than one such tile , one is chosen at random. Then the character chooses one shortest path to the destination tile.
+                            The minion advances towards the opposition base. We taught the minions some basic DSA so that it can choose a destination tile that is <b>closest to the opponent base as well as reachable</b> from its current position. If there are more than one such tile , one is chosen at random. Then the minion randomly chooses one shortest path to the destination tile.
 
                         </p>
                     </li>
@@ -331,14 +333,14 @@
                     <li>
                         <action>build</action>  <b>character_id object_name pos_x pos_y</b>
                         <p>
-                            The character stops and builds the object at the specified position. The build takes one unit time.
+                            The minion stops and builds the object at the specified position. The build takes one unit time.
 <br>
 <br>
 If both of the player tries to build an object at the same position at the same time , the player closer to his base will succeed. The other player's minion will just ignore the build command.
-(<b>pos_x</b>, <b>pos_y</b>) should be the coordinat of one of the 4neighbour or minion with id = <b>character_id</b>.
+(<b>pos_x</b>, <b>pos_y</b>) should be the coordinate of one of the 4-neighbours of the minion with id = <b>character_id</b>.
 <br>
 <br>
-In case of building a bomb the consdition <i>abs(pos_x-curr_x)<=2 and abs(pos_y-curr_y) <=2</i> must hold. where (curr_x,curr_y) is the current position of the minion with id = <b>character_id</b>
+In case of building a bomb the condition <i>abs(pos_x-curr_x)<=2 and abs(pos_y-curr_y) <=2</i> must hold. where (curr_x,curr_y) is the current position of the minion with id = <b>character_id</b>
                         </p>
                     </li>
 <br>
@@ -404,7 +406,7 @@ In case of building a bomb the consdition <i>abs(pos_x-curr_x)<=2 and abs(pos_y-
                         A character tries to build an object when the player does not have enough coins to build it.
                     </li>
                     <li>
-                        A character can only choose one of his 4 neighbour tiles to build or attack something.
+                        A character can only choose one of his 4 neighbour tiles to build an object.
                         Exception is bomb. See the bomb section for details.
                     </li>
                     <h4> In Case of invalid outputs the player's code will be terminated immediatly and the player will lose.</h4>

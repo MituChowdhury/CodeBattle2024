@@ -2,9 +2,6 @@ import java.util.*;
 import java.io.*;
 import java.math.*;
 
-/**
- * Survive the attack waves
- **/
 class Player {
 
     public static void main(String args[]) {
