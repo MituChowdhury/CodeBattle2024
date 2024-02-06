@@ -37,8 +37,8 @@ public class BuildCommand extends Command {
         }
         else {
 
-            isValid = Math.abs(posX-attackerX)<=Constants.FIREBOMB_RANGE[0] &&
-                    Math.abs(posY-attackerY) <= Constants.FIREBOMB_RANGE[0];
+            isValid = Math.abs(posX-attackerX)<=Constants.FIREBOMB_THROW_RANGE &&
+                    Math.abs(posY-attackerY) <= Constants.FIREBOMB_THROW_RANGE;
         }
 
         if (!isValid) {

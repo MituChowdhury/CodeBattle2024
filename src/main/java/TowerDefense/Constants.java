@@ -12,16 +12,9 @@ public class Constants {
 	public static final int TURN_COUNT = 200;
 	public static final int MIN_PATH_LENGTH = 30;
 
-	public static final int PLAYER_MONEY = 1000;
-	public static final int PLAYER_LIVES = 20;
-	public static final int PLAYER_SCORE = 0;
-	public static final int PLAYER_DEATH_COUNT = 0;
 
-	public static final int ATTACKER_DAMAGE = 30;
 
 	public static final int GUNTOWER_COST = 350;
-	public static final int FIREBOMB_COST = 70;
-
 	public static final double[] GUNTOWER_DAMAGE = { 20, 8, 15, 30 };
 	public static final double[] GUNTOWER_RANGE = { 4, 4, 5, 6 };
 	public static final double[] GUNTOWER_RELOAD = { 2, 4, 3, 2 };
@@ -30,12 +23,13 @@ public class Constants {
 	public static final int GUNTOWER_BOUNTY = 200;
 
 
-	public static final double[] FIREBOMB_DAMAGE = { 70, 8, 15, 30 };
+	public static final int FIREBOMB_COST = 100;//changed
+	public static final double[] FIREBOMB_DAMAGE = { 45, 8, 15, 30 };//changed
 	public static final double[] FIREBOMB_RANGE = { 2, 4, 5, 6 };
 	public static final double[] FIREBOMB_RELOAD = { -1, 0, 0, 0 };
 	public static final double[] FIREBOMB_HITPOINTS = { -1, 10, 15, 20 };
 	public static final double[] FIREBOMB_FUSETIME = { 2, 1, 0, 0 };
-
+	public static int FIREBOMB_THROW_RANGE=3;//changed
 	public static final int FIREBOMB_BOUNTY = 0;
 
 	public static final double[] SPRINGTRAP_DAMAGE = { -1, 3, 4, 5 };
@@ -45,7 +39,7 @@ public class Constants {
 
 	// DEBUG: spring lifetime 100
 	public static final double[] SPRINGTRAP_FUSETIME = { 20, 3, 3, 3 }; // FUSETIME IS LIFETIME FOR SPRINGTRAP
-	public static final int SPRINGTRAP_COST = 300;
+	public static final int SPRINGTRAP_COST = 200;//changed
 	public static final int SPRINGTRAP_BOUNTY = -1;
 
 
@@ -63,8 +57,8 @@ public class Constants {
 	public static final double[] FIRETOWER_RELOAD = { 8, 7, 6, 5 };
 	public static final int FIRE_EFFECT_DURATION = 2;
 	public static final int FIRETOWER_BOUNTY = 0;
-	public static final int GLUETOWER_COST = 70;
-	public static final double[] GLUETOWER_DAMAGE = { 8, 15, 25, 40 }; // duration of slowdown effect
+	public static final int GLUETOWER_COST = 400;
+	public static final double[] GLUETOWER_DAMAGE = { 5, 15, 25, 40 }; // duration of slowdown
 	public static final double[] GLUETOWER_RANGE = { 3, 4, 5, 6 };
 	public static final double[] GLUETOWER_RELOAD = { 5, 3, 2, 1 };
 	public static final double[] GLUETOWER_HITPOINT = { 90, 10, 15, 20 };
@@ -100,13 +94,21 @@ public class Constants {
 	public static final int BOUNTY = 25;
 	public static final int NUM_UPGRADE_SPRITES = 3;
 
-	public  static  final int CHECKPOINT_REWARD = 100;
+	public static final int PLAYER_MONEY = 1000;
+	public static final int PLAYER_LIVES = 20;
+	public static final int PLAYER_SCORE = 0;
+	public static final int PLAYER_DEATH_COUNT = 0;
+
+	public static final int ATTACKER_DAMAGE = 50;//changed
+
+	public  static  final int CHECKPOINT_REWARD = 60; //changed
 //    public static int CHARACTER_COUNT =1;  // For de
 	public static int CHARACTER_COUNT = 5;
 
 	// Authored by: mdmab
 	public static int BOARD_DASH_WIDTH = 280;
 	public static int BOARD_DASH_HEIGHT = 367;
+
 
 
 //	public static List<String> VALID_OBJECT_NAMES = Arrays.asList(new String[]{
