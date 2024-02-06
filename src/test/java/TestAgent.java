@@ -127,6 +127,13 @@ public class TestAgent {
 
 
                 // go character_id | build character_id object position_x position_y | attack character_id direction
+
+                // Debug code...
+//                if (turn == 11)
+//                    System.out.println("build 4 GUN_TOWER 17 8");
+//                else
+//                    System.out.println("go 4");
+
                 System.out.println("go 4");
             }
 

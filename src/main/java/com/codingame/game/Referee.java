@@ -235,6 +235,7 @@ public class Referee extends AbstractReferee {
 				ex.getPlayer().kill();
 				ex.getPlayer().deactivate();
 				System.err.println(ex.getMessage());
+				this.addErrorMessage(ex.getPlayer().getIndex(), "Invalid build operation.");  // Was missing this statement that decrements the score of the invalid action giver...
 				gameManager.addToGameSummary(ex.getMessage());
 				gameManager.endGame();
 			}
