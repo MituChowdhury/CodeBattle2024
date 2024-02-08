@@ -50,7 +50,7 @@ public class Referee extends AbstractReferee {
 
 		Locale.setDefault(new Locale("en", "US"));
 
-		random = new Random(10);
+		random = new Random(gameManager.getSeed());
 		Tile[][] grid = MapGenerator.generateMap(random);
 		gameManager.setMaxTurns(Constants.TURN_COUNT);
 		board = new Board(grid, gameManager.getPlayers(), random);
@@ -198,7 +198,7 @@ public class Referee extends AbstractReferee {
 						} catch (BadCommandException ex) {
 //							System.err.println("\t[Exception] " + ex.getMessage());
 							System.out.println("Invalid input detected by player no. " + player.getIndex());
-							this.addErrorMessage(player.getIndex(), ex.getMessage());
+							this.addErrorMessage(player.getIndex(), "Invalid Output");
 							System.err.println("*** Error by player "
 									+ player.getIndex()
 									+ " at command no. "
