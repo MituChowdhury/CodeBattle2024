@@ -1,8 +1,6 @@
 package com.codingame.game;
 
-import TowerDefense.Attacker;
-import TowerDefense.Board;
-import TowerDefense.Constants;
+import TowerDefense.*;
 import command.AttackCommand;
 import command.BuildCommand;
 import command.GoCommand;
@@ -172,6 +170,14 @@ public class Util {
         String objectName = commandArgs[2];
         int positionX = Integer.parseInt(commandArgs[3]);
         int positionY = Integer.parseInt(commandArgs[4]);
+
+        if (positionX < 0 || positionX >= Constants.MAP_WIDTH || positionY < 0 || positionY >= Constants.MAP_HEIGHT)
+            throw new BadCommandException("Tile (" + positionX + "/" + positionX + ") is outside of the map");
+
+        Tile t = board.getGrid()[positionX][positionY];
+        if (!t.canBuild()) {
+            throw new BadCommandException("Tile (" + positionX + "/" + positionY + ") already has something");
+        }
 
         Attacker attacker = null;
 

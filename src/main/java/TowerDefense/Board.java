@@ -298,12 +298,10 @@ public class Board {
 	}
 
 	private void build(Player player, int x, int y, String type) throws InvalidActionException {
-		if (x < 0 || x >= width || y < 0 || y >= height)
-			throw new InvalidActionException("Tile (" + x + "/" + y + ") is outside of the map", true, player);
 
-
-		if (!grid[x][y].canBuild()) {
-			throw new InvalidActionException("Tile (" + x + "/" + y + ") already has something", false, player);
+		if(!grid[x][y].canBuild()){
+			System.err.println("Player "+player.getIndex()+": Tile (" + x + "/" + y + ") is not available for building");
+			return;
 		}
 
 		Tower tower = null;
@@ -342,22 +340,14 @@ public class Board {
 		default:
 			throw new InvalidActionException("tower type " + type + " unknown", true, player);
 		}
-//		if (!tower.getTile().canBuild()) {
-//			tower.undoBuild();
-//			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
-//		}
-		for (Tower t : towers) {
-			if (t.getTile() == tower.getTile()) {
-				tower.undoBuild();
-				throw new InvalidActionException("Tile (" + x + "/" + y + ") is occupied by another tower already", false, player);
-			}
-		}
+
+
 		if (player.buy(tower)) {
 			towers.add(tower);
 			view.addTower(tower);
 		} else {
 			tower.undoBuild();
-			throw new InvalidActionException("not enough money to build a " + type, false, player);
+			throw new InvalidActionException("not enough money to build a " + type, true, player);
 		}
 	}
 

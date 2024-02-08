@@ -50,7 +50,7 @@ public class Referee extends AbstractReferee {
 
 		Locale.setDefault(new Locale("en", "US"));
 
-		random = new Random(gameManager.getSeed());
+		random = new Random(10);
 		Tile[][] grid = MapGenerator.generateMap(random);
 		gameManager.setMaxTurns(Constants.TURN_COUNT);
 		board = new Board(grid, gameManager.getPlayers(), random);
@@ -84,14 +84,15 @@ public class Referee extends AbstractReferee {
 //		try {
 //
 //			if(turn==10){
-//				board.cacheBuild(gameManager.getActivePlayers().get(1), 18, 10, "WALL");
+////				board.cacheBuild(gameManager.getActivePlayers().get(1), 18, 10, "WALL");
 //			}
 //			if (turn == 4) {
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 3, 1, "STUN_TOWER");
-//				board.cacheBuild(gameManager.getActivePlayers().get(0), 15, 11, "GUN_TOWER");
+//				board.cacheBuild(gameManager.getActivePlayers().get(0), 0, 11, "GUN_TOWER");
+////				board.cacheBuild(gameManager.getActivePlayers().get(1), 0, 11, "STUN_TOWER");
 ////				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_EAST");
 ////				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_NORTH");
-//				board.cacheBuild(gameManager.getActivePlayers().get(1), 8, 7, "GUN_TOWER");
+////				board.cacheBuild(gameManager.getActivePlayers().get(1), 8, 7, "GUN_TOWER");
 //
 //
 ////				board.cacheBuild(gameManager.getActivePlayers().get(0), 2, 8, "WALL");
@@ -197,7 +198,7 @@ public class Referee extends AbstractReferee {
 						} catch (BadCommandException ex) {
 //							System.err.println("\t[Exception] " + ex.getMessage());
 							System.out.println("Invalid input detected by player no. " + player.getIndex());
-							this.addErrorMessage(player.getIndex(), "Invalid input.");
+							this.addErrorMessage(player.getIndex(), ex.getMessage());
 							System.err.println("*** Error by player "
 									+ player.getIndex()
 									+ " at command no. "

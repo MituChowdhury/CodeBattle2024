@@ -15,7 +15,7 @@ public class SkeletonMain {
 //			gameRunner.addAgent(TestAgent.class, "eulerscheZahl", "https://static.codingame.com/servlet/fileservlet?id=29379905825543&format=profile_avatar");
 //			gameRunner.addAgent(TestAgent.class, "CodinGame", "https://static.codingame.com/servlet/fileservlet?id=19333912201092&format=profile_avatar");
 //			gameRunner.addAgent(Agent1.class, "eulerscheZahl", "https://static.codingame.com/servlet/fileservlet?id=29379905825543&format=profile_avatar");
-			gameRunner.addAgent(Boss.class, "Sagor", "https://static.codingame.com/servlet/fileservlet?id=19333912201092&format=profile_avatar");
+			gameRunner.addAgent(TestAgent.class, "Sagor", "https://static.codingame.com/servlet/fileservlet?id=19333912201092&format=profile_avatar");
 			gameRunner.addAgent(TestAgent.class, "eulerscheZahl", "https://static.codingame.com/servlet/fileservlet?id=29379905825543&format=profile_avatar");
 //			gameRunner.addAgent(NewAgent.class, "CodinGame", "https://static.codingame.com/servlet/fileservlet?id=19333912201092&format=profile_avatar");
 //		}
