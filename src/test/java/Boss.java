@@ -109,8 +109,8 @@ public class Boss{
 //                        continue;
 
                 // build some objects early
-                if (turn <= 10) {
-                    System.out.println("go " + myplayers[p][0]);
+                if (turn > 10) {
+                    System.out.println("build " + myplayers[p][0]+ " BOMB  "+" 12 120");
                 }
 
                 // then only march forward or attack
@@ -143,6 +143,7 @@ public class Boss{
 
 
             System.out.flush();
+            turn++;
 
         }
 

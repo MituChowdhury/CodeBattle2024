@@ -5,15 +5,9 @@ import java.util.Scanner;
 public class NewAgent {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-//        String[] linewords = new String[]{};
-//
-//        linewords = in.nextLine().split(" ");
         String playerId = in.nextLine();
         System.err.println("playerId: " + playerId);
 
-//        String width_height = in.nextLine();
-//        System.err.println("width, height: " + width_height);
-//        int height = Integer.parseInt(width_height.split(" ")[1]);
         int width = in.nextInt();
         int height = in.nextInt();
 

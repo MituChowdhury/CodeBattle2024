@@ -1,5 +1,7 @@
 package TowerDefense;
 
+import com.codingame.game.Referee;
+
 import java.util.*;
 
 public class PathFinder {
@@ -7,7 +9,7 @@ public class PathFinder {
     //enemy==1 right hand side base is the target
     private static  boolean [][] visited;
     private static  Tile [][] parents;
-    private  static Random random = new Random();
+    private static final Random random = Referee.random;
 
     private static int enemy;
     public static void init(int _enemy) {

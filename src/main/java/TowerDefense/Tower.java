@@ -21,7 +21,7 @@ public abstract class Tower {
 	protected int cost;
 	private TowerView view;
 	private Player owner;
-	public static final String[] TowerOrder = { "HEALTOWER", "FIRETOWER", "GUNTOWER", "GLUETOWER" };
+	public static final String[] TowerOrder = { "HEALTOWER", "FIRETOWER", "GUNTOWER", "STUNTOWER" };
 	private int lifetime = 0;
 
 	static int idCounter = 0;

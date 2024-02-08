@@ -182,6 +182,13 @@ public class Util {
             }
         }
 
+        for (Attacker _attacker: board.getAllVeteransOf(player)) {
+            if (_attacker.getId() == charId) {
+                attacker = _attacker;
+                break;
+            }
+        }
+
         return new BuildCommand(player, attacker, objectName, positionX, positionY);
     }
 

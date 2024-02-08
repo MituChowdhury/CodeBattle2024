@@ -49,8 +49,7 @@ public class AttackerView {
 		spriteCache.add(new ArrayList<Group>());
 	}
 
-	Circle shockWaveEffect;
-	final Random random = new Random();
+
 
     private String getResourcePath(String type) {
         if (attacker.getOwner().getIndex() == 0) {

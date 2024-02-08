@@ -149,53 +149,6 @@ public class Board {
 
 
 
-//	private boolean canCreateAttackers(int turn) {
-//		if (turn == Constants.WAVE_START[waveIndex])
-//			return true;
-//		if (turn < earliestWaveStart)
-//			return false;
-//		for (Player p : players) {
-//			boolean playerReady = true;
-//			for (Attacker a : attackers) {
-//				if (a.getOwner() == p && a.getPathLength() * Constants.WAVE_COMPLETION > paths.get(0).size())
-//					playerReady = false;
-//			}
-//			if (playerReady)
-//				return true;
-//		}
-//		return false;
-//	}
-
-//	private void createAttackers(int turn) {
-
-
-
-//		earliestWaveStart = turn + Constants.WAVE_TIME + 1;
-//		for (int unit = 0; unit < Constants.WAVE_COUNT[waveIndex]; unit++) {
-//			int time = turn + Referee.random.nextInt(Constants.WAVE_TIME);
-//
-//			List<SubTile> path = selectPath(paths);
-//			for (int remove = Referee.random.nextInt(10); remove > 0; remove--)
-//				path.remove(path.size() - 1);
-//			List<SubTile> mirror = mirrorPath(path);
-//			int hp = Constants.WAVE_HP[waveIndex];
-//			int speed = Constants.WAVE_SPEED[waveIndex];
-//			int bounty = Constants.WAVE_BOUNTY[waveIndex];
-//			futureAttackers.get(time).add(new Attacker(mirror, hp, speed, bounty, players.get(1), players.get(0)));
-//			futureAttackers.get(time).add(new Attacker(path, hp, speed, bounty, players.get(0), players.get(1)));
-//		}
-//		waveNumber++;
-//
-//		if (waveIndex + 1 < Constants.WAVE_START.length)
-//			waveIndex++;
-//		else { // make up new waves on the spot, if none defined
-//			Constants.WAVE_COUNT[waveIndex]++;
-//			Constants.WAVE_HP[waveIndex]++;
-//			Constants.WAVE_START[waveIndex] += 10;
-//		}
-//	}
-
-	// creating attackers
 
 
 
@@ -207,7 +160,6 @@ public class Board {
 			a.setView(a_view);
 
 			attackers.add(a);
-
 	}
 
 //	public void test() {
@@ -307,6 +259,19 @@ public class Board {
 				all.add(attacker);
 			}
 		}
+		return all;
+	}
+
+	public List<Attacker> getAllVeteransOf(Player player) {
+		List<Attacker> all = new ArrayList<>();
+
+		for (Attacker attacker: veterans) {
+			if (attacker.getOwner() == player) {
+				all.add(attacker);
+			}
+		}
+
+
 
 		return all;
 	}
@@ -338,7 +303,7 @@ public class Board {
 
 
 		if (!grid[x][y].canBuild()) {
-			throw new InvalidActionException("Tile (" + x + "/" + y + ") is a canyon", false, player);
+			throw new InvalidActionException("Tile (" + x + "/" + y + ") already has something", false, player);
 		}
 
 		Tower tower = null;
@@ -533,33 +498,8 @@ public class Board {
 			input.add(type + " " + id + " " + owner + " " + posX + " " + posY + " " + health + " " + damage + " " + range + " " + cooldown + " " + bounty);
 		}
 
-//		input.add(player.getPlayerInput());
-//		if (players.get(0) == player)
-//			input.add(players.get(1).getPlayerInput());
-//		else
-//			input.add(players.get(0).getPlayerInput());
-
-		// towers, attackers
-//		input.add(String.valueOf(towers.size()));
-//		Comparator<Tower> compareById = (Tower t1, Tower t2) -> t1.getId() - t2.getId();
-//		Collections.sort(towers, compareById);
-//		for (Tower t : towers)
-//			input.add(t.getPlayerInput());
-//
-//		input.add(String.valueOf(attackers.size()));
-//		for (Attacker a : attackers)
-//			input.add(a.getPlayerInput());
 		return input;
 	}
-
-//	public String getWaveInfo() {
-//		int index = Math.min(waveNumber, Constants.WAVE_COUNT.length) - 1;
-//		return "Wave " + waveNumber
-//				+ "\ncount: " + Constants.WAVE_COUNT[index]
-//				+ "\nhealth: " + Constants.WAVE_HP[index]
-//				+ "\nspeed: " + ((double)Constants.WAVE_SPEED[index] / SubTile.SUBTILE_SIZE)
-//				+ "\nbounty: " + Constants.WAVE_BOUNTY[index];
-//	}
 
 	public void addObject() {
 		++this.objCount;

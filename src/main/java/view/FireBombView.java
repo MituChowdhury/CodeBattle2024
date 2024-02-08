@@ -43,7 +43,7 @@ public class FireBombView extends TowerView {
 				.setVisible(true)
 				.setAlpha(1);
 
-//		destroyedSpriteAnimation.setAlpha(1);
+
 		graphics.commitEntityState(1, explosionAnimation);
 
 		explosionAnimation

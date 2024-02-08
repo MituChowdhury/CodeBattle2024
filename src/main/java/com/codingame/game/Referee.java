@@ -47,6 +47,7 @@ public class Referee extends AbstractReferee {
 
 	@Override
 	public void init() {
+
 		Locale.setDefault(new Locale("en", "US"));
 
 		random = new Random(gameManager.getSeed());
@@ -60,7 +61,7 @@ public class Referee extends AbstractReferee {
 		}
 
 		VALID_OBJECT_NAMES.add("GUN_TOWER");
-		VALID_OBJECT_NAMES.add("HEAL_TOWER");
+//		VALID_OBJECT_NAMES.add("HEAL_TOWER");
 		VALID_OBJECT_NAMES.add("STUN_TOWER");
 		VALID_OBJECT_NAMES.add("SPRING_NORTH");
 		VALID_OBJECT_NAMES.add("SPRING_SOUTH");
@@ -88,7 +89,7 @@ public class Referee extends AbstractReferee {
 //			if (turn == 4) {
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 3, 1, "STUN_TOWER");
 //				board.cacheBuild(gameManager.getActivePlayers().get(0), 15, 11, "GUN_TOWER");
-//				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_EAST");
+////				board.cacheBuild(gameManager.getActivePlayers().get(1), 11, 11, "SPRING_EAST");
 ////				board.cacheBuild(gameManager.getActivePlayers().get(1), 12, 11, "SPRING_NORTH");
 //				board.cacheBuild(gameManager.getActivePlayers().get(1), 8, 7, "GUN_TOWER");
 //
@@ -124,11 +125,13 @@ public class Referee extends AbstractReferee {
 ////				board.cacheBuild(gameManager.getActivePlayers().get(1), 9, 11, "BOMB");
 //			}
 //		} catch ( InvalidActionException e ) {
-////			System.out.println(e.getMessage());
-//			this.addErrorMessage(0, "Internal Error");
-//			this.addErrorMessage(1, "Internal Error");
+//////			System.out.println(e.getMessage());
+////			this.addErrorMessage(0, "Internal Error");
+////			this.addErrorMessage(1, "Internal Error");
 //			System.err.println(e.getMessage());
-//			gameManager.endGame();
+////			gameManager.endGame();
+//
+//
 //		}
 
 
@@ -163,7 +166,7 @@ public class Referee extends AbstractReferee {
 
 							if (yCord < 0 || yCord >= Constants.MAP_HEIGHT) {
 								System.err.printf("Expected a valid integer for y coordinate between 0 and %d\n", Constants.MAP_HEIGHT);
-								this.addErrorMessage(player.getIndex(), "Y coordinate is not valid.");
+								addErrorMessage(player.getIndex(), "Y coordinate is not valid.");
 								gameManager.addToGameSummary("Expected a valid integer for y coordinate between 0 and "+ Constants.MAP_HEIGHT+"\n");
 								gameManager.endGame();
 							}
@@ -174,7 +177,7 @@ public class Referee extends AbstractReferee {
 					catch (Exception e){
 //						System.err.println("############# Invalid initial output");
 						System.err.println("Expected integer for y coordinate, found something else.");
-						this.addErrorMessage(player.getIndex(), "Y coordinate is not an integer.");
+						addErrorMessage(player.getIndex(), "Y coordinate is not an integer.");
 						gameManager.addToGameSummary("Expected integer for y coordinate, found something else.");
 						gameManager.endGame();
 					}
@@ -190,7 +193,7 @@ public class Referee extends AbstractReferee {
 					actions.forEach(action -> {
 						try {
 							i.incrementAndGet();
-							executeCommand(parseCommand(player, usedAttackers, action.split(" ")));
+							executeCommand(parseCommand(player, usedAttackers, action.split("\\s+")));
 						} catch (BadCommandException ex) {
 //							System.err.println("\t[Exception] " + ex.getMessage());
 							System.out.println("Invalid input detected by player no. " + player.getIndex());
@@ -203,6 +206,7 @@ public class Referee extends AbstractReferee {
 							System.err.println(ex.getMessage());
 							System.err.println();
 							gameManager.addToGameSummary(ex.getMessage());
+
 							gameManager.endGame();
 						}
 					});
@@ -217,6 +221,7 @@ public class Referee extends AbstractReferee {
 				System.out.println("" + player.getIndex() + " killed.");
 				System.out.println("****** On timeout *******");
 				gameManager.addToGameSummary("Check Game statement for valid input/output");
+				this.addErrorMessage(player.getIndex(),"Timed out");
 				gameManager.endGame();
 			}
 		}
@@ -236,7 +241,9 @@ public class Referee extends AbstractReferee {
 				ex.getPlayer().deactivate();
 				System.err.println(ex.getMessage());
 				gameManager.addToGameSummary(ex.getMessage());
+				addErrorMessage(ex.getPlayer().getIndex(),ex.getMessage());
 				gameManager.endGame();
+				return;
 			}
 		}
 
@@ -245,12 +252,12 @@ public class Referee extends AbstractReferee {
 		board.checkDeadAttacker(); //add those that are killed in this turn
 		board.updateView();
 
-
-		for (Player player : gameManager.getPlayers()) {
-			player.setScore(player.getScorePoints());
-			if (player.isDead() && player.isActive())
-				player.deactivate(player.getNicknameToken() + ": no lives left");
-		}
+//
+//		for (Player player : gameManager.getPlayers()) {
+//			player.setScore(player.getScorePoints());
+//			if (player.isDead() && player.isActive())
+//				player.deactivate(player.getNicknameToken() + ": no lives left");
+//		}
 
 		if (turn == Constants.TURN_COUNT) {
 			gameManager.getActivePlayers().get(0).deactivate();
@@ -333,7 +340,8 @@ public class Referee extends AbstractReferee {
 		} else if (commandArgs[0].equals("build")) {
 			// Implementation for "build" command...
 			cmd = Util.getBuildCommand(commander, this.board, commandArgs);
-			Attacker attacker = cmd.getAttacker();
+
+            Attacker attacker = cmd.getAttacker();
 
 			if(attacker!=null) {
 				throwIfAttackerUsed(usedAttackers, attacker.getId());
@@ -371,7 +379,6 @@ public class Referee extends AbstractReferee {
 	@Override
 	public void onEnd() {
 
-//     int[] scores = gameManager.getPlayers().stream().mapToInt(p -> p.getScore()).toArray();
 			if (scores[0] < 0 || scores[1] < 0) {
 				onErrorEnd();
 			}
@@ -379,11 +386,11 @@ public class Referee extends AbstractReferee {
 				onSuccessfulEnd();
 			}
 
+			for (Player player : gameManager.getPlayers()) {
+				player.setScore(scores[player.getIndex()]);
+			}
+
 			endScreenModule.setScores(scores, texts);
-		//String endSprite = "tie";
-		//if (scores[0] > scores[1]) endSprite = "win0";
-		//if (scores[0] < scores[1]) endSprite = "win1";
-		//endScreenModule.setTitleRankingsSprite(endSprite + ".png");
 	}
 
 	private void onSuccessfulEnd() {
@@ -400,7 +407,6 @@ public class Referee extends AbstractReferee {
 	}
 
 	private void setScores() {
-//		int[] scores = {0, 0};
 
 		Player playerOne = gameManager.getPlayer(0);
 		Player playerTwo = gameManager.getPlayer(1);
@@ -427,7 +433,7 @@ public class Referee extends AbstractReferee {
 
 	private void addErrorMessage(int playerId, String message) {
 		this.playerErrorMessages[playerId].add(message);
-		this.scores[playerId] -= 1;
+		this.scores[playerId] = -1;
 	}
 
 	private void onErrorEnd() {
@@ -440,7 +446,7 @@ public class Referee extends AbstractReferee {
 					sb.append(err);
 				});
 
-				texts[i] = sb.toString();
+				texts[i] = playerErrorMessages[i].get(playerErrorMessages[i].size()-1);
 			}
 			else {
 				Player player = gameManager.getPlayer(i);

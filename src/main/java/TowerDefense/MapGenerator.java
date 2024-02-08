@@ -24,93 +24,12 @@ public class MapGenerator {
 		private int height;
 		private Tile[][] grid;
 
-//		public static BoardDraft generatePath(int width, int height) {
-//			BoardDraft board = new BoardDraft(width, height);
-////			while (!board.isSymmetric() || board.getPathLength() < Constants.MIN_PATH_LENGTH)
-////				board = new BoardDraft(width, height);
-//			return board;
-//		}
 
-//		private int getPathLength() {
-//			ArrayList<Tile> start = new ArrayList<Tile>();
-//			ArrayList<Tile> exit = new ArrayList<Tile>();
-//			for (int y = 0; y < height; y++) {
-//				if (grid[0][y].isCanyon())
-//					start.add(grid[0][y]);
-//				if (grid[width - 1][y].isCanyon())
-//					exit.add(grid[width - 1][y]);
-//			}
-//			int[][] dist = bfs(start);
-//			int result = Integer.MAX_VALUE;
-//			for (Tile t : exit) {
-//				result = Math.min(result, dist[t.getX()][t.getY()]);
-//			}
-//			return result;
-//		}
-
-//		private boolean pathLengthsEqual() {
-//			Board board = new Board(grid, null, null);
-//			List<List<SubTile>> paths = board.getPaths();
-//			for (int i = 1; i < paths.size(); i++) {
-//				if (paths.get(i).size() != paths.get(0).size())
-//					return false;
-//			}
-//			return true;
-//		}
-
-//		private boolean hasBranching() {
-//			if (!enforceBranching) return true;
-//			for (int x = 1; x < width; x++) {
-//				for (int y = 1; y < height; y++) {
-//					if (grid[x][y].isCanyon() && grid[x - 1][y].isCanyon() && grid[x][y - 1].isCanyon() && grid[x - 1][y - 1].isCanyon())
-//						return false; // no "real" branching, just large area
-//				}
-//			}
-//
-//			for (int x = 0; x < width; x++) {
-//				for (int y = 0; y < height; y++) {
-//					if (grid[x][y].isCanyon() && Arrays.stream(grid[x][y].getNeighbors()).filter(n -> n != null && n.isCanyon()).count() > 2)
-//						return true;
-//				}
-//			}
-//			return false;
-//		}
-
-//		public static BoardDraft generatePath(int width, int height, int paths) {
-//			BoardDraft board = tryGeneratePath(width, height, paths);
-//			while (!board.isSymmetric() || board.getPathLength() < Constants.MIN_PATH_LENGTH || !board.pathLengthsEqual() || !board.hasBranching())
-//				board = tryGeneratePath(width, height, paths);
-//			return board;
-//		}
-
-//		private static BoardDraft tryGeneratePath(int width, int height, int paths) {
-//			ArrayList<BoardDraft> boards = new ArrayList<>();
-//			for (int i = 0; i < paths; i++)
-//				boards.add(generatePath(width, height));
-//			BoardDraft board = new BoardDraft(width, height);
-//			for (int x = 0; x < width; x++) {
-//				for (int y = 0; y < height; y++) {
-//					final int x_ = x, y_ = y;
-//					board.grid[x][y].setCanyon(boards.stream().anyMatch(b -> b.grid[x_][y_].isCanyon()));
-//				}
-//			}
-//
-//			ArrayList<Tile> start = new ArrayList<Tile>();
-//			ArrayList<Tile> exit = new ArrayList<Tile>();
-//			for (int y = 0; y < height; y++) {
-//				if (board.grid[0][y].isCanyon())
-//					start.add(board.grid[0][y]);
-//				if (board.grid[width - 1][y].isCanyon())
-//					exit.add(board.grid[width - 1][y]);
-//			}
-//			board.buildPath(width, height, start, exit, false);
-//			return board;
-//		}
 
 		public BoardDraft(int width, int height) {
 
-			Random random = new Random();
-			random.setSeed(2);
+
+
 			this.width = width;
 			this.height = height;
 			grid = new Tile[width][height];
@@ -288,8 +207,8 @@ public class MapGenerator {
 //								{'*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'}};
 //
 
-			Random rand = new Random();
-			int rn = rand.nextInt(dummy.length);
+
+			int rn = random.nextInt(dummy.length);
 
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
@@ -431,16 +350,6 @@ public class MapGenerator {
 			return sb.toString();
 		}
 
-//		public boolean isSymmetric() {
-//			if (width % 2 == 1 && height % 2 == 1 && !grid[width / 2][height / 2].isCanyon())
-//				return false;
-//			for (int x = 0; x < width; x++) {
-//				for (int y = 0; y < height; y++) {
-//					if (grid[x][y].isCanyon() != grid[width - 1 - x][height - 1 - y].isCanyon())
-//						return false;
-//				}
-//			}
-//			return true;
-//		}
+
 	}
 }

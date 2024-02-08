@@ -11,7 +11,7 @@ import view.TowerView;
 
 public class GlueTower extends Tower {
 	public GlueTower(Tile tile) {
-		super("GLUETOWER", tile);
+		super("STUNTOWER", tile);
 		properties[TowerProperty.DAMAGE.ordinal()] = Constants.GLUETOWER_DAMAGE;
 		properties[TowerProperty.RANGE.ordinal()] = Constants.GLUETOWER_RANGE;
 		properties[TowerProperty.RELOAD.ordinal()] = Constants.GLUETOWER_RELOAD;

@@ -15,34 +15,34 @@ public class BuildCommand extends Command {
         this.objectName = objectName;
         this.posX = posX;
         this.posY = posY;
-        int attackerX = attacker.getCurrentTile().getX();
-        int attackerY = attacker.getCurrentTile().getY();
 
-//        if( posX > attackerX+1 || posX < attackerX-1 || posY > attackerY+1 || posY < attackerY-1 ) {
-//            throw new BadCommandException("Build coordinate is invalid");
-//        }
+        //if null then this command will be ignored.
+        if(attacker!=null) {
+            int attackerX = attacker.getCurrentTile().getX();
+            int attackerY = attacker.getCurrentTile().getY();
 
-        if (attackerX == posX && attackerY == posY) {
-            throw new BadCommandException("An attacker cannot build anything in its current position.");
-        }
 
-        if (posX < 0 || posX > Constants.MAP_WIDTH - 1 || posY < 0 || posY > Constants.MAP_HEIGHT - 1) {
-            throw new BadCommandException("The position is out of the map.");
-        }
+            if (attackerX == posX && attackerY == posY) {
+                throw new BadCommandException("An attacker cannot build anything in its current position.");
+            }
 
-        boolean isValid = false;
+            if (posX < 0 || posX > Constants.MAP_WIDTH - 1 || posY < 0 || posY > Constants.MAP_HEIGHT - 1) {
+                throw new BadCommandException("The position is out of the map.");
+            }
 
-        if (!objectName.equals("BOMB")) {
-            isValid =( Math.abs(posX-attackerX)+Math.abs(posY-attackerY))==1;
-        }
-        else {
+            boolean isValid = false;
 
-            isValid = Math.abs(posX-attackerX)<=Constants.FIREBOMB_THROW_RANGE &&
-                    Math.abs(posY-attackerY) <= Constants.FIREBOMB_THROW_RANGE;
-        }
+            if (!objectName.equals("BOMB")) {
+                isValid = (Math.abs(posX - attackerX) + Math.abs(posY - attackerY)) == 1;
+            } else {
 
-        if (!isValid) {
-            throw new BadCommandException("Build coordinate is invalid.");
+                isValid = Math.abs(posX - attackerX) <= Constants.FIREBOMB_THROW_RANGE &&
+                        Math.abs(posY - attackerY) <= Constants.FIREBOMB_THROW_RANGE;
+            }
+
+            if (!isValid) {
+                throw new BadCommandException("Build coordinate is invalid.");
+            }
         }
     }
 
