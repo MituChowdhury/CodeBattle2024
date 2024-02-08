@@ -381,8 +381,6 @@ public class Referee extends AbstractReferee {
 			}
 
 			endScreenModule.setScores(scores, texts);
-			board.getPlayer(0).setScores(scores[0]);
-			board.getPlayer(1).setScores(scores[1]);
 		//String endSprite = "tie";
 		//if (scores[0] > scores[1]) endSprite = "win0";
 		//if (scores[0] < scores[1]) endSprite = "win1";
@@ -426,6 +424,9 @@ public class Referee extends AbstractReferee {
 			int i = playerOne.getScores() > playerTwo.getScores() ? 0: 1;
 			scores[i] = 1;
 		}
+
+		playerOne.setScore(scores[0]);
+		playerTwo.setScore(scores[1]);
 	}
 
 	private void addErrorMessage(int playerId, String message) {
