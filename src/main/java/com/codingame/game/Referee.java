@@ -134,7 +134,7 @@ public class Referee extends AbstractReferee {
 
 		board.spawnAttackers(turn); //spawn those that were killed in previous turn
 		board.updateTowers();
-		board.fireTowers();
+//		board.fireTowers();
 
 		for (Player player : gameManager.getActivePlayers()) {
 			for (String line : board.getPlayerInput(player, turn == 1)) {
@@ -247,11 +247,11 @@ public class Referee extends AbstractReferee {
 		board.updateView();
 
 
-		for (Player player : gameManager.getPlayers()) {
-			player.setScore(player.getScorePoints());
-			if (player.isDead() && player.isActive())
-				player.deactivate(player.getNicknameToken() + ": no lives left");
-		}
+//		for (Player player : gameManager.getPlayers()) {
+//			player.setScore(player.getScorePoints());
+//			if (player.isDead() && player.isActive())
+//				player.deactivate(player.getNicknameToken() + ": no lives left");
+//		}
 
 		if (turn == Constants.TURN_COUNT) {
 			gameManager.getActivePlayers().get(0).deactivate();
@@ -428,7 +428,7 @@ public class Referee extends AbstractReferee {
 
 	private void addErrorMessage(int playerId, String message) {
 		this.playerErrorMessages[playerId].add(message);
-		this.scores[playerId] -= 1;
+		this.scores[playerId] = -1;
 	}
 
 	private void onErrorEnd() {
@@ -441,7 +441,8 @@ public class Referee extends AbstractReferee {
 					sb.append(err);
 				});
 
-				texts[i] = sb.toString();
+//				texts[i] = sb.toString();
+				texts[i] = "Invalid input.";
 			}
 			else {
 				Player player = gameManager.getPlayer(i);
