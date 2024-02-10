@@ -38,7 +38,7 @@ public abstract class Tower {
 		this.tile = tile;
 		this.upgradeStates = new int[TowerProperty.values().length];
 		this.properties = new double[TowerProperty.values().length][];
-		if(!type.equals("BOMB") && !type.equals("SPRINGTRAP"))
+		if(!type.equals("FIREBOMB") && !type.equals("SPRINGTRAP"))
 			tile.setDestructibleObject(this);
 		bounty=0;
 	}
