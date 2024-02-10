@@ -157,8 +157,10 @@ public abstract class TowerView {
 		sb.append("\ntype: ").append(tower.getType());
 		sb.append("\nid: ").append(tower.getId());
 		sb.append("\nowner: ").append(tower.getOwner().getIndex());
+		sb.append("\nHITPOINT: ").append(tower.getHealth());
 		for (TowerProperty p : TowerProperty.values()) {
-			sb.append("\n").append(p).append(": ").append(new DecimalFormat("0.#").format(tower.getProperty(p)));
+			if(p!=TowerProperty.HITPOINT)
+				sb.append("\n").append(p).append(": ").append(new DecimalFormat("0.#").format(tower.getProperty(p)));
 		}
 		//sb.append("\ncooldown: ").append(tower.getCooldown());
 

@@ -43,9 +43,9 @@ public class Player extends AbstractMultiplayerPlayer {
 		deathCount++;
 	}
 
-	public void destroy(Tower t) {
-		this.coins += t.getBounty();
-	}
+//	public void destroy(Tower t) {
+//		this.coins += t.getBounty();
+//	}
 
 	public boolean buy(Tower tower) {
 		if (coins < tower.getCost())

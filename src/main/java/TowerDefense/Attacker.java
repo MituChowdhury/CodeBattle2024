@@ -295,7 +295,7 @@ public class Attacker {
 			if(obstacle.isDestroyed())
 				owner.setCoins(owner.getCoins()+obstacle.getBounty());
 		}
-		// TODO: Add attacker attack animation here
+
 	}
 
 

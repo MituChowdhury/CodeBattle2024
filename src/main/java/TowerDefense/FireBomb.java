@@ -20,7 +20,7 @@ public class FireBomb extends Tower {
 		properties[TowerProperty.FUSETIME.ordinal()] = Constants.FIREBOMB_FUSETIME;
 		cost = Constants.FIREBOMB_COST;
 		this.bounty = Constants.FIREBOMB_BOUNTY;
-		this.tile.unsetDestructibleObject();
+//		this.tile.unsetDestructibleObject();
 	}
 
 	@Override

@@ -175,7 +175,7 @@ public class Util {
             throw new BadCommandException("Tile (" + positionX + "/" + positionX + ") is outside of the map");
 
         Tile t = board.getGrid()[positionX][positionY];
-        if (!t.canBuild()) {
+        if (!objectName.equals("BOMB") &&  !t.canBuild()) {
             throw new BadCommandException("Tile (" + positionX + "/" + positionY + ") already has something");
         }
 

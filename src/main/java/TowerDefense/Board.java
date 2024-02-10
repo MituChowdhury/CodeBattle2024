@@ -219,6 +219,17 @@ public class Board {
 
 		ArrayList<Integer> to_del = new ArrayList<Integer>();
 
+		//remove those who are already dead
+		for (int i = attackers.size() - 1; i >= 0; i--) {
+			Attacker a = attackers.get(i);
+			if (a.isDead()) {
+				attackers.get(i).kill();
+				veterans.add(attackers.get(i));
+				attackers.remove(i);
+			}
+		}
+
+		//attack them all
 		for (int t_i=0; t_i<towers.size(); t_i++) {
 			Tower t = towers.get(t_i);
 			t.attack(attackers, towers);
@@ -299,7 +310,7 @@ public class Board {
 
 	private void build(Player player, int x, int y, String type) throws InvalidActionException {
 
-		if(!grid[x][y].canBuild()){
+		if(!type.equals("BOMB") && !grid[x][y].canBuild()){
 			System.err.println("Player "+player.getIndex()+": Tile (" + x + "/" + y + ") is not available for building");
 			return;
 		}
@@ -479,7 +490,7 @@ public class Board {
 			int owner = t.getOwner().getIndex();
 			int posX = t.getTile().getX();
 			int posY = t.getTile().getY();
-			int health = (int)t.getProperty(TowerProperty.HITPOINT);
+			int health = t.getHealth();
 			int damage = (int)t.getProperty(TowerProperty.DAMAGE);
 			int range = (int)t.getProperty(TowerProperty.RANGE);
 			int cooldown = (int)t.getProperty(TowerProperty.RELOAD);
@@ -499,6 +510,10 @@ public class Board {
 		view.updateView();
 		for (Player player : players) {
 			player.updateView();
+		}
+
+		for (Tower t:towers){
+			t.updateTooltip();
 		}
 	}
 

@@ -38,7 +38,8 @@ public abstract class Tower {
 		this.tile = tile;
 		this.upgradeStates = new int[TowerProperty.values().length];
 		this.properties = new double[TowerProperty.values().length][];
-		tile.setDestructibleObject(this);
+		if(!type.equals("BOMB") && !type.equals("SPRINGTRAP"))
+			tile.setDestructibleObject(this);
 		bounty=0;
 	}
 
@@ -100,6 +101,10 @@ public abstract class Tower {
 
 	public int getCost() {
 		return cost;
+	}
+
+	public int getHealth(){
+		return hitPoints;
 	}
 
 	public Tile getTile() {
@@ -201,6 +206,10 @@ public abstract class Tower {
 
 	public void setView(TowerView view) {
 		this.view = view;
+	}
+
+	public void updateTooltip(){
+		view.updateTooltip();
 	}
 
 	public void undoBuild() {

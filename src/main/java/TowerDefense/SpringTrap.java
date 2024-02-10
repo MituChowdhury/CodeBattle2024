@@ -28,9 +28,9 @@ public class SpringTrap extends Tower {
 		this.dir = dir;
 		this.board = board;
 		this.hitPoints = (int) this.getProperty(TowerProperty.HITPOINT);
-		this.tile.unsetDestructibleObject();
+//		this.tile.unsetDestructibleObject();
 		this.bounty = Constants.SPRINGTRAP_BOUNTY;
-		this.tile.unsetDestructibleObject();
+//		this.tile.unsetDestructibleObject();
 		tile.setSpring(this);
 	}
 

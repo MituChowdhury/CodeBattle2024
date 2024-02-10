@@ -41,7 +41,8 @@ public class BuildCommand extends Command {
             }
 
             if (!isValid) {
-                throw new BadCommandException("Build coordinate is invalid.");
+                throw new BadCommandException("Build not possible. Minion cords- :("+attackerX+"/"+attackerY+"). target: ("
+                        +posX+"/"+posY+").");
             }
         }
     }

@@ -308,9 +308,7 @@ public class AttackerView {
 
     public void kill() {
         if (attacker.hasReachedTarget()) {
-
            changeAnimation(attackerJumpSprites,CELEBRATE_DURATION);
-
         } else {
             //dead animation
             changeAnimation(attackerDeadSprites,DEATH_DURATION);
