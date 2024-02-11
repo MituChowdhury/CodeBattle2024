@@ -73,7 +73,11 @@ public abstract class Tower {
 	// TODO: add disappear animation here in view.destroy()
 	public void disappear() {
 		hitPoints = 0;
-		this.tile.unsetDestructibleObject();
+		if(!type.equals("FIREBOMB") && !type.equals("SPRINGTRAP"))
+			this.tile.unsetDestructibleObject();
+		if(type.equals("SPRINGTRAP"))
+			this.tile.setSpring(null);
+
 		view.destroy();
 	}
 	public boolean canUpgrade(TowerProperty property) {

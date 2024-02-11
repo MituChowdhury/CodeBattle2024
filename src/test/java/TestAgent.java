@@ -117,7 +117,7 @@ public class TestAgent {
                     System.out.println("attack 1 SOUTH");
                 else
                 // go character_id | build character_id object position_x position_y | attack character_id direction
-                System.out.println("go 1");
+                    System.out.println("go 1");
 
                 // Write an action using System.out.println()
                 // To debug: System.err.println("Debug messages...");
@@ -131,9 +131,17 @@ public class TestAgent {
 
                 if(turn==2){
                     if(playerId==0)
-                        System.out.println("build 3 WALL 0 7");
+                        System.out.println("build 3 GUN_TOWER 0 7");
                     else{
-                        System.out.println("build 3 WALL 19 7");
+                        System.out.println("build 3 GUN_TOWER 19 7");
+                    }
+                }
+
+                else if(turn==3){
+                    if(playerId==0)
+                        System.out.println("build 3 BOMB 0 7");
+                    else{
+                        System.out.println("build 3 BOMB 19 7");
                     }
                 }
                 else if(turn ==94 && playerId==1){
