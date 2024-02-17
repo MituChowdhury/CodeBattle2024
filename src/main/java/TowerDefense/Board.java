@@ -400,7 +400,7 @@ public class Board {
 		}
 
 		// player + opponent
-		Player opponent = players.get(0) == player ? players.get(1): player;
+		Player opponent = players.get(player.getIndex()^1);
 
 		input.add(player.getPlayerMoneyInput() + " " + opponent.getPlayerMoneyInput());
 		input.add(player.getPlayerScoresInput() + " " + opponent.getPlayerScoresInput());
