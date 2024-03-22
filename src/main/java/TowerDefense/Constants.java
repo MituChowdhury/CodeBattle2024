@@ -24,11 +24,11 @@ public class Constants {
 
 
 	public static final int FIREBOMB_COST = 100;//changed
-	public static final double[] FIREBOMB_DAMAGE = { 45, 8, 15, 30 };//changed
+	public static final double[] FIREBOMB_DAMAGE = { 35, 8, 15, 30 };//changed
 	public static final double[] FIREBOMB_RANGE = { 2, 4, 5, 6 };
 	public static final double[] FIREBOMB_RELOAD = { -1, 0, 0, 0 };
 	public static final double[] FIREBOMB_HITPOINTS = { -1, 10, 15, 20 };
-	public static final double[] FIREBOMB_FUSETIME = { 2, 1, 0, 0 };
+	public static final double[] FIREBOMB_FUSETIME = { 20, 1, 0, 0 };
 	public static int FIREBOMB_THROW_RANGE=3;//changed
 	public static final int FIREBOMB_BOUNTY = 0;
 
@@ -38,7 +38,7 @@ public class Constants {
 	public static final double[] SPRINGTRAP_HITPOINT = { -1, 10, 15, 20 };
 
 	// DEBUG: spring lifetime 100
-	public static final double[] SPRINGTRAP_FUSETIME = { 20, 3, 3, 3 }; // FUSETIME IS LIFETIME FOR SPRINGTRAP
+	public static final double[] SPRINGTRAP_FUSETIME = { 35, 3, 3, 3 }; // FUSETIME IS LIFETIME FOR SPRINGTRAP
 	public static final int SPRINGTRAP_COST = 200;//changed
 	public static final int SPRINGTRAP_BOUNTY = -1;
 
